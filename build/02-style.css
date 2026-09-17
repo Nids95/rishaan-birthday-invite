@@ -1,0 +1,528 @@
+/* ══════════════════════════════════════════════════════════
+   Rishaan turns one.
+
+   Two acts on one page.
+
+   Act one is the GATE: a cover that fills the window. He is parked
+   on a country road with the engine warm. Press the button and he
+   drives for five seconds — the world scrolls past him, not the
+   other way round — pulls up under a balloon arch, and the whole
+   cover lifts away like a curtain.
+
+   Act two is the INVITATION underneath: four sections, nothing more.
+   You are lovingly invited · Curtain up in · When & where · the
+   closing line.
+
+   The palette is powder blue and ivory with navy ink, one warm bulb
+   accent. Lit surfaces stay ivory in BOTH themes, so ink on them is
+   always navy — otherwise dark mode turns the name sign into
+   near-white on near-white.
+   ══════════════════════════════════════════════════════════ */
+:root{
+  --bg:#D8EBFC; --sky-1:#EAF4FE; --sky-2:#CFE5FA;
+  --card:#FBFAF7; --card-2:#F1F6FB; --ivory:#FBFAF7; --ivory-2:#EDF3F9;
+  --paper:#FCFAF5; --paper-2:#F4EFE4;
+  --ink:#0E2F57; --body:#41648C; --muted:#6B89A8;
+  --line:rgba(74,136,190,.28); --line-soft:rgba(74,136,190,.14); --rule:rgba(14,47,87,.16);
+  --accent:#4A88BE; --accent-ink:#2A6394; --navy:#1F5581; --navy-2:#2E6A9B;
+  --powder:#DBE4EB; --dusty:#9DC0DE; --dusty-2:#BBD6EC; --deep:#6E9BC4;
+  --el:#CBD4DE; --el-2:#AFBCCA; --el-in:#E3D2CE; --blush:#E8B3A8;
+  --gold:#D9A93F; --bulb:#F3D79C; --bulb-glow:rgba(243,215,156,.42);
+  --glow:rgba(150,196,234,.55); --glow-wide:rgba(130,180,225,.28);
+  --sheen:rgba(255,255,255,.44); --ring:rgba(74,136,190,.30);
+  --shadow:0 16px 40px -20px rgba(14,47,87,.30);
+  --lift:0 2px 2px rgba(14,47,87,.04), 0 10px 20px -12px rgba(14,47,87,.22),
+         0 34px 56px -40px rgba(14,47,87,.34);
+  --ease:cubic-bezier(.22,.72,.24,1);
+  --gut:clamp(22px,4.4vw,52px);
+  --sec:clamp(46px,9vw,116px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1C31; --card:#14273F; --card-2:#1B3148;
+    --paper:#16293F; --paper-2:#102135;
+    --ink:#EAF2FB; --body:#B6C8DC; --muted:#8AA1B8;
+    --line:rgba(127,180,224,.30); --line-soft:rgba(127,180,224,.15); --rule:rgba(190,215,240,.20);
+    --accent:#7FB4E0; --accent-ink:#9CC8EC; --navy:#2E6A9B; --navy-2:#3E7FB2;
+    --powder:#BCD2E6; --dusty:#6E9BC4; --dusty-2:#5A86B0; --deep:#4B7CA8;
+    --el:#AAB6C4; --el-2:#94A2B2; --el-in:#C2AFAB; --blush:#D69D93;
+    --gold:#C6963A; --bulb:#E0C185; --bulb-glow:rgba(224,193,133,.26);
+    --glow:rgba(120,170,215,.34); --glow-wide:rgba(100,150,200,.20);
+    --sheen:rgba(150,200,245,.13); --ring:rgba(127,180,224,.34);
+    --shadow:0 18px 44px -22px rgba(0,0,0,.7);
+    --lift:0 2px 2px rgba(0,0,0,.2), 0 12px 24px -14px rgba(0,0,0,.6),
+           0 40px 64px -44px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1C31; --card:#14273F; --card-2:#1B3148;
+  --paper:#16293F; --paper-2:#102135;
+  --ink:#EAF2FB; --body:#B6C8DC; --muted:#8AA1B8;
+  --line:rgba(127,180,224,.30); --line-soft:rgba(127,180,224,.15); --rule:rgba(190,215,240,.20);
+  --accent:#7FB4E0; --accent-ink:#9CC8EC; --navy:#2E6A9B; --navy-2:#3E7FB2;
+  --powder:#BCD2E6; --dusty:#6E9BC4; --dusty-2:#5A86B0; --deep:#4B7CA8;
+  --el:#AAB6C4; --el-2:#94A2B2; --el-in:#C2AFAB; --blush:#D69D93;
+  --gold:#C6963A; --bulb:#E0C185; --bulb-glow:rgba(224,193,133,.26);
+  --glow:rgba(120,170,215,.34); --glow-wide:rgba(100,150,200,.20);
+  --sheen:rgba(150,200,245,.13); --ring:rgba(127,180,224,.34);
+  --shadow:0 18px 44px -22px rgba(0,0,0,.7);
+  --lift:0 2px 2px rgba(0,0,0,.2), 0 12px 24px -14px rgba(0,0,0,.6),
+         0 40px 64px -44px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--body); overflow-x:hidden;
+  font-family:"Jost","Avenir Next",Segoe UI,sans-serif; font-weight:300; font-size:16px;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility}
+h1,h2,h3{margin:0; color:var(--ink); font-weight:400; line-height:1.12; text-wrap:balance}
+p{margin:0}
+button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
+a{color:inherit}
+img,svg{display:block; max-width:100%}
+/* the artwork is handed to the <img> tags by the script; with no script
+   there is nothing to show, and a broken-image box is worse than nothing */
+img:not([src]){display:none}
+:focus-visible{outline:2.5px solid var(--accent-ink); outline-offset:3px; border-radius:10px}
+
+/* ══ type scale ══════════════════════════════════════════ */
+.l-eyebrow{font-family:"Jost",sans-serif; font-size:.7rem; font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:var(--accent-ink)}
+.l-h{font-family:"Cormorant Garamond",Georgia,serif; font-weight:300;
+  font-size:clamp(2rem,1.2rem + 3.6vw,3.6rem); line-height:1.06; letter-spacing:-.012em}
+.l-h em{font-style:italic; color:var(--accent-ink)}
+.l-sign-off{font-family:"Parisienne",cursive; font-size:clamp(1.5rem,1.2rem + 1vw,2rem); color:var(--accent-ink)}
+.l-name{font-family:"Parisienne",cursive; font-size:clamp(2.5rem,11vw,4rem); color:var(--ink); line-height:1}
+.l-tag{font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.12rem,4.2vw,1.5rem); color:var(--accent)}
+.l-tag b{font-weight:500; letter-spacing:.06em}
+.l-rule{display:flex; align-items:center; gap:13px; max-width:230px; width:100%}
+.l-rule i{flex:1; height:1px; background:linear-gradient(90deg,var(--rule),transparent)}
+.l-rule svg{width:11px; height:11px; fill:var(--accent-ink); flex:none}
+.l-rule.c i:first-child{background:linear-gradient(90deg,transparent,var(--rule))}
+
+/* ══ grid ════════════════════════════════════════════════ */
+.g{max-width:1160px; margin-inline:auto; padding-inline:var(--gut);
+  display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(18px,2.6vw,32px)}
+.g > *{grid-column:1/-1; min-width:0}
+.sec{padding-block:var(--sec); position:relative}
+
+/* ══ buttons ═════════════════════════════════════════════ */
+.l-btn{display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  text-decoration:none; border-radius:999px; padding:16px 30px; min-height:52px;
+  font-family:"Jost",sans-serif; font-size:.72rem; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .25s var(--ease), color .25s var(--ease)}
+.l-btn svg{width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round; transition:transform .3s var(--ease)}
+.l-primary{background:var(--navy); color:#FBFCFD; box-shadow:0 10px 22px -12px rgba(14,47,87,.7)}
+.l-primary:hover{background:var(--navy-2); transform:translateY(-2px); box-shadow:0 18px 30px -14px rgba(14,47,87,.7)}
+.l-primary:hover svg{transform:translateX(3px)}
+.l-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--line)}
+.l-ghost:hover{background:var(--ink); color:var(--paper); border-color:transparent; transform:translateY(-2px)}
+.l-acts{display:flex; flex-wrap:wrap; gap:12px}
+
+/* ══ a string of party lights ════════════════════════════
+   White and sky-blue bulbs on a drooping wire. Two bulb layers
+   twinkle out of phase; the wire never moves. */
+.l-lights{position:absolute; left:0; right:0; top:0; height:62px; z-index:6; pointer-events:none}
+.l-lights::before{content:""; position:absolute; inset:0; opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%2762%27%3E%3Cpath%20d%3D%27M0%203%20Q100%2052%20200%203%27%20fill%3D%27none%27%20stroke%3D%27%236E9BC4%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E"); background-repeat:repeat-x; background-size:200px 62px}
+.l-lights i{position:absolute; inset:0; background-repeat:repeat-x; background-size:200px 62px;
+  filter:drop-shadow(0 2px 3px rgba(14,47,87,.10))}
+.l-lights i:nth-child(1){background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%2762%27%3E%3Cdefs%3E%3CradialGradient%20id%3D%27g%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23FFFFFF%27%20stop-opacity%3D%27.55%27%2F%3E%3Cstop%20offset%3D%27.55%27%20stop-color%3D%27%23FFFFFF%27%20stop-opacity%3D%27.16%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23FFFFFF%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2725.0%27%20cy%3D%2724.1%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Ccircle%20cx%3D%27125.0%27%20cy%3D%2736.4%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Crect%20x%3D%2723.1%27%20y%3D%2713.1%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%2725.0%27%20cy%3D%2724.1%27%20r%3D%276%27%20fill%3D%27%23FFFFFF%27%20stroke%3D%27%2393B7D8%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%2723.1%27%20cy%3D%2722.1%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%27123.1%27%20y%3D%2725.4%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%27125.0%27%20cy%3D%2736.4%27%20r%3D%276%27%20fill%3D%27%23FFFFFF%27%20stroke%3D%27%2393B7D8%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%27123.1%27%20cy%3D%2734.4%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3C%2Fsvg%3E"); animation:l-twink 4.6s ease-in-out infinite}
+.l-lights i:nth-child(2){background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%2762%27%3E%3Cdefs%3E%3CradialGradient%20id%3D%27g%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%238CC3EB%27%20stop-opacity%3D%27.55%27%2F%3E%3Cstop%20offset%3D%27.55%27%20stop-color%3D%27%238CC3EB%27%20stop-opacity%3D%27.16%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%238CC3EB%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2775.0%27%20cy%3D%2736.4%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Ccircle%20cx%3D%27175.0%27%20cy%3D%2724.1%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Crect%20x%3D%2773.1%27%20y%3D%2725.4%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%2775.0%27%20cy%3D%2736.4%27%20r%3D%276%27%20fill%3D%27%23A2C9EA%27%20stroke%3D%27%237FAFD6%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%2773.1%27%20cy%3D%2734.4%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%27173.1%27%20y%3D%2713.1%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%27175.0%27%20cy%3D%2724.1%27%20r%3D%276%27%20fill%3D%27%23A2C9EA%27%20stroke%3D%27%237FAFD6%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%27173.1%27%20cy%3D%2722.1%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3C%2Fsvg%3E"); animation:l-twink 4.6s ease-in-out 2.3s infinite}
+@keyframes l-twink{0%,100%{opacity:.78}50%{opacity:1}}
+@media (max-width:640px){ .l-lights{height:46px}
+  .l-lights::before,.l-lights i{background-size:150px 46px} }
+
+/* ══════════════════════════════════════════════════════════
+   ACT ONE · THE GATE
+   ══════════════════════════════════════════════════════════ */
+/* No script, no gate: the invitation is simply there. */
+.gate{display:none}
+html.gated .gate{display:grid}
+html.gated body{overflow:hidden}
+html.gated #invite{opacity:0}
+html.gated.open #invite{opacity:1; transition:opacity .6s ease .15s}
+html.gated.open body{overflow:visible}
+
+.gate{position:fixed; inset:0; z-index:90; grid-template-rows:minmax(0,1fr) auto;
+  background:var(--sky-1); overflow:hidden; overscroll-behavior:contain;
+  transition:transform 1s cubic-bezier(.66,.02,.24,1)}
+.gate.lift{transform:translateY(-101%); box-shadow:0 30px 60px -20px rgba(14,47,87,.45)}
+.gate[hidden]{display:none!important}
+
+/* ── the road, and everything beside it ───────────────── */
+.g-scene{position:relative; overflow:hidden; min-height:0;
+  /* A LIT SURFACE. It is ivory in both themes, so every token that paints
+     on it has to hold its light value too — otherwise dark mode drops a
+     charcoal card, with navy text on it, onto an ivory band. */
+  --ink:#0E2F57; --body:#41648C; --muted:#6B89A8;
+  --card:#FBFAF7; --card-2:#F1F6FB;
+  --line:rgba(74,136,190,.28); --line-soft:rgba(74,136,190,.14); --rule:rgba(14,47,87,.16);
+  --accent:#4A88BE; --accent-ink:#2A6394; --navy:#1F5581; --navy-2:#2E6A9B;
+  --dusty:#9DC0DE; --dusty-2:#BBD6EC; --powder:#DBE4EB; --deep:#6E9BC4;
+  --ring:rgba(74,136,190,.30); --sheen:rgba(255,255,255,.44);
+  --shadow:0 16px 40px -20px rgba(14,47,87,.30);
+  background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 78%)}
+.g-sun{position:absolute; left:14%; top:-10%; width:min(46vh,340px); aspect-ratio:1; border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,0) 70%)}
+/* Every scrolling band is three identical tiles in a row; the script
+   slides the band by (distance × parallax) modulo one tile width, so the
+   seam never arrives. Three tiles means one full tile of slack at any
+   screen width up to the tile size. */
+.g-band{position:absolute; left:0; bottom:0; display:flex; will-change:transform}
+.g-band .t{position:relative; flex:none; height:100%}
+#gSky{top:0; height:58%; bottom:auto}
+#gHill{height:38%; bottom:calc(var(--road,90px) - 2px)}
+#gBush{height:20%; bottom:calc(var(--road,90px) - 2px); z-index:3}
+#gFore{height:7%; bottom:calc(var(--road,90px) * .04); z-index:8; opacity:.88}
+
+.g-cloud{position:absolute}
+.g-hill{position:absolute; bottom:0; border-radius:50% 50% 0 0/100% 100% 0 0;
+  background:rgba(255,255,255,.42); box-shadow:inset 0 3px 0 rgba(255,255,255,.7)}
+.g-bush{position:absolute; bottom:0; border-radius:52% 48% 0 0/100% 100% 0 0;
+  background:rgba(255,255,255,.66)}
+.g-tuft{position:absolute; bottom:0}
+.g-bal{position:absolute; animation:g-bob 7s ease-in-out infinite}
+.g-bal:nth-child(even){animation-duration:8.6s; animation-direction:reverse}
+@keyframes g-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+
+/* the road itself */
+.g-road{position:absolute; left:0; right:0; bottom:0; height:var(--road); z-index:4;
+  background:linear-gradient(180deg,var(--ivory),var(--ivory-2));
+  border-top:2px solid rgba(255,255,255,.85)}
+.g-road::after{content:""; position:absolute; left:0; right:0; bottom:0; height:30%;
+  background:linear-gradient(180deg,var(--dusty),var(--deep)); opacity:.85}
+.g-dash{position:absolute; left:0; right:-160px; top:34%; height:4px; border-radius:4px;
+  background:repeating-linear-gradient(90deg,var(--dusty-2) 0 44px,transparent 44px 104px);
+  opacity:.75; will-change:transform}
+
+/* the balloon arch he pulls up under */
+#gArch{position:absolute; left:50%; bottom:calc(var(--road,90px) * .42); z-index:5;
+  width:calc(var(--carw,300px) * 1.46); will-change:transform}
+
+/* ── the car ──────────────────────────────────────────── */
+/* The script writes the transform on these two, and a transform with its
+   own -50% is what centres them — so no `translate` here as well, or they
+   travel half their width twice. */
+.g-car{position:absolute; left:50%; bottom:calc(var(--road,90px) * .40); z-index:6;
+  width:var(--carw,300px); transform:translate3d(-50%,0,0); will-change:transform}
+.g-car img{position:relative; z-index:2; width:100%;
+  filter:drop-shadow(0 18px 18px rgba(14,47,87,.16))}
+.g-shade{position:absolute; left:50%; bottom:calc(var(--road,90px) * .40 - 8px); z-index:5;
+  width:calc(var(--carw,300px) * .84); height:22px; transform:translate3d(-50%,0,0);
+  border-radius:50%; background:rgba(14,47,87,.16); filter:blur(7px); will-change:transform}
+
+/* motion cues: they exist only while he is moving, and their strength
+   is written from the script as --v (0 → 1). */
+.g-speed{position:absolute; inset:0; z-index:7; pointer-events:none; opacity:calc(var(--v,0) * .85)}
+.g-speed i{position:absolute; height:2px; border-radius:2px;
+  background:linear-gradient(90deg,transparent,rgba(110,155,196,.6));
+  animation:g-whoosh .62s linear infinite}
+.g-dust{position:absolute; left:0; bottom:3%; width:46%; height:36%;
+  z-index:1; pointer-events:none; opacity:var(--v,0)}
+.g-dust i{position:absolute; border-radius:50%; background:rgba(255,255,255,.92);
+  animation:g-puff 1s ease-out infinite}
+@keyframes g-whoosh{0%{transform:translateX(0); opacity:0}
+  18%{opacity:1} 100%{transform:translateX(-46vw); opacity:0}}
+@keyframes g-puff{0%{transform:translate(0,0) scale(.4); opacity:.85}
+  100%{transform:translate(-90px,-34px) scale(1.7); opacity:0}}
+
+/* confetti at the finish */
+.g-conf{position:absolute; inset:0; z-index:8; pointer-events:none; overflow:hidden}
+.g-conf i{position:absolute; width:9px; height:12px; border-radius:2px; opacity:0}
+
+/* ── the words under the scene ────────────────────────── */
+.g-ui{position:relative; z-index:10; background:var(--card);
+  border-top:1px solid var(--line-soft); box-shadow:0 -14px 40px -24px rgba(14,47,87,.4);
+  border-radius:26px 26px 0 0; margin-top:-26px;
+  padding:clamp(20px,3.4vw,34px) var(--gut) calc(clamp(20px,3.4vw,30px) + env(safe-area-inset-bottom,0px))}
+.g-ui .wrap{max-width:640px; margin-inline:auto; text-align:center;
+  display:grid; justify-items:center; gap:clamp(10px,1.6vw,15px)}
+.g-ui .l-name{font-size:clamp(2.2rem,9vw,3.5rem)}
+.g-ui .say{font-family:"Cormorant Garamond",Georgia,serif; font-style:italic;
+  font-size:clamp(1.04rem,3.6vw,1.24rem); line-height:1.5; color:var(--body); max-width:34ch}
+.g-ui .l-btn{margin-top:4px}
+
+/* the two states of that panel cross-fade in place, and the panel
+   animates its own height with the 0fr → 1fr grid trick */
+.g-swap{display:grid; width:100%}
+.g-swap > *{grid-area:1/1; display:grid; justify-items:center; align-content:center; gap:inherit;
+  transition:opacity .34s ease, transform .44s var(--ease)}
+.g-swap .off{opacity:0; transform:translateY(8px); pointer-events:none; visibility:hidden}
+
+/* while he drives */
+.g-going{display:grid; justify-items:center; gap:14px; width:100%}
+.g-going .cap{font-family:"Cormorant Garamond",Georgia,serif; font-style:italic;
+  font-size:clamp(1.02rem,3.4vw,1.18rem); color:var(--body)}
+.g-prog{width:min(320px,74%); height:3px; border-radius:3px; background:var(--line-soft); overflow:hidden}
+.g-prog i{display:block; height:100%; width:0%; border-radius:3px;
+  background:linear-gradient(90deg,var(--accent),var(--navy))}
+.g-skip{font-size:.58rem; letter-spacing:.24em; text-transform:uppercase; color:var(--muted);
+  padding:8px 14px; border-radius:999px; transition:color .2s}
+.g-skip:hover{color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){
+  .gate{transition:opacity .3s ease}
+  .gate.lift{transform:none; opacity:0}
+  .g-speed,.g-dust,.g-conf{display:none}
+  .l-lights i{animation:none; opacity:.95}
+}
+
+/* ══════════════════════════════════════════════════════════
+   ACT TWO · THE INVITATION
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1 · you are lovingly invited ─────────────────────── */
+.head{position:relative; overflow:hidden; padding-top:clamp(56px,9vw,92px);
+  /* A LIT SURFACE. It is ivory in both themes, so every token that paints
+     on it has to hold its light value too — otherwise dark mode drops a
+     charcoal card, with navy text on it, onto an ivory band. */
+  --ink:#0E2F57; --body:#41648C; --muted:#6B89A8;
+  --card:#FBFAF7; --card-2:#F1F6FB;
+  --line:rgba(74,136,190,.28); --line-soft:rgba(74,136,190,.14); --rule:rgba(14,47,87,.16);
+  --accent:#4A88BE; --accent-ink:#2A6394; --navy:#1F5581; --navy-2:#2E6A9B;
+  --dusty:#9DC0DE; --dusty-2:#BBD6EC; --powder:#DBE4EB; --deep:#6E9BC4;
+  --ring:rgba(74,136,190,.30); --sheen:rgba(255,255,255,.44);
+  --shadow:0 16px 40px -20px rgba(14,47,87,.30);
+  background:
+    radial-gradient(ellipse 74% 46% at 50% 100%,rgba(247,226,184,.42),transparent 70%),
+    repeating-linear-gradient(90deg,
+      rgba(0,0,0,0) 0, rgba(14,47,87,.016) 15px,
+      rgba(255,255,255,.42) 30px, rgba(14,47,87,.012) 45px, rgba(0,0,0,0) 60px),
+    linear-gradient(180deg,var(--ivory) 0%,var(--ivory-2) 100%);
+  border-bottom:1px solid var(--line-soft)}
+.head .inner{display:grid; justify-items:center; text-align:center; gap:clamp(11px,1.7vw,16px)}
+.arrived{position:relative; width:min(520px,94%); margin-bottom:clamp(2px,1vw,12px)}
+.arrived .arch{position:relative; width:100%; opacity:.9}
+.arrived img{position:absolute; left:50%; bottom:-3%; width:70%; translate:-50% 0;
+  filter:drop-shadow(0 16px 16px rgba(14,47,87,.15))}
+.arrived .sh{position:absolute; left:50%; bottom:-1%; width:56%; height:15px; translate:-50% 0;
+  border-radius:50%; background:rgba(14,47,87,.15); filter:blur(6px)}
+.l-facts{display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:6px 16px; font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(1rem,3.5vw,1.2rem); color:var(--ink)}
+.l-facts b{font-weight:400}
+.l-facts span{color:var(--line); font-size:.8em}
+
+/* his note: it lands, he types it, then it catches the eye now and then */
+.l-note{position:relative; overflow:hidden;
+  display:flex; align-items:center; gap:11px; background:var(--card);
+  border:1px solid var(--line); border-radius:17px; padding:10px 16px 10px 10px;
+  box-shadow:var(--shadow); max-width:430px; margin-top:4px;
+  opacity:0; transform:translateY(12px) scale(.965);
+  transition:opacity .5s var(--ease), transform .62s cubic-bezier(.18,.9,.28,1.22)}
+.l-note.in{opacity:1; transform:none}
+.l-note img{width:40px; height:40px; border-radius:50%; flex:none; object-fit:cover;
+  background:var(--card-2); border:1px solid var(--line-soft);
+  opacity:0; transform:scale(.62);
+  transition:opacity .34s var(--ease) .1s, transform .52s cubic-bezier(.2,.9,.25,1.55) .1s}
+.l-note.in img{opacity:1; transform:none}
+.l-note.in:not(.typed) img{animation:l-live 1.6s ease-out .62s infinite}
+@keyframes l-live{0%{box-shadow:0 0 0 0 var(--ring)} 72%,100%{box-shadow:0 0 0 11px transparent}}
+.l-note p{font-family:"Cormorant Garamond",Georgia,serif; font-size:1.04rem; line-height:1.32;
+  color:var(--ink); text-align:left; text-wrap:pretty}
+/* the words are laid out from the start, so nothing shifts while he types */
+.l-note p .w{display:inline-block; opacity:0; transform:translateY(7px)}
+.l-note.typed p .w{animation:l-word .44s var(--ease) forwards; animation-delay:calc(var(--i,0) * 55ms)}
+@keyframes l-word{to{opacity:1; transform:none}}
+.l-note .dots{position:absolute; left:61px; top:50%; margin-top:-3px;
+  display:flex; gap:5px; opacity:0; pointer-events:none; transition:opacity .28s var(--ease)}
+.l-note.in .dots{opacity:1}
+.l-note.typed .dots{opacity:0}
+.l-note .dots i{width:6px; height:6px; border-radius:50%; background:var(--accent); opacity:.38}
+.l-note.in:not(.typed) .dots i{animation:l-dot 1.05s ease-in-out infinite}
+.l-note.in:not(.typed) .dots i:nth-child(2){animation-delay:.16s}
+.l-note.in:not(.typed) .dots i:nth-child(3){animation-delay:.32s}
+@keyframes l-dot{0%,58%,100%{transform:translateY(0); opacity:.34} 29%{transform:translateY(-4px); opacity:.95}}
+.l-note.live::after{content:""; position:absolute; inset:-1px; border-radius:inherit;
+  pointer-events:none; transform:translateX(-130%);
+  background:linear-gradient(104deg,transparent 28%,var(--sheen) 50%,transparent 72%);
+  animation:l-sheen 8s ease-in-out 1.4s infinite}
+@keyframes l-sheen{0%{transform:translateX(-130%)} 26%,100%{transform:translateX(130%)}}
+@media (prefers-reduced-motion:reduce){
+  .l-note,.l-note img{transition:none}
+  .l-note.live::after,.l-note.in:not(.typed) img{animation:none}
+}
+
+/* ── 2 · curtain up in ────────────────────────────────── */
+.curtain{background:linear-gradient(180deg,var(--paper-2),var(--paper)); overflow:hidden}
+.curtain::before{content:""; position:absolute; inset:0;
+  background:radial-gradient(ellipse 58% 70% at 50% 0%,var(--bulb-glow),transparent 70%); pointer-events:none}
+.bulbs{position:absolute; left:0; right:0; top:0; height:16px}
+.bulbs i{position:absolute; inset:0; background-repeat:repeat-x;
+  background-image:radial-gradient(circle at 50% 50%,var(--bulb) 0 2.5px,transparent 3.6px)}
+.bulbs i:nth-child(1){background-size:52px 100%; background-position:0 6px; animation:shim 4.6s ease-in-out infinite}
+.bulbs i:nth-child(2){background-size:52px 100%; background-position:26px 6px; animation:shim 4.6s ease-in-out 2.3s infinite}
+@keyframes shim{0%,100%{opacity:.34}50%{opacity:.95}}
+.curtain .inner{display:grid; gap:clamp(24px,3.2vw,38px); text-align:center; position:relative; z-index:1}
+.curtain .l-eyebrow{justify-self:center}
+.clock{display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(6px,2.2vw,32px); width:100%; max-width:780px; margin-inline:auto}
+.tick{display:grid; justify-items:center; gap:10px; min-width:0}
+.tick b{font-family:"Cormorant Garamond",Georgia,serif; font-weight:300;
+  font-size:clamp(2.9rem,1.2rem + 7vw,6.4rem); line-height:.9; color:var(--ink);
+  font-variant-numeric:tabular-nums; letter-spacing:-.03em}
+.tick i{display:block; width:100%; max-width:96px; height:1px; background:var(--rule)}
+.tick span{font-family:"Jost",sans-serif; font-size:.6rem; font-weight:500;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--muted)}
+.done{font-family:"Parisienne",cursive; font-size:clamp(2rem,6vw,3.2rem); color:var(--ink)}
+
+/* ── 3 · when & where ─────────────────────────────────── */
+.ticketsec{--notch:var(--bg); background:var(--bg)}
+.tkt{position:relative; display:grid; background:var(--paper);
+  border-radius:22px; box-shadow:var(--lift); isolation:isolate}
+.tkt::before{content:""; position:absolute; inset:0; border-radius:inherit;
+  border:1px solid var(--line-soft); pointer-events:none}
+.tkt-main{padding:clamp(30px,4.4vw,54px); display:grid; gap:clamp(18px,2.4vw,26px); align-content:start}
+.tkt-top{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
+.serial{font-family:"Jost",sans-serif; font-size:.66rem; font-weight:500; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--muted)}
+.bigdate{display:flex; align-items:baseline; gap:clamp(12px,1.8vw,20px); flex-wrap:wrap}
+.bigdate .d{font-family:"Cormorant Garamond",Georgia,serif; font-weight:300;
+  font-size:clamp(4.2rem,2.4rem + 8vw,7.4rem); line-height:.8; color:var(--ink);
+  font-variant-numeric:lining-nums; letter-spacing:-.04em}
+.bigdate .w{display:grid; gap:4px}
+.bigdate .w b{font-family:"Jost",sans-serif; font-weight:500; font-size:clamp(.82rem,.7rem + .4vw,1rem);
+  letter-spacing:.2em; text-transform:uppercase; color:var(--ink)}
+.bigdate .w span{font-family:"Jost",sans-serif; font-weight:400; font-size:.76rem;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--muted)}
+.tkt-rule{height:1px; background:var(--rule)}
+.tkt-grid{display:grid; gap:clamp(16px,2.2vw,30px)}
+.field{display:grid; gap:5px; min-width:0}
+.field .k{font-family:"Jost",sans-serif; font-size:.62rem; font-weight:500; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--accent-ink)}
+.field .v{font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.2rem,1.06rem + .6vw,1.55rem);
+  line-height:1.26; color:var(--ink)}
+.field .s{font-size:.92rem; line-height:1.5; color:var(--muted); text-wrap:pretty}
+.tkt-stub{position:relative; padding:clamp(16px,3vw,36px);
+  display:grid; gap:12px; align-content:center; justify-items:center; text-align:center;
+  background:linear-gradient(180deg,var(--paper),var(--paper-2))}
+.tkt-stub img{width:clamp(112px,19vw,208px); filter:drop-shadow(0 12px 16px rgba(14,47,87,.15))}
+.perf{position:absolute; background:none}
+.perf::before,.perf::after{content:""; position:absolute; width:22px; height:22px;
+  border-radius:50%; background:var(--notch)}
+
+/* ── 4 · the closing line ─────────────────────────────── */
+.call{background:var(--card-2); text-align:center; border-top:1px solid var(--line-soft)}
+.call .inner{display:grid; gap:clamp(16px,2vw,24px); justify-items:center}
+.call img{width:clamp(142px,19vw,232px); filter:drop-shadow(0 16px 18px rgba(14,47,87,.15))}
+.call .q{font-family:"Cormorant Garamond",Georgia,serif; font-style:italic; font-weight:300;
+  font-size:clamp(1.55rem,1.1rem + 2.2vw,2.6rem); line-height:1.22; color:var(--ink); max-width:17ch}
+.foot{text-align:center; padding:30px var(--gut) calc(38px + env(safe-area-inset-bottom,0px));
+  font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
+  background:var(--card-2); border-top:1px solid var(--line-soft)}
+
+/* ══ reveal on scroll ════════════════════════════════════ */
+[data-rev]{transition:opacity .9s var(--ease), transform .9s var(--ease); transition-delay:var(--d,0ms)}
+[data-rev].hid{opacity:0; transform:translateY(26px)}
+
+/* ══ layout at width ═════════════════════════════════════ */
+.tkt{grid-template-rows:auto auto}
+.tkt-stub{border-top:1px dashed var(--line); border-radius:0 0 22px 22px}
+.perf{left:-11px; right:-11px; height:0; top:0}
+.perf::before{left:0; top:-11px}
+.perf::after{right:0; top:-11px}
+.tkt-grid{grid-template-columns:1fr}
+@media (max-width:560px){
+  .tkt .l-acts{display:grid; grid-template-columns:1fr; gap:10px}
+  .tkt .l-acts .l-btn{width:100%}
+}
+@media (min-width:700px){
+  .tkt-grid{grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,44px)}
+  .curtain .inner{gap:clamp(30px,3.4vw,44px)}
+}
+@media (min-width:1000px){
+  .tkt{grid-template-columns:1fr 262px; grid-template-rows:none}
+  .tkt-stub{border-top:0; border-left:1px dashed var(--line); border-radius:0 22px 22px 0}
+  .perf{left:0; top:-11px; bottom:-11px; width:0; right:auto; height:auto}
+  .perf::before{left:-11px; top:0}
+  .perf::after{left:-11px; bottom:0; top:auto; right:auto}
+  .call .inner{max-width:760px; margin-inline:auto}
+}
+
+/* A phone turned sideways cannot stack a scene and a panel — the road
+   ends up a letterbox slit. There is width to spare instead, so the words
+   move BESIDE the scene and the car gets the whole height. */
+@media (orientation:landscape) and (max-height:600px){
+  .gate{grid-template-columns:minmax(0,54%) minmax(0,1fr); grid-template-rows:minmax(0,1fr)}
+  .g-ui{margin-top:0; margin-left:-24px; border-radius:24px 0 0 0;
+    align-content:center; display:grid;
+    padding:18px clamp(18px,3vw,30px) calc(18px + env(safe-area-inset-bottom,0px));
+    box-shadow:-14px 0 40px -24px rgba(14,47,87,.4)}
+  .g-ui .wrap{gap:9px}
+  .g-ui .l-name{font-size:clamp(1.7rem,5.2vw,2.5rem)}
+  .g-ui .say{font-size:.95rem}
+  .g-ui .l-btn{min-height:44px; padding:12px 24px}
+}
+@media (orientation:portrait) and (max-height:680px){
+  .g-ui .wrap{gap:9px}
+  .g-ui .l-btn{min-height:48px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; animation-iteration-count:1!important;
+    transition-duration:.01ms!important}
+}
+
+/* ══════════════════════════════════════════════════════════
+   PARKED — "Meet the birthday boy"
+   Kept for future use, per request. The markup sits commented out
+   at the foot of the invitation and the artwork (ART.racer1 and the
+   three wave sprites) is still loaded, so bringing it back is:
+     1. uncomment the <section class="sec recsec"> block in the HTML
+     2. uncomment this stylesheet block
+     3. uncomment the three ART assignments in the script
+   ══════════════════════════════════════════════════════════
+.recsec{background:var(--card-2); border-top:1px solid var(--line-soft)}
+.rec{position:relative; display:grid; background:var(--paper);
+  border-radius:22px; box-shadow:var(--lift); overflow:hidden}
+.rec::after{content:""; position:absolute; inset:0; border-radius:inherit;
+  border:1px solid var(--line-soft); pointer-events:none}
+.rec-img{position:relative; display:grid; place-items:center;
+  padding:clamp(18px,2.6vw,32px) clamp(18px,2.6vw,30px) 0;
+  background:linear-gradient(180deg,var(--sky-1),var(--sky-2))}
+.wave{position:relative; width:100%; max-width:460px;
+  filter:drop-shadow(0 16px 20px rgba(14,47,87,.18))}
+.wave > img{display:block; width:100%}
+.wave .wv{position:absolute; left:21.0351%; top:0%; width:32.3038%; opacity:0; pointer-events:none}
+.wave .wv:nth-of-type(4){opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .wave .wv{animation-duration:3.6s; animation-iteration-count:infinite}
+  .wave .wv:nth-of-type(4){animation-name:wv-rest}
+  .wave .wv:nth-of-type(3){animation-name:wv-mid}
+  .wave .wv:nth-of-type(2){animation-name:wv-far}
+}
+@keyframes wv-rest{0%,7.4%{opacity:1} 7.5%,29.9%{opacity:0} 30%,37.4%{opacity:1}
+  37.5%,59.9%{opacity:0} 60%,100%{opacity:1}}
+@keyframes wv-mid{0%,7.4%{opacity:0} 7.5%,14.9%{opacity:1} 15%,22.4%{opacity:0}
+  22.5%,29.9%{opacity:1} 30%,37.4%{opacity:0} 37.5%,44.9%{opacity:1}
+  45%,52.4%{opacity:0} 52.5%,59.9%{opacity:1} 60%,100%{opacity:0}}
+@keyframes wv-far{0%,14.9%{opacity:0} 15%,22.4%{opacity:1} 22.5%,44.9%{opacity:0}
+  45%,52.4%{opacity:1} 52.5%,100%{opacity:0}}
+.rec-body{padding:clamp(26px,3.6vw,48px); display:grid; gap:clamp(18px,2.2vw,26px); align-content:center}
+.tally{display:grid}
+.tr{display:grid; grid-template-columns:auto 1fr; gap:clamp(14px,2.2vw,26px);
+  padding:clamp(12px,1.7vw,17px) 0; border-top:1px solid var(--rule)}
+.tr:first-child{border-top:0; padding-top:0}
+.tr > b{font-family:"Cormorant Garamond",Georgia,serif; font-weight:300; color:var(--ink);
+  font-size:clamp(2.3rem,1.3rem + 3vw,3.3rem); line-height:.86; text-align:right;
+  min-width:2.1ch; font-variant-numeric:lining-nums; letter-spacing:-.02em}
+.tr .k{font-family:"Jost",sans-serif; font-size:.64rem; font-weight:500; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--accent-ink)}
+.tr .n{font-family:"Cormorant Garamond",Georgia,serif; font-style:italic; text-wrap:pretty;
+  font-size:clamp(1.02rem,.96rem + .4vw,1.18rem); color:var(--body); margin-top:4px; line-height:1.45}
+.bites{display:grid; grid-template-columns:repeat(3,1fr); margin-top:13px; max-width:340px;
+  border:1px solid var(--line-soft); border-radius:12px; overflow:hidden; background:var(--card-2)}
+.bites div{padding:10px 4px; text-align:center; border-left:1px solid var(--line-soft)}
+.bites div:first-child{border-left:0}
+.bites b{display:block; font-family:"Cormorant Garamond",Georgia,serif; font-weight:400;
+  font-size:1.45rem; line-height:1; color:var(--ink); font-variant-numeric:lining-nums}
+.bites span{display:block; margin-top:5px; font-size:.53rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted)}
+.faves{font-family:"Cormorant Garamond",Georgia,serif; line-height:1.7; color:var(--body); text-wrap:pretty;
+  font-size:clamp(1.02rem,.96rem + .4vw,1.18rem)}
+.faves b{color:var(--accent-ink); font-weight:400; font-style:italic}
+@media (min-width:1000px){ .rec{grid-template-columns:.92fr 1.08fr}
+  .rec-img{padding-bottom:clamp(18px,2.6vw,32px)} }
+   ══════════════════════════════════════════════════════════ */
