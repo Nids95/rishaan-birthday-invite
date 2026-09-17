@@ -1,3 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;padding:0;background:#D8EBFC}img{max-width:100%}
+[hidden]:not([hidden=until-found i]){display:none!important}</style>
+
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rishaan Vineesh turns One">
+<meta property="og:description" content="Friday, 25 September 2026 · 6 pm onwards · The Locus, Punnapra. One little year. A lifetime of love.">
+<meta property="og:image" content="https://rishaan-turns-one.vercel.app/share-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A first birthday invitation for Rishaan Vineesh">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rishaan Vineesh turns One">
+<meta name="twitter:description" content="Friday, 25 September 2026 · 6 pm onwards · The Locus, Punnapra.">
+<meta name="twitter:image" content="https://rishaan-turns-one.vercel.app/share-card.jpg">
+<meta name="description" content="Rishaan Vineesh turns one. Friday, 25 September 2026, 6 pm onwards, at The Locus, Punnapra.">
+<title>Rishaan's Ride</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Parisienne&display=swap">
+
+<script>
+/* The gate is a JavaScript experience. If the script never runs, the guest
+   must still get the invitation — so the gate is display:none until this
+   line proves the page is alive. Inline and first, so there is no flash of
+   the invitation before the cover drops over it. */
+document.documentElement.className = "gated";
+</script>
+<link rel="preload" as="image" href="img/car.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/eleph.webp">
+
+<style>
 /* ══════════════════════════════════════════════════════════
    Rishaan turns one.
 
@@ -494,3 +532,679 @@ html.gated.open body{overflow:visible}
 @media (min-width:1000px){ .rec{grid-template-columns:.92fr 1.08fr}
   .rec-img{padding-bottom:clamp(18px,2.6vw,32px)} }
    ══════════════════════════════════════════════════════════ */
+
+</style>
+</head>
+<body>
+
+<!-- ══ ACT ONE · the gate ═══════════════════════════════════ -->
+<div class="gate" id="gate" role="group" aria-label="Rishaan's ride">
+
+  <div class="g-scene" id="gScene">
+    <div class="g-sun" aria-hidden="true"></div>
+    <div class="g-band" id="gSky"  aria-hidden="true"></div>
+    <div class="g-band" id="gHill" aria-hidden="true"></div>
+    <div class="g-band" id="gBush" aria-hidden="true"></div>
+
+    <div class="g-road" aria-hidden="true"><div class="g-dash" id="gDash"></div></div>
+
+    <svg id="gArch" viewBox="0 0 440 340" aria-hidden="true">
+      <path d="M40,340 L40,150 A180,130 0 0 1 400,150 L400,340" fill="none" stroke="var(--dusty)" stroke-width="9" stroke-linecap="round"/>
+      <g fill="var(--dusty)">
+        <ellipse cx="44" cy="130" rx="22" ry="25"/><ellipse cx="92" cy="72" rx="19" ry="22"/>
+        <ellipse cx="220" cy="34" rx="22" ry="25"/><ellipse cx="350" cy="74" rx="19" ry="22"/>
+        <ellipse cx="398" cy="132" rx="22" ry="25"/>
+      </g>
+      <g fill="var(--ivory)" stroke="var(--line-soft)">
+        <ellipse cx="66" cy="94" rx="19" ry="22"/><ellipse cx="152" cy="44" rx="21" ry="24"/>
+        <ellipse cx="288" cy="44" rx="21" ry="24"/><ellipse cx="376" cy="100" rx="19" ry="22"/>
+      </g>
+      <g fill="var(--powder)">
+        <ellipse cx="120" cy="52" rx="16" ry="18"/><ellipse cx="320" cy="52" rx="16" ry="18"/>
+      </g>
+    </svg>
+
+    <div class="g-shade" id="gShade" aria-hidden="true"></div>
+    <div class="g-car" id="gCar">
+      <div class="g-dust" id="gDust" aria-hidden="true"></div>
+      <img id="gCarImg" alt="Rishaan at the wheel of his blue pedal car">
+    </div>
+
+    <div class="g-band" id="gFore" aria-hidden="true"></div>
+    <div class="g-speed" id="gSpeed" aria-hidden="true"></div>
+    <div class="g-conf" id="gConf" aria-hidden="true"></div>
+    <div class="l-lights" aria-hidden="true"><i></i><i></i></div>
+  </div>
+
+  <div class="g-ui">
+    <div class="wrap">
+      <div class="g-swap" id="gSwap">
+        <div class="ready" id="gReady">
+          <div class="l-name">Rishaan Vineesh</div>
+          <p class="say">He is one, and he has the keys. Climb in &mdash; the party is just down this road.</p>
+          <button class="l-btn l-primary" id="gGo" type="button">
+            Come on my ride
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div class="g-going off" id="gGoing" aria-hidden="true">
+          <p class="cap" id="gCap">Hold on tight&hellip;</p>
+          <div class="g-prog"><i id="gBar"></i></div>
+          <button class="g-skip" id="gSkip" type="button">Skip ahead</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ACT TWO · the invitation ═════════════════════════════ -->
+<main id="invite">
+
+  <!-- ── 1 · you are lovingly invited ───────────────────── -->
+  <header class="sec head" id="top">
+    <div class="l-lights" aria-hidden="true"><i></i><i></i></div>
+    <div class="g">
+      <div class="inner">
+        <div class="arrived" data-rev>
+          <svg class="arch" viewBox="0 0 440 340" aria-hidden="true">
+            <path d="M40,340 L40,150 A180,130 0 0 1 400,150 L400,340" fill="none" stroke="var(--dusty)" stroke-width="9" stroke-linecap="round"/>
+            <g fill="var(--dusty)">
+              <ellipse cx="44" cy="130" rx="22" ry="25"/><ellipse cx="92" cy="72" rx="19" ry="22"/>
+              <ellipse cx="220" cy="34" rx="22" ry="25"/><ellipse cx="350" cy="74" rx="19" ry="22"/>
+              <ellipse cx="398" cy="132" rx="22" ry="25"/>
+            </g>
+            <g fill="var(--ivory)" stroke="var(--line-soft)">
+              <ellipse cx="66" cy="94" rx="19" ry="22"/><ellipse cx="152" cy="44" rx="21" ry="24"/>
+              <ellipse cx="288" cy="44" rx="21" ry="24"/><ellipse cx="376" cy="100" rx="19" ry="22"/>
+            </g>
+            <g fill="var(--powder)">
+              <ellipse cx="120" cy="52" rx="16" ry="18"/><ellipse cx="320" cy="52" rx="16" ry="18"/>
+            </g>
+          </svg>
+          <span class="sh" aria-hidden="true"></span>
+          <img id="iCar" alt="Rishaan parked under a balloon arch in his blue pedal car">
+        </div>
+        <div class="l-eyebrow" data-rev>You are lovingly invited</div>
+        <h1 class="l-name" data-rev style="--d:50ms">Rishaan Vineesh</h1>
+        <div class="l-rule c" data-rev style="--d:90ms"><i></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg><i></i></div>
+        <div class="l-tag" data-rev style="--d:120ms">is turning <b>ONE</b></div>
+        <div class="l-facts" id="lFacts" data-rev style="--d:160ms"></div>
+        <div class="l-note" id="lNote"><img id="lAvatar" alt=""><p>That was my best driving yet. Now the important bit &mdash; please come.</p><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── 2 · curtain up in ──────────────────────────────── -->
+  <section class="sec curtain">
+    <div class="bulbs" aria-hidden="true"><i></i><i></i></div>
+    <div class="g">
+      <div class="inner">
+        <h2 class="l-eyebrow" data-rev>Curtain up in</h2>
+        <div class="clock" id="lClock" data-rev style="--d:80ms">
+          <div class="tick"><b id="cd-d">00</b><i></i><span>Days</span></div>
+          <div class="tick"><b id="cd-h">00</b><i></i><span>Hours</span></div>
+          <div class="tick"><b id="cd-m">00</b><i></i><span>Minutes</span></div>
+          <div class="tick"><b id="cd-s">00</b><i></i><span>Seconds</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3 · when & where ───────────────────────────────── -->
+  <section class="sec ticketsec">
+    <div class="g">
+      <article class="tkt" data-rev>
+        <div class="tkt-main">
+          <div class="tkt-top">
+            <h2 class="l-eyebrow">When &amp; where</h2>
+            <div class="serial">No. 1</div>
+          </div>
+          <div class="bigdate">
+            <div class="d" id="tDay">25</div>
+            <div class="w"><b id="tWeekday">Friday</b><span id="tMonth">September 2026</span></div>
+          </div>
+          <div class="tkt-rule"></div>
+          <div class="tkt-grid">
+            <div class="field">
+              <div class="k">Doors open</div>
+              <div class="v" id="tTime">From 6:00 in the evening</div>
+              <div class="s">Come when you can, stay as long as you like</div>
+            </div>
+            <div class="field">
+              <div class="k">The place</div>
+              <div class="v" id="tVenue">The Locus</div>
+              <div class="s" id="tAddr">Punnapra, Alappuzha, Kerala</div>
+            </div>
+          </div>
+          <div class="l-acts">
+            <a class="l-btn l-primary" id="lMap" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              Get directions
+            </a>
+            <a class="l-btn l-ghost" id="lCal" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M12 14v4M10 16h4"/></svg>
+              Add to calendar
+            </a>
+          </div>
+        </div>
+        <aside class="tkt-stub">
+          <div class="perf" aria-hidden="true"></div>
+          <img id="lElephS" alt="">
+        </aside>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PARKED — "Meet the birthday boy", kept for future use.
+       To bring it back: uncomment this block, uncomment the
+       matching stylesheet block at the foot of the <style>, and
+       uncomment the three wave assignments in the script.
+  <section class="sec recsec">
+    <div class="g">
+      <article class="rec" data-rev>
+        <div class="rec-img">
+          <div class="wave">
+            <img id="lRacer1" alt="Rishaan in his number one racer with his elephant">
+            <img class="wv" id="lWv1" alt="" aria-hidden="true">
+            <img class="wv" id="lWv2" alt="" aria-hidden="true">
+            <img class="wv" id="lWv3" alt="" aria-hidden="true">
+          </div>
+        </div>
+        <div class="rec-body">
+          <div>
+            <div class="l-eyebrow">Meet the birthday boy</div>
+            <h2 class="l-h" style="margin-top:11px">My first year, <em>in numbers</em></h2>
+          </div>
+          <div class="tally">
+            <div class="tr"><b>12</b><div>
+              <div class="k">Months old</div>
+              <div class="n">Not one of them quiet.</div>
+            </div></div>
+            <div class="tr"><b>6</b><div>
+              <div class="k">Tiny teeth</div>
+              <div class="n">Twenty-five bites on record so far.</div>
+              <div class="bites">
+                <div><b>8</b><span>Amma</span></div>
+                <div><b>4</b><span>Achan</span></div>
+                <div><b>13</b><span>Sheelamma</span></div>
+              </div>
+            </div></div>
+            <div class="tr"><b>3</b><div>
+              <div class="k">Wobbly steps</div>
+              <div class="n">Managed after roughly a hundred failed attempts.</div>
+            </div></div>
+            <div class="tr"><b>1</b><div>
+              <div class="k">Favourite car</div>
+              <div class="n">The blue one. Only ever the blue one.</div>
+            </div></div>
+          </div>
+          <p class="faves"><b>A few of my favourite things &mdash;</b> Achan's shoulders, pookalam flowers, being chased around the room, banging the chenda, and anything at all with wheels.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+       ══════════════════════════════════════════════════════ -->
+
+  <!-- ── 4 · the closing line ───────────────────────────── -->
+  <section class="sec call">
+    <div class="g">
+      <div class="inner">
+        <img id="lEleph2" alt="" data-rev>
+        <p class="q" data-rev style="--d:60ms">Your presence will make his day even sweeter</p>
+        <div class="l-rule c" data-rev style="--d:100ms"><i></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg><i></i></div>
+        <div data-rev style="--d:140ms">
+          <div class="l-eyebrow" style="margin-bottom:6px">With love</div>
+          <div class="l-sign-off" id="lHosts"></div>
+        </div>
+        <div class="l-acts" data-rev style="justify-content:center; --d:180ms">
+          <a class="l-btn l-ghost" id="lWa" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>
+            Tell us you&rsquo;re coming
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot" id="lFoot"></div>
+</main>
+
+<script>
+/* ── artwork ──────────────────────────────────────────────
+   car    · the landing portrait, also parked under the arch below
+   eleph  · the ticket stub and the closing line
+   head   · his face in the little note
+   The four images for the parked "Meet the birthday boy" section are
+   held in assets.json and left out on purpose; set INCLUDE_PARKED in
+   build.py when you bring the section back. */
+window.ART = {
+  car: "img/car.webp",
+  eleph: "img/eleph.webp",
+  head: "img/head.webp"
+};
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   Everything about this party lives in one object. Change a
+   field here and the header, the ticket, the countdown, the
+   directions link and the calendar link all follow.
+   ══════════════════════════════════════════════════════════ */
+window.EVENT = {
+  name:      "Rishaan Vineesh",
+  tagline:   "One year, so loved",
+  startISO:  "2026-09-25T18:00:00+05:30",
+  endISO:    "2026-09-25T22:00:00+05:30",
+  dateLabel: "Friday, 25 September 2026",
+  dateShort: "Fri 25 Sep 2026",
+  timeLabel: "From 6:00 in the evening",
+  timeShort: "6 pm onwards",
+  venue:     "The Locus",
+  address:   "Punnapra, Alappuzha, Kerala",
+  hosts:     "Rishaan's Family",
+  whatsapp:  "919400000000",
+  /* geo: "9.4603,76.3319"  <- paste "lat,lng" from a Google Maps pin and the
+     directions link becomes an exact route instead of a name search */
+  geo:       "",
+  calTitle:  "Rishaan Turns One",
+  calNote:   "Rishaan's first birthday. Doors open from 6 in the evening - come when you can, stay as long as you like."
+};
+
+/* ── the two outbound actions, in one place ─────────────── */
+window.INVITE = (function(){
+  var E = window.EVENT;
+  var where = E.venue + ", " + E.address;
+  var pad = function(n){ return String(n).padStart(2, "0"); };
+  function utc(d){
+    return d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" +
+           pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + pad(d.getUTCSeconds()) + "Z";
+  }
+  return {
+    where: where,
+    /* "dir" asks Google to geocode the destination into one exact point, and
+       on a name it cannot match it picks the wrong one. Only a coordinate is
+       safe to route to; a name goes to "search", which shows the place. */
+    map: function(){
+      return E.geo
+        ? "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(E.geo)
+        : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(where);
+    },
+    gcal: function(){
+      var st = new Date(E.startISO), en = new Date(E.endISO);
+      return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+             "&text=" + encodeURIComponent(E.calTitle) +
+             "&dates=" + utc(st) + "/" + utc(en) +
+             "&details=" + encodeURIComponent(E.calNote) +
+             "&location=" + encodeURIComponent(where);
+    }
+  };
+})();
+
+(function(){
+  "use strict";
+  var E = window.EVENT, ART = window.ART, IV = window.INVITE;
+  var $ = function(id){ return document.getElementById(id); };
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var set = function(id, v){ var el = $(id); if (el) el.textContent = v; };
+  var root = document.documentElement;
+
+  /* ── artwork: one decoded copy, several placements ───── */
+  [["gCarImg",ART.car],["iCar",ART.car],
+   ["lElephS",ART.eleph],["lEleph2",ART.eleph],["lAvatar",ART.head]
+   /* parked with the "Meet the birthday boy" section:
+   ,["lRacer1",ART.racer1],["lWv1",ART.wave1],["lWv2",ART.wave2],["lWv3",ART.wave3] */
+  ].forEach(function(p){ var el = $(p[0]); if (el){ el.src = p[1]; el.decoding = "async"; } });
+
+  /* ══════════════════════════════════════════════════════
+     THE INVITATION
+     ══════════════════════════════════════════════════════ */
+  var dot = '<span>&#9670;</span>';
+  $("lFacts").innerHTML = "<b>"+E.dateShort+"</b>"+dot+"<b>"+E.timeShort+"</b>"+dot+"<b>"+E.venue+"</b>";
+  set("lHosts", E.hosts);
+
+  var st = new Date(E.startISO);
+  var TZ = { timeZone:"Asia/Kolkata" };
+  function fmt(opts){
+    try { return new Intl.DateTimeFormat("en-GB", Object.assign({}, TZ, opts)).format(st); }
+    catch(err){ return ""; }
+  }
+  set("tDay", fmt({ day:"numeric" }) || "25");
+  set("tWeekday", fmt({ weekday:"long" }) || "Friday");
+  set("tMonth", (fmt({ month:"long" }) + " " + fmt({ year:"numeric" })).trim());
+  set("tTime", E.timeLabel);
+  set("tVenue", E.venue);
+  set("tAddr", E.address);
+  set("lFoot", E.name + " · First Birthday · " + (fmt({ year:"numeric" }) || "2026"));
+
+  $("lMap").href = IV.map();
+  $("lCal").href = IV.gcal();
+  $("lWa").href  = "https://wa.me/" + E.whatsapp + "?text=" +
+    encodeURIComponent("We'll be there for " + E.name + "'s first birthday!");
+
+  /* ── countdown ───────────────────────────────────────── */
+  var els = { d:$("cd-d"), h:$("cd-h"), m:$("cd-m"), s:$("cd-s") };
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function beat(){
+    var gap = st.getTime() - Date.now();
+    if (gap <= 0){ $("lClock").innerHTML = '<p class="done">Today is the day</p>'; return false; }
+    var v = Math.floor(gap/1000);
+    els.d.textContent = pad(Math.floor(v/86400));
+    els.h.textContent = pad(Math.floor(v/3600)%24);
+    els.m.textContent = pad(Math.floor(v/60)%60);
+    els.s.textContent = pad(v%60);
+    return true;
+  }
+  if (beat()) { var tick = setInterval(function(){ if (!beat()) clearInterval(tick); }, 1000); }
+
+  /* ── his note: it lands, he types it, then it winks ──── */
+  function playNote(){
+    var note = $("lNote"), p = note && note.querySelector("p");
+    if (!note || !p || note.dataset.done) return;
+    note.dataset.done = "1";
+    if (reduce){ note.classList.add("in","typed"); return; }
+    var words = p.textContent.trim().split(/\s+/);
+    p.textContent = "";
+    words.forEach(function(w, i){
+      var s = document.createElement("span");
+      s.className = "w"; s.style.setProperty("--i", i); s.textContent = w;
+      p.appendChild(s);
+      if (i < words.length - 1) p.appendChild(document.createTextNode(" "));
+    });
+    setTimeout(function(){ note.classList.add("in"); }, 520);
+    setTimeout(function(){ note.classList.add("typed"); }, 1420);
+    setTimeout(function(){ note.classList.add("live"); }, 1420 + words.length * 55 + 620);
+  }
+
+  /* ── reveal, from a visible resting state ────────────── */
+  function startReveals(){
+    if (reduce || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function(en){
+      en.forEach(function(x){ if (x.isIntersecting){ x.target.classList.remove("hid"); io.unobserve(x.target); } });
+    }, { rootMargin:"0px 0px -8% 0px" });
+    document.querySelectorAll("[data-rev]").forEach(function(el){
+      if (el.getBoundingClientRect().top > innerHeight * 0.55){ el.classList.add("hid"); io.observe(el); }
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     THE GATE — he drives for five seconds, then the cover
+     lifts away and the invitation is underneath.
+
+     The car never moves horizontally. The world moves past
+     it, every band at its own fraction of one shared
+     distance, which is what makes the depth read.
+     ══════════════════════════════════════════════════════ */
+  var gate = $("gate"), invite = $("invite");
+  if (!gate) return;
+  invite.setAttribute("inert", "");
+
+  var scene = $("gScene");
+  var V = 640;                      /* cruising speed, px per second      */
+  var T = { accel:0.9, brake:3.6, end:5.0 };
+  var smooth = function(x){ x = x<0?0:(x>1?1:x); return x*x*(3-2*x); };
+  function speedAt(t){
+    if (t <= 0) return 0;
+    if (t < T.accel) return V * smooth(t / T.accel);
+    if (t < T.brake) return V;
+    if (t < T.end)   return V * smooth(1 - (t - T.brake) / (T.end - T.brake));
+    return 0;
+  }
+  /* how far he travels in total — integrated once, so the arch can be
+     parked at exactly the spot where he will come to rest */
+  var TOTAL = (function(){ var s = 0, dt = 1/240;
+    for (var t = 0; t < T.end; t += dt) s += speedAt(t) * dt;
+    return s; })();
+
+  /* ── build the scenery ───────────────────────────────── */
+  /* The set is drawn at desktop scale and shrunk on a narrow screen: a
+     940px hill on a 390px phone is not a hill, it is a wall. */
+  var SC = 1;
+  function band(id, tileW, paint){
+    var host = $(id); host.innerHTML = "";
+    var w = Math.round(tileW * SC);
+    for (var i = 0; i < 3; i++){
+      var t = document.createElement("div");
+      t.className = "t"; t.style.width = w + "px";
+      t.innerHTML = paint(SC);
+      host.appendChild(t);
+    }
+    return w;
+  }
+  /* left, top(% of band), width — a cloud is three overlapping ellipses, so
+     it reads as weather rather than as a rounded rectangle */
+  var CLOUDS = [[40,8,190],[240,26,130],[430,2,220],[610,17,150],[800,6,170],
+                [980,30,210],[1160,12,240],[1340,3,150],
+                [120,48,160],[500,62,130],[880,52,190],[1250,66,150],[1420,44,120]];
+  var HILLS  = [[-140,720,82],[420,940,100],[900,820,74],[1080,520,92]];
+  var BUSHES = [[80,230,72],[420,190,56],[640,250,86],[820,150,48]];
+  var BALS   = [[150,40,34],[700,56,28],[1210,34,40],[420,72,26],[1040,68,32]];
+
+  function buildScene(){
+    band("gSky", 1400, function(k){
+      var out = CLOUDS.map(function(c){
+        return '<svg class="g-cloud" style="left:' + (c[0]*k).toFixed(0) + 'px;top:' + c[1] + '%;width:' +
+          (c[2]*k).toFixed(0) + 'px" viewBox="0 0 200 74" aria-hidden="true"><g fill="rgba(255,255,255,.8)">' +
+          '<ellipse cx="54" cy="48" rx="46" ry="24"/><ellipse cx="104" cy="34" rx="44" ry="30"/>' +
+          '<ellipse cx="152" cy="50" rx="42" ry="22"/><rect x="50" y="48" width="106" height="24" rx="12"/>' +
+          '</g></svg>';
+      });
+      /* a few balloons let go earlier in the day — they give the upper half
+         of a tall phone screen something to be */
+      out = out.concat(BALS.map(function(b, i){
+        var tint = ["var(--dusty)","var(--powder)","var(--dusty-2)"][i % 3];
+        return '<svg class="g-bal" style="left:' + (b[0]*k).toFixed(0) + 'px;top:' + b[1] + '%;width:' +
+          (b[2]*k).toFixed(0) + 'px" viewBox="0 0 40 74" aria-hidden="true">' +
+          '<path d="M20 34 C21 46 19 58 20 72" stroke="rgba(74,136,190,.3)" stroke-width="1.2" fill="none"/>' +
+          '<ellipse cx="20" cy="19" rx="16" ry="18" fill="' + tint + '"/>' +
+          '<ellipse cx="14" cy="12" rx="5" ry="6" fill="rgba(255,255,255,.5)"/>' +
+          '<path d="M17 36 L20 31 L23 36 Z" fill="' + tint + '"/></svg>';
+      }));
+      return out.join("");
+    });
+    band("gHill", 1200, function(k){
+      return HILLS.map(function(h){
+        return '<div class="g-hill" style="left:' + (h[0]*k).toFixed(0) + 'px;width:' +
+               (h[1]*k).toFixed(0) + 'px;height:' + h[2] + '%"></div>';
+      }).join("");
+    });
+    band("gBush", 900, function(k){
+      return BUSHES.map(function(b){
+        return '<div class="g-bush" style="left:' + (b[0]*k).toFixed(0) + 'px;width:' +
+               (b[1]*k).toFixed(0) + 'px;height:' + b[2] + '%"></div>';
+      }).join("");
+    });
+    band("gFore", 760, function(k){
+      var tuft = function(x, w){
+        return '<svg class="g-tuft" style="left:' + (x*k).toFixed(0) + 'px;width:' + (w*k).toFixed(0) +
+          'px" viewBox="0 0 200 80" aria-hidden="true">' +
+          '<g fill="var(--ivory)" opacity=".92"><ellipse cx="36" cy="62" rx="36" ry="24"/>' +
+          '<ellipse cx="104" cy="66" rx="44" ry="26"/><ellipse cx="166" cy="60" rx="30" ry="22"/></g>' +
+          '<g fill="var(--dusty-2)"><circle cx="42" cy="47" r="5"/><circle cx="110" cy="50" r="5.5"/></g></svg>';
+      };
+      return tuft(30, 150) + tuft(430, 175);
+    });
+  }
+
+  /* speed lines and wheel dust, once */
+  (function(){
+    var sp = $("gSpeed"), html = "";
+    for (var i = 0; i < 9; i++){
+      html += '<i style="top:' + (14 + Math.random()*62).toFixed(1) + '%;left:' +
+              (52 + Math.random()*44).toFixed(1) + '%;width:' + (40 + Math.random()*110).toFixed(0) +
+              'px;animation-delay:-' + (Math.random()*0.62).toFixed(2) + 's"></i>';
+    }
+    sp.innerHTML = html;
+    var du = $("gDust"), d = "";
+    for (var j = 0; j < 5; j++){
+      d += '<i style="left:' + (8 + j*9) + '%;bottom:' + (2 + Math.random()*10).toFixed(0) +
+           '%;width:' + (10 + Math.random()*16).toFixed(0) + 'px;height:' + (10 + Math.random()*16).toFixed(0) +
+           'px;animation-delay:-' + (j*0.19).toFixed(2) + 's"></i>';
+    }
+    du.innerHTML = d;
+  })();
+
+  /* ── the road band's height drives the whole composition ── */
+  var road = 100;
+  function fit(){
+    var h = scene.clientHeight || 1, w = scene.clientWidth || 1;
+    road = Math.max(54, Math.min(196, h * 0.28));
+    /* the car is sized to the room ABOVE the road as well as across it, or a
+       phone held sideways pushes his head off the top of the frame */
+    var avail = h - road * 0.40 - 76;          /* 76 clears the party lights */
+    /* the cap is in rem so it follows the root-size step on a big monitor */
+    var rem = parseFloat(getComputedStyle(root).fontSize) || 16;
+    var carW = Math.max(140, Math.min(47.5 * rem, w * 0.86, avail * 1.083));
+    /* the set is drawn at 1150px. Shrink it on a phone so a hill is a hill
+       and not a wall, and let it grow on a wide screen so the same hill is
+       not tiled six times across the horizon. */
+    var sc = Math.max(0.46, Math.min(1.6, w / 1150));
+    scene.style.setProperty("--road", road.toFixed(0) + "px");
+    scene.style.setProperty("--carw", carW.toFixed(0) + "px");
+    if (Math.abs(sc - SC) > 0.02){ SC = sc; buildScene(); syncWidths(); }
+  }
+
+  /* ── the drive ───────────────────────────────────────── */
+  var bands = [["gSky",0.16,1400],["gHill",0.34,1200],["gBush",0.66,900],["gFore",1.55,760]];
+  var refs = bands.map(function(b){ return { el:$(b[0]), f:b[1], base:b[2], w:b[2] }; });
+  var DASH = 104;
+  function syncWidths(){
+    refs.forEach(function(r){ r.w = Math.round(r.base * SC); });
+    /* the road markings belong to the set, so they scale with it — and the
+       loop has to wrap on exactly one painted period or the dashes stutter */
+    DASH = Math.round(104 * SC);
+    var d = $("gDash");
+    d.style.backgroundImage = "repeating-linear-gradient(90deg,var(--dusty-2) 0 " +
+      Math.round(44 * SC) + "px,transparent " + Math.round(44 * SC) + "px " + DASH + "px)";
+    d.style.height = Math.max(3, Math.round(4 * SC)) + "px";
+  }
+  buildScene(); syncWidths(); fit();
+  var rt; addEventListener("resize", function(){
+    clearTimeout(rt); rt = setTimeout(function(){ if (!running) fit(); }, 120);
+  });
+
+  var dash = $("gDash"), arch = $("gArch"), car = $("gCar"), shade = $("gShade");
+  var bar = $("gBar"), cap = $("gCap");
+  var running = false, done = false, t0 = 0, dist = 0, lastV = 0;
+
+  function place(d, v){
+    refs.forEach(function(r){
+      var x = -((d * r.f) % r.w);
+      r.el.style.transform = "translate3d(" + x.toFixed(1) + "px,0,0)";
+    });
+    dash.style.transform = "translate3d(" + (-(d % DASH)).toFixed(1) + "px,0,0)";
+    arch.style.transform = "translate3d(calc(-50% + " + (TOTAL - d).toFixed(1) + "px),0,0)";
+
+    var u = v / V;
+    scene.style.setProperty("--v", u.toFixed(3));
+    /* the bob is tied to distance, not to time, so it stops when he stops */
+    var bob = Math.sin(d * 0.055) * 3.4 * Math.min(1, u * 1.6);
+    var pitch = ((v - lastV) * 0.006);
+    car.style.transform = "translate3d(-50%," + bob.toFixed(2) + "px,0) rotate(" +
+      Math.max(-2.2, Math.min(2.2, -pitch)).toFixed(2) + "deg)";
+    shade.style.transform = "translate3d(-50%,0,0) scaleX(" + (1 - bob * 0.008).toFixed(3) + ")";
+    shade.style.opacity = (0.95 - bob * 0.02).toFixed(2);
+  }
+  place(0, 0);
+  arch.style.opacity = "1";
+
+  var CAPS = [[0,"Hold on tight…"],[1.6,"Mind the puddles…"],[3.2,"Almost there…"],[4.4,"We have arrived."]];
+  var capAt = -1;
+
+  function frame(now){
+    if (!running) return;
+    var t = (now - t0) / 1000;
+    if (t >= T.end) t = T.end;
+    var v = speedAt(t);
+    /* integrate with the average of the two samples: at 5 seconds the
+       error would otherwise show up as the arch stopping off-centre */
+    dist += (v + lastV) / 2 * (1/60);
+    place(dist, v);
+    lastV = v;
+    bar.style.width = (Math.min(1, t / T.end) * 100).toFixed(1) + "%";
+    for (var i = CAPS.length - 1; i >= 0; i--){
+      if (t >= CAPS[i][0] && capAt !== i){ capAt = i; cap.textContent = CAPS[i][1]; break; }
+    }
+    if (t >= T.end){ running = false; arrive(); return; }
+    requestAnimationFrame(frame);
+  }
+
+  /* the arch is parked at TOTAL, and the frame loop's integration drifts
+     by a pixel or two — snap it home so he stops dead centre under it */
+  function arrive(){
+    dist = TOTAL; place(dist, 0); lastV = 0;
+    confetti();
+    setTimeout(lift, 620);
+  }
+
+  function confetti(){
+    if (reduce) return;
+    var host = $("gConf"), tints = ["var(--dusty)","var(--powder)","var(--ivory)","var(--dusty-2)","var(--bulb)"];
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 34; i++){
+      var n = document.createElement("i");
+      n.style.left = (50 + (Math.random()*44 - 22)).toFixed(1) + "%";
+      n.style.bottom = (road * 1.1).toFixed(0) + "px";
+      n.style.background = tints[i % tints.length];
+      frag.appendChild(n);
+      (function(el, k){
+        var dx = (Math.random()*440 - 220), dy = -(120 + Math.random()*220), rot = Math.random()*900 - 450;
+        requestAnimationFrame(function(){
+          el.animate(
+            [{ opacity:0, transform:"translate(0,0) rotate(0deg) scale(.6)" },
+             { opacity:1, offset:.12 },
+             { opacity:0, transform:"translate("+dx+"px,"+(dy+260)+"px) rotate("+rot+"deg) scale(1)" }],
+            { duration: 1500 + Math.random()*700, delay: k*9, easing:"cubic-bezier(.15,.6,.4,1)", fill:"forwards" });
+        });
+      })(n, i);
+    }
+    host.appendChild(frag);
+  }
+
+  /* ── the curtain lifts ───────────────────────────────── */
+  function lift(){
+    if (done) return;
+    done = true;
+    invite.removeAttribute("inert");
+    root.classList.add("open");
+    window.scrollTo(0, 0);
+    gate.classList.add("lift");
+    /* the invitation animates in WHILE the cover rises, not after it —
+       otherwise the guest watches a still page for a second first */
+    startReveals();
+    setTimeout(playNote, 380);
+    var finish = function(){ gate.hidden = true; };
+    if (reduce) setTimeout(finish, 300);
+    else {
+      var fired = false;
+      gate.addEventListener("transitionend", function h(e){
+        if (e.propertyName !== "transform" || fired) return;
+        fired = true; gate.removeEventListener("transitionend", h); finish();
+      });
+      setTimeout(function(){ if (!fired){ fired = true; finish(); } }, 1400);  /* belt and braces */
+    }
+  }
+
+  function go(){
+    if (running || done) return;
+    if (reduce){ lift(); return; }
+    $("gReady").classList.add("off");
+    $("gReady").setAttribute("aria-hidden","true");
+    $("gGoing").classList.remove("off");
+    $("gGoing").removeAttribute("aria-hidden");
+    running = true; t0 = performance.now(); dist = 0; lastV = 0;
+    requestAnimationFrame(frame);
+  }
+
+  $("gGo").addEventListener("click", go);
+  $("gSkip").addEventListener("click", function(){ running = false; arrive(); });
+  addEventListener("keydown", function(e){
+    if (done) return;
+    if (e.key === "Escape"){ running = false; lift(); }
+  });
+})();
+
+</script>
+
+</body>
+</html>

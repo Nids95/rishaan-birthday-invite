@@ -185,11 +185,12 @@ window.INVITE = (function(){
   }
   /* left, top(% of band), width — a cloud is three overlapping ellipses, so
      it reads as weather rather than as a rounded rectangle */
-  var CLOUDS = [[40,10,190],[230,30,130],[420,3,220],[600,22,150],[790,8,170],
-                [960,33,210],[1150,14,240],[1330,2,150]];
+  var CLOUDS = [[40,8,190],[240,26,130],[430,2,220],[610,17,150],[800,6,170],
+                [980,30,210],[1160,12,240],[1340,3,150],
+                [120,48,160],[500,62,130],[880,52,190],[1250,66,150],[1420,44,120]];
   var HILLS  = [[-140,720,82],[420,940,100],[900,820,74],[1080,520,92]];
   var BUSHES = [[80,230,72],[420,190,56],[640,250,86],[820,150,48]];
-  var BALS   = [[150,44,34],[700,52,28],[1210,38,40]];
+  var BALS   = [[150,40,34],[700,56,28],[1210,34,40],[420,72,26],[1040,68,32]];
 
   function buildScene(){
     band("gSky", 1400, function(k){
@@ -262,9 +263,14 @@ window.INVITE = (function(){
     road = Math.max(54, Math.min(196, h * 0.28));
     /* the car is sized to the room ABOVE the road as well as across it, or a
        phone held sideways pushes his head off the top of the frame */
-    var avail = h - road * 0.40 - 42;
-    var carW = Math.max(140, Math.min(480, w * 0.86, avail * 1.083));
-    var sc = Math.max(0.46, Math.min(1, w / 1150));
+    var avail = h - road * 0.40 - 76;          /* 76 clears the party lights */
+    /* the cap is in rem so it follows the root-size step on a big monitor */
+    var rem = parseFloat(getComputedStyle(root).fontSize) || 16;
+    var carW = Math.max(140, Math.min(47.5 * rem, w * 0.86, avail * 1.083));
+    /* the set is drawn at 1150px. Shrink it on a phone so a hill is a hill
+       and not a wall, and let it grow on a wide screen so the same hill is
+       not tiled six times across the horizon. */
+    var sc = Math.max(0.46, Math.min(1.6, w / 1150));
     scene.style.setProperty("--road", road.toFixed(0) + "px");
     scene.style.setProperty("--carw", carW.toFixed(0) + "px");
     if (Math.abs(sc - SC) > 0.02){ SC = sc; buildScene(); syncWidths(); }
@@ -273,7 +279,17 @@ window.INVITE = (function(){
   /* ── the drive ───────────────────────────────────────── */
   var bands = [["gSky",0.16,1400],["gHill",0.34,1200],["gBush",0.66,900],["gFore",1.55,760]];
   var refs = bands.map(function(b){ return { el:$(b[0]), f:b[1], base:b[2], w:b[2] }; });
-  function syncWidths(){ refs.forEach(function(r){ r.w = Math.round(r.base * SC); }); }
+  var DASH = 104;
+  function syncWidths(){
+    refs.forEach(function(r){ r.w = Math.round(r.base * SC); });
+    /* the road markings belong to the set, so they scale with it — and the
+       loop has to wrap on exactly one painted period or the dashes stutter */
+    DASH = Math.round(104 * SC);
+    var d = $("gDash");
+    d.style.backgroundImage = "repeating-linear-gradient(90deg,var(--dusty-2) 0 " +
+      Math.round(44 * SC) + "px,transparent " + Math.round(44 * SC) + "px " + DASH + "px)";
+    d.style.height = Math.max(3, Math.round(4 * SC)) + "px";
+  }
   buildScene(); syncWidths(); fit();
   var rt; addEventListener("resize", function(){
     clearTimeout(rt); rt = setTimeout(function(){ if (!running) fit(); }, 120);
@@ -288,7 +304,7 @@ window.INVITE = (function(){
       var x = -((d * r.f) % r.w);
       r.el.style.transform = "translate3d(" + x.toFixed(1) + "px,0,0)";
     });
-    dash.style.transform = "translate3d(" + (-(d % 104)).toFixed(1) + "px,0,0)";
+    dash.style.transform = "translate3d(" + (-(d % DASH)).toFixed(1) + "px,0,0)";
     arch.style.transform = "translate3d(calc(-50% + " + (TOTAL - d).toFixed(1) + "px),0,0)";
 
     var u = v / V;
