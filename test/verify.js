@@ -3,7 +3,7 @@ const fs = require('fs');
 const SKELETON = `<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box}body{margin:0;padding:0;font:14px -apple-system,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>\n%BODY%\n</body></html>`;
 
 (async () => {
-  fs.writeFileSync('/tmp/page.html', SKELETON.replace('%BODY%', fs.readFileSync('artifact/index.html', 'utf8')));
+  fs.writeFileSync('/tmp/page.html', SKELETON.replace('%BODY%', fs.readFileSync('claude-artifact.html', 'utf8')));
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
   // 1 · full invitation, light and dark, after the ride

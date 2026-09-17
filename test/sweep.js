@@ -4,6 +4,10 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const SKELETON = `<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box}body{margin:0;padding:0;font:14px -apple-system,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>\n%BODY%\n</body></html>`;
 
+/* isMobile:true is the point of this list. A narrow DESKTOP window lays the
+   page out at its own width whatever the html says, so it cannot catch a
+   missing <meta name="viewport"> — the bug that makes a page render at
+   980px and shrink on a real phone. These profiles can. */
 const SIZES = [
   ['320x568 iPhone SE1', 320, 568],
   ['360x640 small Android', 360, 640],
@@ -22,14 +26,37 @@ const SIZES = [
 ];
 
 (async () => {
-  fs.writeFileSync('/tmp/page.html', SKELETON.replace('%BODY%', fs.readFileSync('artifact/index.html', 'utf8')));
+  /* Pass a URL to check a deployed site:  node sweep.js https://your.app/
+     With no argument it checks the local build the way the Artifact service
+     will serve it. */
+  let TARGET = process.argv[2];
+  if (!TARGET) {
+    fs.writeFileSync('/tmp/page.html', SKELETON.replace('%BODY%', fs.readFileSync('claude-artifact.html', 'utf8')));
+    TARGET = 'file:///tmp/page.html';
+  }
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
   const rows = [];
   for (const [label, w, h] of SIZES) {
-    const c = await b.newContext({ viewport: { width: w, height: h } });
+    const phone = w <= 500 || h <= 500;
+    const c = await b.newContext({
+      viewport: { width: w, height: h },
+      deviceScaleFactor: phone ? 3 : 1,
+      isMobile: phone, hasTouch: phone,
+      userAgent: phone
+        ? 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'
+        : undefined,
+    });
     const p = await c.newPage();
-    await p.goto('file:///tmp/page.html');
+    await p.goto(TARGET);
     await p.waitForTimeout(450);
+
+    const laid = await p.evaluate(() => ({
+      meta: (document.querySelector('meta[name=viewport]') || {}).content || 'MISSING',
+      layout: document.documentElement.clientWidth,
+    }));
+    if (laid.meta === 'MISSING' || laid.layout !== w) {
+      console.error(`!! ${label}: laid out at ${laid.layout}px, viewport meta ${laid.meta}`);
+    }
 
     const gate = await p.evaluate(() => {
       const r = id => document.getElementById(id).getBoundingClientRect();
@@ -45,6 +72,7 @@ const SIZES = [
     });
 
     await p.screenshot({ path: `shots/sw-${w}x${h}-gate.png` });
+    void 0;
     await p.click('#gGo');
     await p.waitForTimeout(6600);
     await p.evaluate(() => document.querySelectorAll('[data-rev]').forEach(e => e.classList.remove('hid')));

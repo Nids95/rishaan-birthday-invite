@@ -17,14 +17,16 @@ sweeter*.
 
 `python3 build.py` writes both.
 
-**`site/`** — a static site. Double-click `site/index.html` to look at it,
-or deploy the folder to Vercel; see **DEPLOY.md**. The artwork is three
-`.webp` files the browser caches for a year, so the HTML is 68 KB and a
-second visit re-fetches almost nothing.
+**`index.html` + `img/`** — the website, at the root of this folder.
+Double-click it to look at it, or deploy the folder to Vercel; see
+**DEPLOY.md**. The artwork is three `.webp` files the browser caches for a
+year, so the HTML is 68 KB and a second visit re-fetches almost nothing.
 
-**`artifact/index.html`** — one self-contained file for the Claude Artifact
+**`claude-artifact.html`** — one self-contained file for the Claude Artifact
 service, which supplies the `<!doctype>`/`<head>`/`<body>` wrapper itself
-and has nowhere to put side files, so the artwork is inlined. 249 KB.
+and has nowhere to put side files, so the artwork is inlined. 249 KB. It is
+deliberately not called `index.html`: served raw by a web host it would be a
+page with no `<head>`, and a phone would lay it out at 980px and shrink it.
 
 The only outside request either one makes is Google Fonts; with no network
 they fall back to system serif and sans and still read.
@@ -83,11 +85,14 @@ run it again if you ever swap in a new illustration:
 python3 cutout.py assets/source.png assets/car900.webp
 ```
 
-`test/sweep.js` and `test/verify.js` are the checks used while building it:
-the sweep walks fourteen viewport sizes from a 320px iPhone SE to a 2560px
-monitor and reports anything that overflows or clips; verify covers reduced
-motion, no-JavaScript, and that the arch comes to rest centred on the car.
-Both need `npm i playwright`.
+`test/sweep.js` and `test/verify.js` are the checks used while building it.
+The sweep walks fourteen viewport sizes from a 320px iPhone SE to a 2560px
+monitor — the phone-sized ones under real iPhone and Android emulation, not
+just a narrow window — and prints a line beginning `!!` for anything that
+lays out at the wrong width, overflows sideways, or has a tap target under
+44px. Point it at a deployed site with `node test/sweep.js https://your.app/`.
+`verify.js` covers reduced motion, no-JavaScript, and that the arch comes to
+rest centred on the car. Both need `npm i playwright`.
 
 ## Parked, not deleted
 
@@ -143,14 +148,25 @@ Three widths change the layout rather than the scale:
   vertical rhythm all grow together instead of a 1160px strip sitting in the
   middle of a 2560px monitor.
 
-Checked from 320×568 to 2560×1440, portrait and landscape: no horizontal
-overflow, no tap target under 44px.
+Checked from 320×568 to 2560×1440, portrait and landscape, with the phone
+sizes under real device emulation: every one lays out at its true width, no
+horizontal overflow, no tap target under 44px.
+
+One thing that is easy to get wrong and invisible until it is on a phone:
+the page needs `<meta name="viewport" content="width=device-width">`. Without
+it a phone assumes the page was built for a 980px desktop, lays it out at
+980px and scales the result down — every media query still "works", and the
+page is still unreadable. It lives in `build/01-head.html`, so both builds
+carry it even though the Artifact service adds its own, and `build.py`
+asserts it is there rather than leaving it to be noticed.
 
 ## Files
 
 ```
-site/                 ← deploy this folder (index.html, img/, share-card.jpg)
-artifact/index.html   the same page, for republishing to the Claude artifact
+index.html            ← the website. Deploy this folder.
+img/                  car.webp · eleph.webp · head.webp
+share-card.jpg        the link-preview image (og:image)
+claude-artifact.html  the same page, for republishing to the Claude artifact
 DEPLOY.md             how to put it on Vercel
 build/                the authored sources
 build.py              assembler — SITE_URL and INCLUDE_PARKED live at the top
@@ -161,12 +177,13 @@ assets/source.png     the original illustration, untouched
 assets/car900.webp    the cut-out version the page uses
 assets/eleph464.webp  the elephant
 assets/head96.webp    his face in the note
-assets/share-card.jpg the link-preview image (og:image)
+assets/share-card.jpg the master of the link-preview image
 test/                 the viewport sweep and the behaviour checks
 preview/              what it looks like
 ```
 
-`site/` and `artifact/` are generated — edit `build/`, not them.
+`index.html`, `img/`, `share-card.jpg` and `claude-artifact.html` are
+generated — edit `build/`, not them.
 
 Every image is sized to about twice the largest space the page ever gives
 it — 900px for a car shown at most 475 CSS px, 96px for a 40px avatar —

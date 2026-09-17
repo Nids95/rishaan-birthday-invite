@@ -5,15 +5,19 @@ The page is authored in pieces under build/ so it stays editable, and this
 script puts them together. It writes TWO builds of the same page, because
 the two places it lives want different things:
 
-  site/        a static site for Vercel (or any host). The artwork is served
-               as three .webp files the browser can cache forever, so the
-               HTML is small and a second visit re-fetches almost nothing.
-               index.html here is a complete document — you can also just
-               double-click it.
+  index.html + img/   the website. A complete document, with the artwork as
+               three .webp files the browser caches for a year, so the HTML
+               is small and a second visit re-fetches almost nothing. This
+               sits at the root on purpose: point Vercel at this folder and
+               it serves the right file with no settings to get wrong. You
+               can also just double-click it.
 
-  artifact/    one self-contained file for the Claude Artifact service,
-               which supplies the <!doctype>/<head>/<body> wrapper itself
-               and has nowhere to put side files. The artwork is inlined.
+  claude-artifact.html   the same page built for the Claude Artifact
+               service, which supplies the <!doctype>/<head>/<body> wrapper
+               itself and has nowhere to put side files, so the artwork is
+               inlined. Deliberately NOT called index.html — served raw by a
+               web host it would be a page with no <head>, and a phone would
+               lay it out at 980px and shrink it.
 
     python3 build.py
 """
@@ -27,7 +31,7 @@ import shutil
 # Social apps (WhatsApp, iMessage, Facebook) will not follow a relative
 # og:image — the link preview silently loses its picture. Put the real
 # Vercel domain here before you share the link.
-SITE_URL = "https://rishaan-turns-one.vercel.app"
+SITE_URL = "https://rishaan-birthday-invite.vercel.app"
 
 # The parked "Meet the birthday boy" section is commented out in the markup,
 # so shipping its four images means every guest downloads 143 KB they will
@@ -87,8 +91,8 @@ def page(art_js, extra_head="", standalone=True, og_absolute=False):
     return shell.replace("@HEAD@", head_part + "\n</style>").replace("@BODY@", rest)
 
 
-# ── 1 · the static site ─────────────────────────────────────────────────
-site = here / "site"
+# ── 1 · the website, at the root ────────────────────────────────────────
+site = here
 (site / "img").mkdir(parents=True, exist_ok=True)
 
 FILE = {"car": "img/car.webp", "eleph": "img/eleph.webp", "head": "img/head.webp",
@@ -109,19 +113,24 @@ preload = ('<link rel="preload" as="image" href="img/car.webp" fetchpriority="hi
 
 (site / "index.html").write_text(page(art_files, preload, standalone=True, og_absolute=True))
 shutil.copy(here / "assets" / "share-card.jpg", site / "share-card.jpg")
-shutil.copy(here / "vercel.json", site / "vercel.json")
 
 # ── 2 · the Claude artifact ─────────────────────────────────────────────
-artifact = here / "artifact"
-artifact.mkdir(exist_ok=True)
 art_inline = "window.ART = {\n" + ",\n".join(
     '  %s: "%s"' % (k, assets[k]) for k in keys) + "\n};\n"
-(artifact / "index.html").write_text(page(art_inline, standalone=False))
+(here / "claude-artifact.html").write_text(page(art_inline, standalone=False))
 
 sz = lambda p: p.stat().st_size / 1024
-print("site/index.html      %7.1f KB  + %.1f KB of images (cached separately)"
+print("index.html            %7.1f KB  + %.1f KB of images (cached separately)"
       % (sz(site / "index.html"), sum(sz(site / FILE[k]) for k in keys)))
-print("artifact/index.html  %7.1f KB  (everything inlined)" % sz(artifact / "index.html"))
+print("claude-artifact.html  %7.1f KB  (everything inlined)" % sz(here / "claude-artifact.html"))
+
+# ── 3 · the check that matters ──────────────────────────────────────────
+# A page served to a phone without this tag is laid out at 980px and scaled
+# down. It is invisible in a desktop browser and obvious on a phone, so it
+# gets asserted rather than eyeballed.
+for f in (site / "index.html", here / "claude-artifact.html"):
+    assert 'name="viewport"' in f.read_text(), "no viewport meta in " + f.name
+print("viewport meta: present in both")
 
 # a quick sanity pass: every id the script reaches for exists in the markup
 ids = set(re.findall(r'id="([A-Za-z0-9_-]+)"', body))

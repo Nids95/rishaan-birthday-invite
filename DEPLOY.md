@@ -1,15 +1,23 @@
 # Putting it on Vercel
 
-The whole site is the `site/` folder. It is static — no framework, no build
-step on Vercel's side, nothing to install there. Four things live in it:
+The site is the **root of this folder**: `index.html`, `img/`,
+`share-card.jpg` and `vercel.json`. It is static — no framework, no build
+step on Vercel's side, nothing to install there.
 
 ```
-site/
-  index.html        the page
-  img/              car.webp · eleph.webp · head.webp
-  share-card.jpg    the picture in the link preview
-  vercel.json       cache and security headers
+index.html          the page
+img/                car.webp · eleph.webp · head.webp
+share-card.jpg      the picture in the link preview
+vercel.json         cache and security headers
+.vercelignore       keeps the sources out of the deployment
 ```
+
+> **Do not deploy `claude-artifact.html`.** That build is for the Claude
+> Artifact service, which supplies the `<!doctype>`/`<head>`/`<body>`
+> wrapper itself. Served raw by a web host it is a page with no `<head>`,
+> and a phone lays it out at 980px and shrinks the whole thing to fit —
+> which looks exactly like "the site is not responsive". It is deliberately
+> not named `index.html` so a host will never pick it by accident.
 
 ---
 
@@ -17,25 +25,23 @@ site/
 
 ```bash
 npm i -g vercel
-cd site
 vercel           # first run: signs you in, creates the project, gives a preview URL
 vercel --prod    # publishes it to the real address
 ```
 
-Run it **from inside `site/`**. That makes `site/` the root of the
-deployment, so `index.html` is served at `/` and `img/` resolves. If you run
-`vercel` from the folder above, you get a directory listing instead of the
-invitation.
+Run it from **this** folder. `.vercelignore` keeps `build/`, `assets/`,
+`test/` and `preview/` out of the upload, so only the five things above go
+up.
 
 ## The Git way
 
-Push this whole folder to a GitHub repo, then on vercel.com → **Add New →
+Push this folder to a GitHub repo, then on vercel.com → **Add New →
 Project → Import**, and set:
 
 | Setting | Value |
 | --- | --- |
 | Framework Preset | **Other** |
-| Root Directory | **site** |
+| Root Directory | `./` (the repo root) |
 | Build Command | leave empty (untick the override) |
 | Output Directory | leave empty |
 | Install Command | leave empty |
@@ -49,25 +55,42 @@ guests see it.
 ## One step you should not skip
 
 WhatsApp, iMessage and Facebook will not follow a **relative** `og:image`.
-Until the address in the page is the real one, the link preview shows the
-title and text with no picture.
+Until the address baked into the page is the real one, the link preview
+shows the title and text with no picture.
 
 So after the first deploy:
 
-1. copy your real domain, e.g. `https://rishaan-turns-one.vercel.app`
+1. copy your real domain, e.g. `https://rishaan-birthday-invite.vercel.app`
 2. open `build.py` and set
 
    ```python
-   SITE_URL = "https://rishaan-turns-one.vercel.app"
+   SITE_URL = "https://rishaan-birthday-invite.vercel.app"
    ```
 
 3. `python3 build.py`
-4. deploy again (`cd site && vercel --prod`, or push)
+4. deploy again
 
 Then paste the link into a WhatsApp chat with yourself to check the card.
 If you add a custom domain later, change `SITE_URL` to that and redeploy —
 and note that WhatsApp caches previews for a while, so test with a fresh
 link or a `?v=2` on the end.
+
+## Checking it on a phone before you send it
+
+```bash
+npm i playwright
+node test/sweep.js https://your-domain.vercel.app/
+```
+
+It loads the live site at fourteen sizes, three of them under real iPhone
+and Android emulation, and prints a line beginning `!!` for anything that
+lays out at the wrong width, overflows sideways, or has a tap target under
+44px. Silence means it is fine.
+
+A narrow desktop window is **not** the same test: it lays the page out at
+its own width whatever the HTML says, which is why a missing viewport tag
+can look perfect in a resized browser and be broken on the phone in your
+hand. Chrome DevTools' device toolbar does emulate this properly.
 
 ## Changing anything afterwards
 
@@ -86,9 +109,7 @@ itself. Remember to update `SITE_URL` and redeploy.
 
 ## The Claude artifact is separate
 
-`artifact/index.html` is the same page built for the Claude Artifact
-service, which wraps it in its own `<head>`/`<body>` and has nowhere to put
-side files, so the artwork is inlined there instead. Deploying to Vercel
-does not touch it, and republishing the artifact does not touch Vercel.
-Keep whichever one you are actually sending to people up to date — or send
-the Vercel link and let the artifact be the working copy.
+`claude-artifact.html` is the same page built for the Claude Artifact
+service. Deploying to Vercel does not touch it, and republishing the
+artifact does not touch Vercel. Keep whichever one you are actually
+sending to people up to date.
