@@ -40,6 +40,11 @@ document.documentElement.className = "gated";
 </script>
 <link rel="preload" as="image" href="img/car.webp" fetchpriority="high">
 <link rel="preload" as="image" href="img/eleph.webp">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#EAF4FE">
 
 <style>
 /* ══════════════════════════════════════════════════════════
@@ -306,11 +311,19 @@ html.gated.open body{overflow:visible}
   filter:drop-shadow(0 16px 16px rgba(14,47,87,.15))}
 .arrived .sh{position:absolute; left:50%; bottom:-1%; width:56%; height:15px; translate:-50% 0;
   border-radius:50%; background:rgba(14,47,87,.15); filter:blur(6px)}
-.l-facts{display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
-  gap:6px 16px; font-family:"Cormorant Garamond",Georgia,serif;
-  font-size:clamp(1rem,3.5vw,1.2rem); color:var(--ink)}
-.l-facts b{font-weight:400}
+/* One line, on every phone. The size and the gaps are fluid so the row
+   shrinks to fit rather than breaking, and `nowrap` is what lets the script
+   MEASURE whether it still fits — a wrapping flex row always reports that it
+   does. When it genuinely cannot (a 320px screen, or a longer venue name
+   later on), the script adds .stack and it becomes three tidy lines instead
+   of a ragged two with a separator dangling at the break. */
+.l-facts{display:flex; flex-wrap:nowrap; justify-content:center; align-items:center;
+  gap:5px clamp(9px,2.6vw,16px); font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(.86rem,3.85vw,1.2rem); color:var(--ink); max-width:100%}
+.l-facts b{font-weight:400; white-space:nowrap}
 .l-facts span{color:var(--line); font-size:.8em}
+.l-facts.stack{flex-direction:column; gap:3px}
+.l-facts.stack span{display:none}
 
 /* his note: it lands, he types it, then it catches the eye now and then */
 .l-note{position:relative; overflow:hidden;
@@ -443,10 +456,6 @@ html.gated.open body{overflow:visible}
 
 /* ── the narrowest phones ──────────────────────────────── */
 @media (max-width:420px){
-  /* three facts on one line need a separator, and a separator that lands
-     at a line break is a dangling diamond. Below this width they stack. */
-  .l-facts{flex-direction:column; gap:3px}
-  .l-facts span{display:none}
   /* "SECONDS" in a 70px column wants less tracking, not a smaller clock */
   .tick span{font-size:.52rem; letter-spacing:.12em}
   .tick{gap:8px}
@@ -819,12 +828,16 @@ html.gated.open body{overflow:visible}
           <div class="l-eyebrow" style="margin-bottom:6px">With love</div>
           <div class="l-sign-off" id="lHosts"></div>
         </div>
+        <!-- The RSVP button, parked. It opened a WhatsApp message to the
+             number in EVENT.whatsapp. To bring it back, uncomment this and
+             the matching $("lWa") line in build/04-app.js.
         <div class="l-acts" data-rev style="justify-content:center; --d:180ms">
           <a class="l-btn l-ghost" id="lWa" href="#" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>
             Tell us you&rsquo;re coming
           </a>
         </div>
+        -->
       </div>
     </div>
   </section>
@@ -868,6 +881,7 @@ window.EVENT = {
   dressCode: "Blue & White",
   dressNote: "Dress to match the birthday vibe!",
   hosts:     "Rishaan\u2019s Favorite Crew",
+  /* read only by the parked "Tell us you're coming" button */
   whatsapp:  "919400000000",
   /* geo: "9.4603,76.3319"  <- paste "lat,lng" from a Google Maps pin and the
      directions link becomes an exact route instead of a name search */
@@ -925,8 +939,25 @@ window.INVITE = (function(){
      THE INVITATION
      ══════════════════════════════════════════════════════ */
   var dot = '<span>&#9670;</span>';
-  $("lFacts").innerHTML = "<b>"+E.dateShort+"</b>"+dot+"<b>"+E.timeShort+"</b>"+dot+"<b>"+E.venue+"</b>";
+  var facts = $("lFacts");
+  facts.innerHTML = "<b>"+E.dateShort+"</b>"+dot+"<b>"+E.timeShort+"</b>"+dot+"<b>"+E.venue+"</b>";
   set("lHosts", E.hosts);
+
+  /* The three facts belong on one line. Whether they fit is a question about
+     THIS text at THIS width in THIS font — not about a width someone guessed
+     at once — so it gets measured. A fixed breakpoint is what made a 430px
+     iPhone and a 360px Android disagree.
+
+     It has to run again after the webfont arrives: Cormorant is wider than
+     the fallback serif, and a row measured against Georgia will overflow the
+     moment the real face swaps in. */
+  function fitFacts(){
+    facts.classList.remove("stack");
+    if (facts.scrollWidth > facts.clientWidth + 1) facts.classList.add("stack");
+  }
+  fitFacts();
+  addEventListener("resize", fitFacts);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitFacts).catch(function(){});
 
   var st = new Date(E.startISO);
   var TZ = { timeZone:"Asia/Kolkata" };
@@ -947,8 +978,9 @@ window.INVITE = (function(){
 
   $("lMap").href = IV.map();
   $("lCal").href = IV.gcal();
+  /* parked with the RSVP button at the foot of build/03-body.html:
   $("lWa").href  = "https://wa.me/" + E.whatsapp + "?text=" +
-    encodeURIComponent("We'll be there for " + E.name + "'s first birthday!");
+    encodeURIComponent("We'll be there for " + E.name + "'s first birthday!"); */
 
   /* ── countdown ───────────────────────────────────────── */
   var els = { d:$("cd-d"), h:$("cd-h"), m:$("cd-m"), s:$("cd-s") };

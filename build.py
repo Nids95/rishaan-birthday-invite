@@ -111,8 +111,52 @@ art_files = "window.ART = {\n" + ",\n".join(
 preload = ('<link rel="preload" as="image" href="img/car.webp" fetchpriority="high">\n'
            '<link rel="preload" as="image" href="img/eleph.webp">\n')
 
-(site / "index.html").write_text(page(art_files, preload, standalone=True, og_absolute=True))
-shutil.copy(here / "assets" / "share-card.jpg", site / "share-card.jpg")
+# Icons: the site's only. The Claude artifact gets its favicon from the
+# Artifact service, and has nowhere to put side files, so these links would
+# only 404 there.
+#
+# The paths are RELATIVE, not "/favicon.svg" — that way index.html still
+# finds them when it is opened straight off the disk with a double-click.
+#
+# To use your own artwork, drop your favicon.svg into assets/ and re-run the
+# build. Nothing here needs editing. Run icons.py afterwards if you want the
+# .ico and the home-screen PNGs redrawn to match.
+icons = (
+    '<link rel="icon" href="favicon.svg" type="image/svg+xml">\n'
+    '<link rel="icon" href="favicon.ico" sizes="32x32">\n'
+    '<link rel="apple-touch-icon" href="apple-touch-icon.png">\n'
+    '<link rel="manifest" href="site.webmanifest">\n'
+    # the colour Android paints its address bar; matched to the sky at the
+    # top of the page so the browser chrome does not cut a line across it
+    '<meta name="theme-color" content="#EAF4FE">\n'
+)
+
+(site / "index.html").write_text(
+    page(art_files, preload + icons, standalone=True, og_absolute=True))
+
+for f in ("share-card.jpg", "favicon.svg", "favicon.ico", "apple-touch-icon.png",
+          "icon-192.png", "icon-512.png", "icon-512-maskable.png"):
+    src = here / "assets" / f
+    if src.exists():
+        shutil.copy(src, site / f)
+
+(site / "site.webmanifest").write_text(json.dumps({
+    "name": "Rishaan Vineesh turns One",
+    "short_name": "Rishaan's Ride",
+    "start_url": ".",
+    "scope": ".",
+    "display": "standalone",
+    "background_color": "#D8EBFC",
+    "theme_color": "#EAF4FE",
+    "icons": [
+        {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+        {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+        # a maskable icon is cropped to whatever shape the launcher likes, so
+        # it needs the mark inside the safe area rather than out at the edge
+        {"src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png",
+         "purpose": "maskable"},
+    ],
+}, indent=2) + "\n")
 
 # ── 2 · the Claude artifact ─────────────────────────────────────────────
 art_inline = "window.ART = {\n" + ",\n".join(

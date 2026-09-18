@@ -18,6 +18,7 @@ window.EVENT = {
   dressCode: "Blue & White",
   dressNote: "Dress to match the birthday vibe!",
   hosts:     "Rishaan\u2019s Favorite Crew",
+  /* read only by the parked "Tell us you're coming" button */
   whatsapp:  "919400000000",
   /* geo: "9.4603,76.3319"  <- paste "lat,lng" from a Google Maps pin and the
      directions link becomes an exact route instead of a name search */
@@ -75,8 +76,25 @@ window.INVITE = (function(){
      THE INVITATION
      ══════════════════════════════════════════════════════ */
   var dot = '<span>&#9670;</span>';
-  $("lFacts").innerHTML = "<b>"+E.dateShort+"</b>"+dot+"<b>"+E.timeShort+"</b>"+dot+"<b>"+E.venue+"</b>";
+  var facts = $("lFacts");
+  facts.innerHTML = "<b>"+E.dateShort+"</b>"+dot+"<b>"+E.timeShort+"</b>"+dot+"<b>"+E.venue+"</b>";
   set("lHosts", E.hosts);
+
+  /* The three facts belong on one line. Whether they fit is a question about
+     THIS text at THIS width in THIS font — not about a width someone guessed
+     at once — so it gets measured. A fixed breakpoint is what made a 430px
+     iPhone and a 360px Android disagree.
+
+     It has to run again after the webfont arrives: Cormorant is wider than
+     the fallback serif, and a row measured against Georgia will overflow the
+     moment the real face swaps in. */
+  function fitFacts(){
+    facts.classList.remove("stack");
+    if (facts.scrollWidth > facts.clientWidth + 1) facts.classList.add("stack");
+  }
+  fitFacts();
+  addEventListener("resize", fitFacts);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitFacts).catch(function(){});
 
   var st = new Date(E.startISO);
   var TZ = { timeZone:"Asia/Kolkata" };
@@ -97,8 +115,9 @@ window.INVITE = (function(){
 
   $("lMap").href = IV.map();
   $("lCal").href = IV.gcal();
+  /* parked with the RSVP button at the foot of build/03-body.html:
   $("lWa").href  = "https://wa.me/" + E.whatsapp + "?text=" +
-    encodeURIComponent("We'll be there for " + E.name + "'s first birthday!");
+    encodeURIComponent("We'll be there for " + E.name + "'s first birthday!"); */
 
   /* ── countdown ───────────────────────────────────────── */
   var els = { d:$("cd-d"), h:$("cd-h"), m:$("cd-m"), s:$("cd-s") };

@@ -5,12 +5,20 @@ The site is the **root of this folder**: `index.html`, `img/`,
 step on Vercel's side, nothing to install there.
 
 ```
-index.html          the page
-img/                car.webp · eleph.webp · head.webp
-share-card.jpg      the picture in the link preview
-vercel.json         cache and security headers
-.vercelignore       keeps the sources out of the deployment
+index.html            the page
+img/                  car.webp · eleph.webp · head.webp
+share-card.jpg        the picture in the link preview
+favicon.svg .ico      the tab icon
+apple-touch-icon.png  iOS "Add to Home Screen"
+icon-192/512*.png     the same for Android
+site.webmanifest      name, colours and icons for a home-screen install
+vercel.json           cache and security headers
+.vercelignore         keeps the sources out of the deployment
 ```
+
+All of those are written by `python3 build.py` — the originals live in
+`assets/`. To use your own tab icon, put your `favicon.svg` in `assets/`
+and rebuild.
 
 > **Do not deploy `claude-artifact.html`.** That build is for the Claude
 > Artifact service, which supplies the `<!doctype>`/`<head>`/`<body>`

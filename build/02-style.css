@@ -262,11 +262,19 @@ html.gated.open body{overflow:visible}
   filter:drop-shadow(0 16px 16px rgba(14,47,87,.15))}
 .arrived .sh{position:absolute; left:50%; bottom:-1%; width:56%; height:15px; translate:-50% 0;
   border-radius:50%; background:rgba(14,47,87,.15); filter:blur(6px)}
-.l-facts{display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
-  gap:6px 16px; font-family:"Cormorant Garamond",Georgia,serif;
-  font-size:clamp(1rem,3.5vw,1.2rem); color:var(--ink)}
-.l-facts b{font-weight:400}
+/* One line, on every phone. The size and the gaps are fluid so the row
+   shrinks to fit rather than breaking, and `nowrap` is what lets the script
+   MEASURE whether it still fits — a wrapping flex row always reports that it
+   does. When it genuinely cannot (a 320px screen, or a longer venue name
+   later on), the script adds .stack and it becomes three tidy lines instead
+   of a ragged two with a separator dangling at the break. */
+.l-facts{display:flex; flex-wrap:nowrap; justify-content:center; align-items:center;
+  gap:5px clamp(9px,2.6vw,16px); font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(.86rem,3.85vw,1.2rem); color:var(--ink); max-width:100%}
+.l-facts b{font-weight:400; white-space:nowrap}
 .l-facts span{color:var(--line); font-size:.8em}
+.l-facts.stack{flex-direction:column; gap:3px}
+.l-facts.stack span{display:none}
 
 /* his note: it lands, he types it, then it catches the eye now and then */
 .l-note{position:relative; overflow:hidden;
@@ -399,10 +407,6 @@ html.gated.open body{overflow:visible}
 
 /* ── the narrowest phones ──────────────────────────────── */
 @media (max-width:420px){
-  /* three facts on one line need a separator, and a separator that lands
-     at a line break is a dangling diamond. Below this width they stack. */
-  .l-facts{flex-direction:column; gap:3px}
-  .l-facts span{display:none}
   /* "SECONDS" in a 70px column wants less tracking, not a smaller clock */
   .tick span{font-size:.52rem; letter-spacing:.12em}
   .tick{gap:8px}

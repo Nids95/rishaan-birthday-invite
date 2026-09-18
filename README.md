@@ -10,7 +10,7 @@ under a balloon arch and the whole cover lifts away like a curtain.
 
 **Act two, the invitation** underneath: *You are lovingly invited* ·
 *Curtain up in* · *When & where* · *Your presence will make his day even
-sweeter*.
+sweeter*, which closes on the sign-off.
 
 ---
 
@@ -101,6 +101,11 @@ rest centred on the car. Both need `npm i playwright`.
 
 ## Parked, not deleted
 
+The **RSVP button** ("Tell us you're coming", which opened a WhatsApp
+message) is commented out at the foot of `build/03-body.html`. To bring it
+back, uncomment that block and the matching `$("lWa")` line in
+`build/04-app.js`, and set `whatsapp` in `EVENT` to the right number.
+
 The **Meet the birthday boy** section (the photo where he waves, plus the
 first-year tally) is still here, commented out. Its four images live in
 `assets.json` but are deliberately **left out of the built page** — shipping
@@ -127,6 +132,12 @@ phone. To bring the section back:
   reader's system is set to dark.
 - The arch is parked at the exact distance the speed curve integrates to, so
   he comes to rest dead centre under it at 5.0 s on any screen.
+- **Icons.** `assets/favicon.svg` is a checkered flag in the invitation's
+  navy, drawn to still read at 16px. To use your own, replace that file and
+  run `python3 build.py`; nothing in the head needs editing. Run
+  `python3 icons.py` too if you want `favicon.ico`, the iOS home-screen icon
+  and the Android manifest icons redrawn to match — otherwise they stay as
+  they are, which is fine, they are only used when the SVG cannot be.
 - **Two small drawings instead of emoji.** The checkered flag in the cover
   headline and the two hearts beside the dress code are inline SVG, in the
   invitation's own palette. Emoji render differently on every platform, and
@@ -149,16 +160,26 @@ wraps on exactly one painted period so the dashes never stutter.
 
 Three widths change the layout rather than the scale:
 
-- **under 420px** — the three facts stack instead of running on one line
-  with a separator that would dangle at the line break; the countdown labels
-  lose tracking so "SECONDS" fits its column; the buttons tighten so
-  "ADD TO CALENDAR" stays on one line.
+- **under 420px** — the countdown labels lose tracking so "SECONDS" fits
+  its column, and the buttons tighten so "ADD TO CALENDAR" stays on one line.
 - **landscape under 600px tall** — the gate turns into two columns, scene
   beside words. Stacked, the road would be a letterbox slit.
 - **1700px and 2200px** — the root font size steps to 18px and then 20px.
   Every measure in the invitation is in rem, so the column, the type and the
   vertical rhythm all grow together instead of a 1160px strip sitting in the
   middle of a 2560px monitor.
+
+**The one-line facts row is measured, not guessed.** `Fri 25 Sep 2026 ◆
+6 PM onwards ◆ The Locus` belongs on one line, and whether it fits is a
+question about that text, at that width, in that font — so the script asks,
+with `scrollWidth > clientWidth`, and only stacks the three facts when the
+answer is no. A fixed breakpoint is what made a 430px iPhone show one line
+and a 360px Android show three. The check runs again on resize and again
+after `document.fonts.ready`, because Cormorant is not the width of the
+fallback serif and a row measured against the wrong face is measured wrong.
+The size and the gaps are fluid too, so at the moment nothing down to 320px
+needs to stack at all — the stacked layout is there for a longer venue name
+later, not for a particular phone.
 
 Checked from 320×568 to 2560×1440, portrait and landscape, with the phone
 sizes under real device emulation: every one lays out at its true width, no
@@ -184,6 +205,8 @@ build/                the authored sources
 build.py              assembler — SITE_URL and INCLUDE_PARKED live at the top
 vercel.json           cache and security headers
 cutout.py             background removal for the landing artwork
+icons.py              draws favicon.ico and the home-screen PNGs
+assets/favicon.svg    the tab icon — replace this one to use your own
 assets.json           artwork as base64
 assets/source.png     the original illustration, untouched
 assets/car900.webp    the cut-out version the page uses
