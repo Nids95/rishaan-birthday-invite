@@ -3,7 +3,8 @@
 A single self-contained page in two acts.
 
 **Act one, the gate.** Rishaan is parked on a country road under a string of
-party lights with one button: *Come on my ride*. Press it and he drives for
+party lights: *Ready, set, ONE!* and one button, *Start your engines*. Press
+it and he drives for
 five seconds — the car never moves, the world scrolls past it — then pulls up
 under a balloon arch and the whole cover lifts away like a curtain.
 
@@ -43,9 +44,13 @@ window.EVENT = {
   name:      "Rishaan Vineesh",
   startISO:  "2026-09-25T18:00:00+05:30",
   endISO:    "2026-09-25T22:00:00+05:30",
+  timeLabel: "6:00 PM onwards",
+  timeNote:  "The cake is ready. The fun is waiting. All we need is YOU!",
   venue:     "The Locus",
   address:   "Punnapra, Alappuzha, Kerala",
-  hosts:     "Rishaan's Family",
+  dressCode: "Blue & White",
+  dressNote: "Dress to match the birthday vibe!",
+  hosts:     "Rishaan's Favorite Crew",
   whatsapp:  "919400000000",     // the RSVP button
   geo:       "",                 // see below
   ...
@@ -122,6 +127,13 @@ phone. To bring the section back:
   reader's system is set to dark.
 - The arch is parked at the exact distance the speed curve integrates to, so
   he comes to rest dead centre under it at 5.0 s on any screen.
+- **Two small drawings instead of emoji.** The checkered flag in the cover
+  headline and the two hearts beside the dress code are inline SVG, in the
+  invitation's own palette. Emoji render differently on every platform, and
+  🩵 (light blue heart) is a 2022 addition that still shows as an empty box
+  on plenty of phones — not something to discover after the link has gone
+  out to sixty relatives. Swapping them back for characters is a one-line
+  edit in `build/03-body.html` if you prefer.
 
 ## How it fits a screen
 

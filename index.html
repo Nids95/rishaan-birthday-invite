@@ -240,10 +240,26 @@ html.gated.open body{overflow:visible}
   padding:clamp(20px,3.4vw,34px) var(--gut) calc(clamp(20px,3.4vw,30px) + env(safe-area-inset-bottom,0px))}
 .g-ui .wrap{max-width:40rem; margin-inline:auto; text-align:center;
   display:grid; justify-items:center; gap:clamp(10px,1.6vw,15px)}
-.g-ui .l-name{font-size:clamp(2.2rem,9vw,3.5rem)}
+/* The cover's headline. Caps in Cormorant with generous tracking reads as a
+   starting line without importing a second, louder typeface. */
+/* Not a flex row: in flex, "Ready, set," and <b>ONE!</b> would each become
+   their own item and the gap meant for the flag would open up between the
+   words as well. Inline flow keeps the words together and lets the line
+   wrap under the flag on a narrow screen. */
+.g-hero{display:block;
+  font-family:"Cormorant Garamond",Georgia,serif; font-weight:400;
+  font-size:clamp(1.42rem,5.9vw,2.5rem); line-height:1.14;
+  letter-spacing:.05em; text-transform:uppercase; color:var(--ink); text-wrap:balance}
+.g-hero b{font-weight:500; color:var(--accent-ink)}
+/* the viewBox is 34×24; one square em would squash the flag */
+.g-hero .flag{display:inline-block; width:1.42em; height:1em;
+  vertical-align:-.1em; margin-right:.34em}
 .g-ui .say{font-family:"Cormorant Garamond",Georgia,serif; font-style:italic;
-  font-size:clamp(1.04rem,3.6vw,1.24rem); line-height:1.5; color:var(--body); max-width:34ch}
-.g-ui .l-btn{margin-top:4px}
+  font-size:clamp(1.04rem,3.7vw,1.26rem); line-height:1.5; color:var(--body);
+  max-width:36ch; text-wrap:balance}
+.g-ui .say b{font-style:normal; font-weight:500; color:var(--accent-ink); letter-spacing:.03em}
+.g-ui .say.sub{font-size:clamp(.95rem,3.3vw,1.1rem); color:var(--muted); max-width:34ch}
+.g-ui .l-btn{margin-top:6px}
 
 /* the two states of that panel cross-fade in place, and the panel
    animates its own height with the 0fr → 1fr grid trick */
@@ -311,8 +327,11 @@ html.gated.open body{overflow:visible}
 .l-note.in img{opacity:1; transform:none}
 .l-note.in:not(.typed) img{animation:l-live 1.6s ease-out .62s infinite}
 @keyframes l-live{0%{box-shadow:0 0 0 0 var(--ring)} 72%,100%{box-shadow:0 0 0 11px transparent}}
-.l-note p{font-family:"Cormorant Garamond",Georgia,serif; font-size:1.04rem; line-height:1.32;
+.l-note .msg{display:grid; gap:5px; min-width:0}
+.l-note p{font-family:"Cormorant Garamond",Georgia,serif; font-size:1.04rem; line-height:1.34;
   color:var(--ink); text-align:left; text-wrap:pretty}
+.l-note p + p{color:var(--accent-ink)}
+.l-note p b{font-weight:500; font-style:italic; letter-spacing:.02em}
 /* the words are laid out from the start, so nothing shifts while he types */
 .l-note p .w{display:inline-block; opacity:0; transform:translateY(7px)}
 .l-note.typed p .w{animation:l-word .44s var(--ease) forwards; animation-delay:calc(var(--i,0) * 55ms)}
@@ -365,10 +384,7 @@ html.gated.open body{overflow:visible}
   border-radius:22px; box-shadow:var(--lift); isolation:isolate}
 .tkt::before{content:""; position:absolute; inset:0; border-radius:inherit;
   border:1px solid var(--line-soft); pointer-events:none}
-.tkt-main{padding:clamp(30px,4.4vw,54px); display:grid; gap:clamp(18px,2.4vw,26px); align-content:start}
-.tkt-top{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
-.serial{font-family:"Jost",sans-serif; font-size:.66rem; font-weight:500; letter-spacing:.22em;
-  text-transform:uppercase; color:var(--muted)}
+.tkt-main{padding:clamp(28px,4.4vw,54px); display:grid; gap:clamp(18px,2.4vw,26px); align-content:start}
 .bigdate{display:flex; align-items:baseline; gap:clamp(12px,1.8vw,20px); flex-wrap:wrap}
 .bigdate .d{font-family:"Cormorant Garamond",Georgia,serif; font-weight:300;
   font-size:clamp(4.2rem,2.4rem + 8vw,7.4rem); line-height:.8; color:var(--ink);
@@ -386,13 +402,21 @@ html.gated.open body{overflow:visible}
 .field .v{font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.2rem,1.06rem + .6vw,1.55rem);
   line-height:1.26; color:var(--ink)}
 .field .s{font-size:.92rem; line-height:1.5; color:var(--muted); text-wrap:pretty}
-.tkt-stub{position:relative; padding:clamp(16px,3vw,36px);
-  display:grid; gap:12px; align-content:center; justify-items:center; text-align:center;
+/* The stub is gone, but the perforation is what made this read as a ticket,
+   so it stays — as a tear line above the two actions. */
+.tkt-foot{position:relative; padding:clamp(22px,3vw,32px) clamp(28px,4.4vw,54px)
+  clamp(26px,3.4vw,40px); border-top:1px dashed var(--line);
   background:linear-gradient(180deg,var(--paper),var(--paper-2))}
-.tkt-stub img{width:clamp(112px,19vw,208px); aspect-ratio:440/463; filter:drop-shadow(0 12px 16px rgba(14,47,87,.15))}
-.perf{position:absolute; background:none}
-.perf::before,.perf::after{content:""; position:absolute; width:22px; height:22px;
+.tkt-foot .l-acts{justify-content:center}
+.perf{position:absolute; left:-11px; right:-11px; top:0; height:0; background:none}
+.perf::before,.perf::after{content:""; position:absolute; top:-11px; width:22px; height:22px;
   border-radius:50%; background:var(--notch)}
+.perf::before{left:0}
+.perf::after{right:0}
+
+/* the dress code sits beside two hearts drawn in the invitation's own blue */
+.field .v.dress{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.field .hearts{flex:none; width:2.15em; height:.98em}
 
 /* ── 4 · the closing line ─────────────────────────────── */
 .call{background:var(--card-2); text-align:center; border-top:1px solid var(--line-soft)}
@@ -431,25 +455,20 @@ html.gated.open body{overflow:visible}
 }
 
 .tkt{grid-template-rows:auto auto}
-.tkt-stub{border-top:1px dashed var(--line); border-radius:0 0 22px 22px}
-.perf{left:-11px; right:-11px; height:0; top:0}
-.perf::before{left:0; top:-11px}
-.perf::after{right:0; top:-11px}
+.tkt-foot{border-radius:0 0 22px 22px}
 .tkt-grid{grid-template-columns:1fr}
 @media (max-width:560px){
   .tkt .l-acts{display:grid; grid-template-columns:1fr; gap:10px}
   .tkt .l-acts .l-btn{width:100%}
 }
-@media (min-width:700px){
-  .tkt-grid{grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,44px)}
+/* Three fields want three columns or one — never two, which leaves an
+   orphan. The switch is where the narrowest of the three still holds its
+   supporting line on two or three lines rather than seven. */
+@media (min-width:720px){
+  .tkt-grid{grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(20px,3vw,40px)}
   .curtain .inner{gap:clamp(30px,3.4vw,44px)}
 }
 @media (min-width:1000px){
-  .tkt{grid-template-columns:1fr 16.4rem; grid-template-rows:none}
-  .tkt-stub{border-top:0; border-left:1px dashed var(--line); border-radius:0 22px 22px 0}
-  .perf{left:0; top:-11px; bottom:-11px; width:0; right:auto; height:auto}
-  .perf::before{left:-11px; top:0}
-  .perf::after{left:-11px; bottom:0; top:auto; right:auto}
   .call .inner{max-width:47.5rem; margin-inline:auto}
 }
 
@@ -586,10 +605,30 @@ html.gated.open body{overflow:visible}
     <div class="wrap">
       <div class="g-swap" id="gSwap">
         <div class="ready" id="gReady">
-          <div class="l-name">Rishaan Vineesh</div>
-          <p class="say">He is one, and he has the keys. Climb in &mdash; the party is just down this road.</p>
+          <h1 class="g-hero">
+            <!-- Drawn, not typed. The checkered-flag emoji looks different on
+                 every platform — glossy on iOS, flat on Android, another thing
+                 again on Windows — and none of them sit well beside Cormorant.
+                 This one is in the invitation's own palette. -->
+            <svg class="flag" viewBox="0 0 34 24" aria-hidden="true">
+              <defs><clipPath id="flagClip"><rect x="7.5" y="3" width="24" height="13" rx="1.6"/></clipPath></defs>
+              <g clip-path="url(#flagClip)">
+                <rect x="7.5" y="3" width="24" height="13" fill="#FFFFFF"/>
+                <g fill="var(--ink)">
+                  <rect x="7.5" y="3" width="8" height="6.5"/><rect x="23.5" y="3" width="8" height="6.5"/>
+                  <rect x="15.5" y="9.5" width="8" height="6.5"/>
+                </g>
+              </g>
+              <rect x="7.5" y="3" width="24" height="13" rx="1.6" fill="none"
+                    stroke="var(--line)" stroke-width="1"/>
+              <path d="M5.6 2.2v19.6" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+            </svg>
+            Ready, set, <b>ONE!</b>
+          </h1>
+          <p class="say">Our little racer is crossing the finish line to <b>ONE</b>!</p>
+          <p class="say sub">Buckle up &mdash; it&rsquo;s time to celebrate his very first birthday.</p>
           <button class="l-btn l-primary" id="gGo" type="button">
-            Come on my ride
+            Start your engines
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
           </button>
         </div>
@@ -635,7 +674,14 @@ html.gated.open body{overflow:visible}
         <div class="l-rule c" data-rev style="--d:90ms"><i></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg><i></i></div>
         <div class="l-tag" data-rev style="--d:120ms">is turning <b>ONE</b></div>
         <div class="l-facts" id="lFacts" data-rev style="--d:160ms"></div>
-        <div class="l-note" id="lNote"><img id="lAvatar" alt=""><p>That was my best driving yet. Now the important bit &mdash; please come.</p><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        <div class="l-note" id="lNote">
+          <img id="lAvatar" alt="">
+          <div class="msg">
+            <p>That was quite a ride! Now for my most important stop&hellip;</p>
+            <p>Come celebrate my <b>BIG</b> little day!</p>
+          </div>
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
       </div>
     </div>
   </header>
@@ -661,10 +707,7 @@ html.gated.open body{overflow:visible}
     <div class="g">
       <article class="tkt" data-rev>
         <div class="tkt-main">
-          <div class="tkt-top">
-            <h2 class="l-eyebrow">When &amp; where</h2>
-            <div class="serial">No. 1</div>
-          </div>
+          <h2 class="l-eyebrow">When &amp; where</h2>
           <div class="bigdate">
             <div class="d" id="tDay">25</div>
             <div class="w"><b id="tWeekday">Friday</b><span id="tMonth">September 2026</span></div>
@@ -672,16 +715,33 @@ html.gated.open body{overflow:visible}
           <div class="tkt-rule"></div>
           <div class="tkt-grid">
             <div class="field">
-              <div class="k">Doors open</div>
-              <div class="v" id="tTime">From 6:00 in the evening</div>
-              <div class="s">Come when you can, stay as long as you like</div>
+              <div class="k">The big day</div>
+              <div class="v" id="tTime">6:00 PM onwards</div>
+              <div class="s" id="tTimeNote">The cake is ready. The fun is waiting. All we need is YOU!</div>
             </div>
             <div class="field">
-              <div class="k">The place</div>
+              <div class="k">The venue</div>
               <div class="v" id="tVenue">The Locus</div>
               <div class="s" id="tAddr">Punnapra, Alappuzha, Kerala</div>
             </div>
+            <div class="field">
+              <div class="k">Dress code</div>
+              <div class="v dress">
+                <span id="tDress">Blue &amp; White</span>
+                <!-- 🩵 (light blue heart) is a 2022 addition and still shows as
+                     a tofu box on plenty of phones. Drawn instead, in the
+                     invitation's own blue, so every guest sees the same thing. -->
+                <svg class="hearts" viewBox="0 0 44 20" aria-hidden="true">
+                  <path d="M11 17.6C11 17.6 2.2 12.4 2.2 7.2 2.2 4.4 4.3 2.2 7 2.2c1.6 0 3.1.8 4 2.1.9-1.3 2.4-2.1 4-2.1 2.7 0 4.8 2.2 4.8 5 0 5.2-8.8 10.4-8.8 10.4z" fill="var(--dusty)" stroke="var(--deep)" stroke-width=".9"/>
+                  <path d="M33 17.6C33 17.6 24.2 12.4 24.2 7.2c0-2.8 2.1-5 4.8-5 1.6 0 3.1.8 4 2.1.9-1.3 2.4-2.1 4-2.1 2.7 0 4.8 2.2 4.8 5 0 5.2-8.8 10.4-8.8 10.4z" fill="#FFFFFF" stroke="var(--dusty)" stroke-width="1.1"/>
+                </svg>
+              </div>
+              <div class="s" id="tDressNote">Dress to match the birthday vibe!</div>
+            </div>
           </div>
+        </div>
+        <div class="tkt-foot">
+          <div class="perf" aria-hidden="true"></div>
           <div class="l-acts">
             <a class="l-btn l-primary" id="lMap" href="#" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
@@ -693,10 +753,6 @@ html.gated.open body{overflow:visible}
             </a>
           </div>
         </div>
-        <aside class="tkt-stub">
-          <div class="perf" aria-hidden="true"></div>
-          <img id="lElephS" alt="">
-        </aside>
       </article>
     </div>
   </section>
@@ -804,17 +860,20 @@ window.EVENT = {
   endISO:    "2026-09-25T22:00:00+05:30",
   dateLabel: "Friday, 25 September 2026",
   dateShort: "Fri 25 Sep 2026",
-  timeLabel: "From 6:00 in the evening",
-  timeShort: "6 pm onwards",
+  timeLabel: "6:00 PM onwards",
+  timeShort: "6 PM onwards",
+  timeNote:  "The cake is ready. The fun is waiting. All we need is YOU!",
   venue:     "The Locus",
   address:   "Punnapra, Alappuzha, Kerala",
-  hosts:     "Rishaan's Family",
+  dressCode: "Blue & White",
+  dressNote: "Dress to match the birthday vibe!",
+  hosts:     "Rishaan\u2019s Favorite Crew",
   whatsapp:  "919400000000",
   /* geo: "9.4603,76.3319"  <- paste "lat,lng" from a Google Maps pin and the
      directions link becomes an exact route instead of a name search */
   geo:       "",
   calTitle:  "Rishaan Turns One",
-  calNote:   "Rishaan's first birthday. Doors open from 6 in the evening - come when you can, stay as long as you like."
+  calNote:   "Rishaan's first birthday. 6:00 PM onwards at The Locus, Punnapra. Dress code: blue & white."
 };
 
 /* ── the two outbound actions, in one place ─────────────── */
@@ -857,7 +916,7 @@ window.INVITE = (function(){
 
   /* ── artwork: one decoded copy, several placements ───── */
   [["gCarImg",ART.car],["iCar",ART.car],
-   ["lElephS",ART.eleph],["lEleph2",ART.eleph],["lAvatar",ART.head]
+   ["lEleph2",ART.eleph],["lAvatar",ART.head]
    /* parked with the "Meet the birthday boy" section:
    ,["lRacer1",ART.racer1],["lWv1",ART.wave1],["lWv2",ART.wave2],["lWv3",ART.wave3] */
   ].forEach(function(p){ var el = $(p[0]); if (el){ el.src = p[1]; el.decoding = "async"; } });
@@ -879,8 +938,11 @@ window.INVITE = (function(){
   set("tWeekday", fmt({ weekday:"long" }) || "Friday");
   set("tMonth", (fmt({ month:"long" }) + " " + fmt({ year:"numeric" })).trim());
   set("tTime", E.timeLabel);
+  set("tTimeNote", E.timeNote);
   set("tVenue", E.venue);
   set("tAddr", E.address);
+  set("tDress", E.dressCode);
+  set("tDressNote", E.dressNote);
   set("lFoot", E.name + " · First Birthday · " + (fmt({ year:"numeric" }) || "2026"));
 
   $("lMap").href = IV.map();
@@ -905,21 +967,39 @@ window.INVITE = (function(){
 
   /* ── his note: it lands, he types it, then it winks ──── */
   function playNote(){
-    var note = $("lNote"), p = note && note.querySelector("p");
-    if (!note || !p || note.dataset.done) return;
+    var note = $("lNote");
+    if (!note || note.dataset.done) return;
     note.dataset.done = "1";
     if (reduce){ note.classList.add("in","typed"); return; }
-    var words = p.textContent.trim().split(/\s+/);
-    p.textContent = "";
-    words.forEach(function(w, i){
-      var s = document.createElement("span");
-      s.className = "w"; s.style.setProperty("--i", i); s.textContent = w;
-      p.appendChild(s);
-      if (i < words.length - 1) p.appendChild(document.createTextNode(" "));
+
+    /* Every word is laid out before the first one appears, so the bubble
+       never changes size mid-sentence. The walk is over child NODES rather
+       than the flattened text, because the message is two paragraphs and
+       one of its words is in bold — splitting textContent would throw the
+       markup away. */
+    var n = 0;
+    [].forEach.call(note.querySelectorAll("p"), function(p){
+      var kids = [].slice.call(p.childNodes);
+      p.textContent = "";
+      kids.forEach(function(node){
+        if (node.nodeType === 3){
+          node.textContent.split(/(\s+)/).forEach(function(t){
+            if (!t) return;
+            if (/^\s+$/.test(t)){ p.appendChild(document.createTextNode(" ")); return; }
+            var s = document.createElement("span");
+            s.className = "w"; s.style.setProperty("--i", n++); s.textContent = t;
+            p.appendChild(s);
+          });
+        } else {
+          node.classList.add("w"); node.style.setProperty("--i", n++);
+          p.appendChild(node);
+        }
+      });
     });
+
     setTimeout(function(){ note.classList.add("in"); }, 520);
     setTimeout(function(){ note.classList.add("typed"); }, 1420);
-    setTimeout(function(){ note.classList.add("live"); }, 1420 + words.length * 55 + 620);
+    setTimeout(function(){ note.classList.add("live"); }, 1420 + n * 55 + 620);
   }
 
   /* ── reveal, from a visible resting state ────────────── */

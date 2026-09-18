@@ -42,10 +42,30 @@
     <div class="wrap">
       <div class="g-swap" id="gSwap">
         <div class="ready" id="gReady">
-          <div class="l-name">Rishaan Vineesh</div>
-          <p class="say">He is one, and he has the keys. Climb in &mdash; the party is just down this road.</p>
+          <h1 class="g-hero">
+            <!-- Drawn, not typed. The checkered-flag emoji looks different on
+                 every platform — glossy on iOS, flat on Android, another thing
+                 again on Windows — and none of them sit well beside Cormorant.
+                 This one is in the invitation's own palette. -->
+            <svg class="flag" viewBox="0 0 34 24" aria-hidden="true">
+              <defs><clipPath id="flagClip"><rect x="7.5" y="3" width="24" height="13" rx="1.6"/></clipPath></defs>
+              <g clip-path="url(#flagClip)">
+                <rect x="7.5" y="3" width="24" height="13" fill="#FFFFFF"/>
+                <g fill="var(--ink)">
+                  <rect x="7.5" y="3" width="8" height="6.5"/><rect x="23.5" y="3" width="8" height="6.5"/>
+                  <rect x="15.5" y="9.5" width="8" height="6.5"/>
+                </g>
+              </g>
+              <rect x="7.5" y="3" width="24" height="13" rx="1.6" fill="none"
+                    stroke="var(--line)" stroke-width="1"/>
+              <path d="M5.6 2.2v19.6" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+            </svg>
+            Ready, set, <b>ONE!</b>
+          </h1>
+          <p class="say">Our little racer is crossing the finish line to <b>ONE</b>!</p>
+          <p class="say sub">Buckle up &mdash; it&rsquo;s time to celebrate his very first birthday.</p>
           <button class="l-btn l-primary" id="gGo" type="button">
-            Come on my ride
+            Start your engines
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
           </button>
         </div>
@@ -91,7 +111,14 @@
         <div class="l-rule c" data-rev style="--d:90ms"><i></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.4 9.6L24 12l-9.6 2.4L12 24l-2.4-9.6L0 12l9.6-2.4z"/></svg><i></i></div>
         <div class="l-tag" data-rev style="--d:120ms">is turning <b>ONE</b></div>
         <div class="l-facts" id="lFacts" data-rev style="--d:160ms"></div>
-        <div class="l-note" id="lNote"><img id="lAvatar" alt=""><p>That was my best driving yet. Now the important bit &mdash; please come.</p><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        <div class="l-note" id="lNote">
+          <img id="lAvatar" alt="">
+          <div class="msg">
+            <p>That was quite a ride! Now for my most important stop&hellip;</p>
+            <p>Come celebrate my <b>BIG</b> little day!</p>
+          </div>
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
       </div>
     </div>
   </header>
@@ -117,10 +144,7 @@
     <div class="g">
       <article class="tkt" data-rev>
         <div class="tkt-main">
-          <div class="tkt-top">
-            <h2 class="l-eyebrow">When &amp; where</h2>
-            <div class="serial">No. 1</div>
-          </div>
+          <h2 class="l-eyebrow">When &amp; where</h2>
           <div class="bigdate">
             <div class="d" id="tDay">25</div>
             <div class="w"><b id="tWeekday">Friday</b><span id="tMonth">September 2026</span></div>
@@ -128,16 +152,33 @@
           <div class="tkt-rule"></div>
           <div class="tkt-grid">
             <div class="field">
-              <div class="k">Doors open</div>
-              <div class="v" id="tTime">From 6:00 in the evening</div>
-              <div class="s">Come when you can, stay as long as you like</div>
+              <div class="k">The big day</div>
+              <div class="v" id="tTime">6:00 PM onwards</div>
+              <div class="s" id="tTimeNote">The cake is ready. The fun is waiting. All we need is YOU!</div>
             </div>
             <div class="field">
-              <div class="k">The place</div>
+              <div class="k">The venue</div>
               <div class="v" id="tVenue">The Locus</div>
               <div class="s" id="tAddr">Punnapra, Alappuzha, Kerala</div>
             </div>
+            <div class="field">
+              <div class="k">Dress code</div>
+              <div class="v dress">
+                <span id="tDress">Blue &amp; White</span>
+                <!-- 🩵 (light blue heart) is a 2022 addition and still shows as
+                     a tofu box on plenty of phones. Drawn instead, in the
+                     invitation's own blue, so every guest sees the same thing. -->
+                <svg class="hearts" viewBox="0 0 44 20" aria-hidden="true">
+                  <path d="M11 17.6C11 17.6 2.2 12.4 2.2 7.2 2.2 4.4 4.3 2.2 7 2.2c1.6 0 3.1.8 4 2.1.9-1.3 2.4-2.1 4-2.1 2.7 0 4.8 2.2 4.8 5 0 5.2-8.8 10.4-8.8 10.4z" fill="var(--dusty)" stroke="var(--deep)" stroke-width=".9"/>
+                  <path d="M33 17.6C33 17.6 24.2 12.4 24.2 7.2c0-2.8 2.1-5 4.8-5 1.6 0 3.1.8 4 2.1.9-1.3 2.4-2.1 4-2.1 2.7 0 4.8 2.2 4.8 5 0 5.2-8.8 10.4-8.8 10.4z" fill="#FFFFFF" stroke="var(--dusty)" stroke-width="1.1"/>
+                </svg>
+              </div>
+              <div class="s" id="tDressNote">Dress to match the birthday vibe!</div>
+            </div>
           </div>
+        </div>
+        <div class="tkt-foot">
+          <div class="perf" aria-hidden="true"></div>
           <div class="l-acts">
             <a class="l-btn l-primary" id="lMap" href="#" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
@@ -149,10 +190,6 @@
             </a>
           </div>
         </div>
-        <aside class="tkt-stub">
-          <div class="perf" aria-hidden="true"></div>
-          <img id="lElephS" alt="">
-        </aside>
       </article>
     </div>
   </section>

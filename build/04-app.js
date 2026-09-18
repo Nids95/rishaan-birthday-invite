@@ -10,17 +10,20 @@ window.EVENT = {
   endISO:    "2026-09-25T22:00:00+05:30",
   dateLabel: "Friday, 25 September 2026",
   dateShort: "Fri 25 Sep 2026",
-  timeLabel: "From 6:00 in the evening",
-  timeShort: "6 pm onwards",
+  timeLabel: "6:00 PM onwards",
+  timeShort: "6 PM onwards",
+  timeNote:  "The cake is ready. The fun is waiting. All we need is YOU!",
   venue:     "The Locus",
   address:   "Punnapra, Alappuzha, Kerala",
-  hosts:     "Rishaan's Family",
+  dressCode: "Blue & White",
+  dressNote: "Dress to match the birthday vibe!",
+  hosts:     "Rishaan\u2019s Favorite Crew",
   whatsapp:  "919400000000",
   /* geo: "9.4603,76.3319"  <- paste "lat,lng" from a Google Maps pin and the
      directions link becomes an exact route instead of a name search */
   geo:       "",
   calTitle:  "Rishaan Turns One",
-  calNote:   "Rishaan's first birthday. Doors open from 6 in the evening - come when you can, stay as long as you like."
+  calNote:   "Rishaan's first birthday. 6:00 PM onwards at The Locus, Punnapra. Dress code: blue & white."
 };
 
 /* ── the two outbound actions, in one place ─────────────── */
@@ -63,7 +66,7 @@ window.INVITE = (function(){
 
   /* ── artwork: one decoded copy, several placements ───── */
   [["gCarImg",ART.car],["iCar",ART.car],
-   ["lElephS",ART.eleph],["lEleph2",ART.eleph],["lAvatar",ART.head]
+   ["lEleph2",ART.eleph],["lAvatar",ART.head]
    /* parked with the "Meet the birthday boy" section:
    ,["lRacer1",ART.racer1],["lWv1",ART.wave1],["lWv2",ART.wave2],["lWv3",ART.wave3] */
   ].forEach(function(p){ var el = $(p[0]); if (el){ el.src = p[1]; el.decoding = "async"; } });
@@ -85,8 +88,11 @@ window.INVITE = (function(){
   set("tWeekday", fmt({ weekday:"long" }) || "Friday");
   set("tMonth", (fmt({ month:"long" }) + " " + fmt({ year:"numeric" })).trim());
   set("tTime", E.timeLabel);
+  set("tTimeNote", E.timeNote);
   set("tVenue", E.venue);
   set("tAddr", E.address);
+  set("tDress", E.dressCode);
+  set("tDressNote", E.dressNote);
   set("lFoot", E.name + " · First Birthday · " + (fmt({ year:"numeric" }) || "2026"));
 
   $("lMap").href = IV.map();
@@ -111,21 +117,39 @@ window.INVITE = (function(){
 
   /* ── his note: it lands, he types it, then it winks ──── */
   function playNote(){
-    var note = $("lNote"), p = note && note.querySelector("p");
-    if (!note || !p || note.dataset.done) return;
+    var note = $("lNote");
+    if (!note || note.dataset.done) return;
     note.dataset.done = "1";
     if (reduce){ note.classList.add("in","typed"); return; }
-    var words = p.textContent.trim().split(/\s+/);
-    p.textContent = "";
-    words.forEach(function(w, i){
-      var s = document.createElement("span");
-      s.className = "w"; s.style.setProperty("--i", i); s.textContent = w;
-      p.appendChild(s);
-      if (i < words.length - 1) p.appendChild(document.createTextNode(" "));
+
+    /* Every word is laid out before the first one appears, so the bubble
+       never changes size mid-sentence. The walk is over child NODES rather
+       than the flattened text, because the message is two paragraphs and
+       one of its words is in bold — splitting textContent would throw the
+       markup away. */
+    var n = 0;
+    [].forEach.call(note.querySelectorAll("p"), function(p){
+      var kids = [].slice.call(p.childNodes);
+      p.textContent = "";
+      kids.forEach(function(node){
+        if (node.nodeType === 3){
+          node.textContent.split(/(\s+)/).forEach(function(t){
+            if (!t) return;
+            if (/^\s+$/.test(t)){ p.appendChild(document.createTextNode(" ")); return; }
+            var s = document.createElement("span");
+            s.className = "w"; s.style.setProperty("--i", n++); s.textContent = t;
+            p.appendChild(s);
+          });
+        } else {
+          node.classList.add("w"); node.style.setProperty("--i", n++);
+          p.appendChild(node);
+        }
+      });
     });
+
     setTimeout(function(){ note.classList.add("in"); }, 520);
     setTimeout(function(){ note.classList.add("typed"); }, 1420);
-    setTimeout(function(){ note.classList.add("live"); }, 1420 + words.length * 55 + 620);
+    setTimeout(function(){ note.classList.add("live"); }, 1420 + n * 55 + 620);
   }
 
   /* ── reveal, from a visible resting state ────────────── */
