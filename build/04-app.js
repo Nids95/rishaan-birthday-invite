@@ -187,14 +187,13 @@ window.INVITE = (function(){
         fraction of his own length, and the frame shown is wherever he is
         in that cycle — so a hand is planted while it is on the floor, and
         the knees never skate.
-     2. Scrolling sets where he is HEADED; he gets there at a baby's pace.
-        A fast flick on a phone does not fire him across the screen. Until
-        the note is well into view, scrolling back up sends him crawling
-        backwards (the frames play in reverse), which is also exactly what
-        babies do.
-     3. Two jokes, then he stops. If you stop scrolling part-way, he stops
-        too, sits back on his heels and looks at you. On a long path he
-        does it once of his own accord. Then he plops down, and speaks.
+     2. He goes at a baby's pace, and once he has set off he goes the whole
+        way by himself — no scrolling needed. Scrolling only decides when
+        he starts: straight away where his row is already on screen, as it
+        is on a phone when the curtain lifts.
+     3. One look, then he stops. On a long path he pauses halfway and looks
+        at you; on a short one he looks at you when he arrives. Then he
+        plops down, and speaks.
      ══════════════════════════════════════════════════════ */
   function initKid(){
     var say = $("lSay"), kid = $("lKid");
@@ -215,7 +214,7 @@ window.INVITE = (function(){
     }
 
     var kh, cw, run, fade, speed, stride, restLeft;
-    var p = 0, v = 0, phase = 0, committed = false, looked = false, idle = 0, lastLook = -1e9;
+    var p = 0, v = 0, phase = 0, looked = false, started = false;
     var state = "crawl", lookUntil = 0, raf = 0, last = 0, onScreen = false;
 
     function measure(){
@@ -232,7 +231,7 @@ window.INVITE = (function(){
     }
 
     function look(now, ms){
-      state = "look"; looked = true; lastLook = now; v = 0;
+      state = "look"; looked = true; v = 0;
       cell(base, 0);                                        /* hands down, the pose he stops in */
       cell(over, 4); kid.classList.add("over");             /* ...and the head turns to you */
       lookUntil = now + (ms || 1050);
@@ -244,63 +243,53 @@ window.INVITE = (function(){
       cell(over, 5); kid.classList.add("over");
       kid.classList.add("sat");
       cancelAnimationFrame(raf);
-      io.disconnect();
+      io.disconnect(); cue.disconnect();
       playNote(220, 820);                                   /* he sits, THEN he talks */
     }
 
+    /* Once he has set off, he crawls the whole way on his own. His journey
+       used to follow the scroll position, and he only finished unaided once
+       the note was well up the screen. On a real phone Safari's address and
+       tool bars take ~180px, the note sits lower than it does in a
+       full-height test, and he stopped halfway and waited to be scrolled.
+       Now scrolling only decides WHEN he starts, never how far he gets. */
     function frame(now){
       raf = 0;
       if (state === "sat") return;
       var dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
 
-      /* where he is headed: 0 as the note's top enters the bottom of the
-         screen, 1 when it is a little above the middle. Past 58% he is
-         committed and finishes on his own, scroll or no scroll. */
-      var r = say.getBoundingClientRect(), vh = innerHeight;
-      var m = Math.max(0, Math.min(1, (vh * .92 - r.top) / (vh * .42)));
-      if (!committed && m >= .58) committed = true;
-      var target = committed ? 1 : m;
-
       if (state === "look"){
         if (now >= lookUntil){
-          /* a look at the very end goes straight into sitting down — cut
-             from facing you to sitting, never back through the profile */
-          /* On a phone the path is too short for a look on the way, so he
-           gives you one on arrival instead — crawls up, turns to you, and
-           only then plops down. Where he has already looked, he just sits. */
-        if (p >= 1){ if (!looked) look(now, 850); else { sit(); return; } }
-          kid.classList.remove("over"); state = "crawl"; idle = 0;
+          /* a look on arrival goes straight into sitting down — a cut from
+             facing you to sitting, never back through the profile */
+          if (p >= 1){ sit(); return; }
+          kid.classList.remove("over"); state = "crawl";
         }
       } else {
-        /* ease towards the target: speed up from rest, slow on arrival */
-        var dp = target - p, vmax = speed / run;
-        var want = Math.sign(dp) * Math.min(vmax, Math.abs(dp) * 3.2);
+        /* speed up from rest, slow down on arrival */
+        var dp = 1 - p, vmax = speed / run;
+        var want = Math.min(vmax, dp * 3.2);
         v += (want - v) * Math.min(1, dt * 5);
         var step = v * dt;
-        if (Math.abs(dp) < .002){ step = dp; v = 0; }
-        p = Math.max(0, Math.min(1, p + step));
+        if (dp < .002){ step = dp; v = 0; }
+        p = Math.min(1, p + step);
 
-        var moved = step * run;
-        phase += moved / stride;                            /* backwards when he is */
-        var f = ((Math.floor(phase * 4) % 4) + 4) % 4;
-        cell(base, f);
+        /* the hands are tied to distance, so they plant and never skate */
+        phase += step * run / stride;
+        cell(base, ((Math.floor(phase * 4) % 4) + 4) % 4);
 
-        idle = Math.abs(moved) < .05 ? idle + dt : 0;
-        /* a look only lands if you can see his face. His face is the front
-           of the drawing; his heels trailing off the edge of the screen do
-           not matter, his nose being off it does. */
+        /* a look only lands if you can see his face — his heels trailing off
+           the edge of the screen do not matter, his nose being off it does */
         var inView = restLeft - run * (1 - p) + cw * .35 > 6;
-        if (!committed && inView && idle > 1.3 && now - lastLook > 4200) look(now);
-        if (committed && inView && !looked && run > cw * 2.4 && p >= .5) look(now);
-        /* On a phone the path is too short for a look on the way, so he
-           gives you one on arrival instead — crawls up, turns to you, and
-           only then plops down. Where he has already looked, he just sits. */
-        if (p >= 1){ if (!looked) look(now, 850); else { sit(); return; } }
+        /* a long desktop path earns a look on the way; a short phone path
+           gets one on arrival instead — crawls up, turns to you, plops down */
+        if (inView && !looked && run > cw * 2.4 && p >= .5) look(now);
+        else if (p >= 1){ if (!looked) look(now, 850); else { sit(); return; } }
       }
 
       /* two pushes per cycle, one per hand: he surges a little on each, the
          body dips as the hand lands, and rocks by under a degree */
-      var moving = state === "crawl" && Math.abs(v) > 1e-4;
+      var moving = state === "crawl" && v > 1e-4;
       var w = phase * Math.PI * 4;
       var surge = moving ? Math.sin(w) * stride * .035 : 0;
       var bob = moving ? -Math.abs(Math.sin(w)) * kh * .018 : 0;
@@ -312,16 +301,26 @@ window.INVITE = (function(){
       if (onScreen) raf = requestAnimationFrame(frame);
     }
 
-    /* only run while the note is anywhere near the screen */
+    function kick(){
+      if (started && onScreen && !raf && state !== "sat"){ last = 0; raf = requestAnimationFrame(frame); }
+    }
+    /* he sets off once half his row is on screen — straight away on a phone,
+       where it already is when the curtain lifts; on the first scroll that
+       brings it into view anywhere it starts below the fold */
+    var cue = new IntersectionObserver(function(en){
+      if (en[0].intersectionRatio >= .5){ started = true; cue.disconnect(); kick(); }
+    }, { threshold: [0, .5, 1] });
+    /* and the loop only runs while the row is anywhere near the screen: if
+       the guest scrolls away mid-crawl he waits, and carries on when they
+       come back, rather than finishing to an empty room */
     var io = new IntersectionObserver(function(en){
-      onScreen = en[0].isIntersecting;
-      if (onScreen && !raf && state !== "sat"){ last = 0; raf = requestAnimationFrame(frame); }
+      onScreen = en[0].isIntersecting; kick();
     }, { rootMargin: "240px 0px 240px 0px" });
 
     measure();
     cell(base, 0); cell(over, 4);
     kid.style.transform = "translate3d(" + (-run) + "px,0,0)";
-    io.observe(say);
+    io.observe(say); cue.observe(say);
     addEventListener("resize", function(){ if (state !== "sat") measure(); });
   }
 

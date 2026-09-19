@@ -145,13 +145,20 @@ them.
 1. His hands are tied to distance, not time. One crawl cycle is a fixed
    fraction of his own length, so a hand stays planted while it is on the
    floor and his knees never slide.
-2. Scrolling sets where he is headed; he gets there at a baby's pace, so a
-   fast flick does not fire him across the screen. Until the note is well
-   into view, scrolling back up makes him crawl backwards.
-3. Two jokes, then he stops. Pause your scrolling and he stops too and looks
-   at you. On a long desktop path he looks once of his own accord; on a
-   phone, where the path is short, he looks at you when he arrives. Then he
-   plops down and speaks.
+2. Once he sets off he crawls the whole way by himself — no scrolling
+   needed. Scrolling only decides *when* he starts: the moment half his row
+   is on screen, which on a phone is straight away when the curtain lifts.
+   (His journey used to follow the scroll position. On a real iPhone,
+   Safari's bars take ~180px of the screen, the note sits lower than in a
+   full-height test, and he stopped halfway waiting to be scrolled.) If the
+   guest scrolls away mid-crawl he waits, and carries on when they return.
+3. One look, then he stops. On a long desktop path he pauses halfway and
+   looks at you; on a phone he looks at you when he arrives. Then he plops
+   down and speaks.
+
+`test/kidcheck.js` lands on the invitation at the *visible* heights of real
+phones — the screen minus the browser's own bars — and does not scroll,
+then reports whether he made it to his seat.
 
 Poses change on a cut, not a cross-fade — a dissolve between two drawings
 shows both at half strength for a moment, and that ghost is what makes this
