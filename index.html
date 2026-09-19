@@ -266,17 +266,33 @@ html.gated.open body{overflow:visible}
 .g-ui .say.sub{font-size:clamp(.95rem,3.3vw,1.1rem); color:var(--muted); max-width:34ch}
 .g-ui .l-btn{margin-top:6px}
 
-/* the two states of that panel cross-fade in place, and the panel
-   animates its own height with the 0fr → 1fr grid trick */
+/* The two states of that panel share one grid cell, so they hand over in
+   turn rather than cross-fading on top of each other: the outgoing words
+   drift up and fade first, and only then do the incoming ones rise in.
+
+   `visibility` is part of each transition on purpose. Left out, it flips
+   the instant the class changes — the old words blink out in a single frame
+   while the new ones are still sliding in over the same spot, which is
+   what read as a glitch. With a 0s transition delayed to the end of the
+   fade, it waits until the words are already invisible. */
 .g-swap{display:grid; width:100%}
 .g-swap > *{grid-area:1/1; display:grid; justify-items:center; align-content:center; gap:inherit;
-  transition:opacity .34s ease, transform .44s var(--ease)}
-.g-swap .off{opacity:0; transform:translateY(8px); pointer-events:none; visibility:hidden}
+  /* arriving: wait for the other state to leave, then rise in */
+  transition:opacity .55s ease .38s, transform .7s var(--ease) .38s, visibility 0s linear .38s}
+.g-swap .off{opacity:0; transform:translateY(-6px); pointer-events:none; visibility:hidden;
+  /* leaving: go first, and only become hidden once fully faded */
+  transition:opacity .36s ease, transform .42s ease, visibility 0s linear .36s}
+/* the state that arrives comes up from just below where the last one left */
+.g-swap .g-going.off{transform:translateY(10px)}
 
 /* while he drives */
 .g-going{display:grid; justify-items:center; gap:14px; width:100%}
 .g-going .cap{font-family:"Cormorant Garamond",Georgia,serif; font-style:italic;
-  font-size:clamp(1.02rem,3.4vw,1.18rem); color:var(--body)}
+  font-size:clamp(1.02rem,3.4vw,1.18rem); color:var(--body);
+  transition:opacity .32s ease, transform .4s var(--ease)}
+/* between two captions: the old line fades up and out before the new one
+   is written in, so the text never changes under the reader's eye */
+.g-going .cap.swap{opacity:0; transform:translateY(-5px)}
 .g-prog{width:min(320px,74%); height:3px; border-radius:3px; background:var(--line-soft); overflow:hidden}
 .g-prog i{display:block; height:100%; width:0%; border-radius:3px;
   background:linear-gradient(90deg,var(--accent),var(--navy))}
@@ -1227,7 +1243,20 @@ window.INVITE = (function(){
   arch.style.opacity = "1";
 
   var CAPS = [[0,"Hold on tight…"],[1.6,"Mind the puddles…"],[3.2,"Almost there…"],[4.4,"We have arrived."]];
-  var capAt = -1;
+  var capAt = -1, capTimer = 0;
+  /* A new caption is never a hard swap of the text: the current line fades
+     out, the words change while nothing is visible, and the new line fades
+     back in. The first caption is already in the markup, so it is left
+     alone rather than faded out and back in as itself. */
+  function caption(text){
+    if (cap.textContent === text) return;
+    clearTimeout(capTimer);
+    cap.classList.add("swap");
+    capTimer = setTimeout(function(){
+      cap.textContent = text;
+      cap.classList.remove("swap");
+    }, reduce ? 0 : 330);
+  }
 
   function frame(now){
     if (!running) return;
@@ -1240,9 +1269,14 @@ window.INVITE = (function(){
     place(dist, v);
     lastV = v;
     bar.style.width = (Math.min(1, t / T.end) * 100).toFixed(1) + "%";
-    for (var i = CAPS.length - 1; i >= 0; i--){
-      if (t >= CAPS[i][0] && capAt !== i){ capAt = i; cap.textContent = CAPS[i][1]; break; }
-    }
+    /* Which caption is due is the LATEST one whose time has passed. The old
+       loop asked "is this one due and not already showing?" and broke on the
+       first yes — so past 1.6s it chose "Mind the puddles", and on the next
+       frame, with that now showing, fell through to "Hold on tight" instead.
+       The text flipped between two lines every frame, 60 times a second. */
+    var due = 0;
+    for (var i = CAPS.length - 1; i >= 0; i--){ if (t >= CAPS[i][0]){ due = i; break; } }
+    if (due !== capAt){ capAt = due; caption(CAPS[due][1]); }
     if (t >= T.end){ running = false; arrive(); return; }
     requestAnimationFrame(frame);
   }

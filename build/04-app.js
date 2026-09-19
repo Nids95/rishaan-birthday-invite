@@ -364,7 +364,20 @@ window.INVITE = (function(){
   arch.style.opacity = "1";
 
   var CAPS = [[0,"Hold on tight…"],[1.6,"Mind the puddles…"],[3.2,"Almost there…"],[4.4,"We have arrived."]];
-  var capAt = -1;
+  var capAt = -1, capTimer = 0;
+  /* A new caption is never a hard swap of the text: the current line fades
+     out, the words change while nothing is visible, and the new line fades
+     back in. The first caption is already in the markup, so it is left
+     alone rather than faded out and back in as itself. */
+  function caption(text){
+    if (cap.textContent === text) return;
+    clearTimeout(capTimer);
+    cap.classList.add("swap");
+    capTimer = setTimeout(function(){
+      cap.textContent = text;
+      cap.classList.remove("swap");
+    }, reduce ? 0 : 330);
+  }
 
   function frame(now){
     if (!running) return;
@@ -377,9 +390,14 @@ window.INVITE = (function(){
     place(dist, v);
     lastV = v;
     bar.style.width = (Math.min(1, t / T.end) * 100).toFixed(1) + "%";
-    for (var i = CAPS.length - 1; i >= 0; i--){
-      if (t >= CAPS[i][0] && capAt !== i){ capAt = i; cap.textContent = CAPS[i][1]; break; }
-    }
+    /* Which caption is due is the LATEST one whose time has passed. The old
+       loop asked "is this one due and not already showing?" and broke on the
+       first yes — so past 1.6s it chose "Mind the puddles", and on the next
+       frame, with that now showing, fell through to "Hold on tight" instead.
+       The text flipped between two lines every frame, 60 times a second. */
+    var due = 0;
+    for (var i = CAPS.length - 1; i >= 0; i--){ if (t >= CAPS[i][0]){ due = i; break; } }
+    if (due !== capAt){ capAt = due; caption(CAPS[due][1]); }
     if (t >= T.end){ running = false; arrive(); return; }
     requestAnimationFrame(frame);
   }

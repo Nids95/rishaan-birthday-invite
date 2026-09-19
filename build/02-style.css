@@ -217,17 +217,33 @@ html.gated.open body{overflow:visible}
 .g-ui .say.sub{font-size:clamp(.95rem,3.3vw,1.1rem); color:var(--muted); max-width:34ch}
 .g-ui .l-btn{margin-top:6px}
 
-/* the two states of that panel cross-fade in place, and the panel
-   animates its own height with the 0fr → 1fr grid trick */
+/* The two states of that panel share one grid cell, so they hand over in
+   turn rather than cross-fading on top of each other: the outgoing words
+   drift up and fade first, and only then do the incoming ones rise in.
+
+   `visibility` is part of each transition on purpose. Left out, it flips
+   the instant the class changes — the old words blink out in a single frame
+   while the new ones are still sliding in over the same spot, which is
+   what read as a glitch. With a 0s transition delayed to the end of the
+   fade, it waits until the words are already invisible. */
 .g-swap{display:grid; width:100%}
 .g-swap > *{grid-area:1/1; display:grid; justify-items:center; align-content:center; gap:inherit;
-  transition:opacity .34s ease, transform .44s var(--ease)}
-.g-swap .off{opacity:0; transform:translateY(8px); pointer-events:none; visibility:hidden}
+  /* arriving: wait for the other state to leave, then rise in */
+  transition:opacity .55s ease .38s, transform .7s var(--ease) .38s, visibility 0s linear .38s}
+.g-swap .off{opacity:0; transform:translateY(-6px); pointer-events:none; visibility:hidden;
+  /* leaving: go first, and only become hidden once fully faded */
+  transition:opacity .36s ease, transform .42s ease, visibility 0s linear .36s}
+/* the state that arrives comes up from just below where the last one left */
+.g-swap .g-going.off{transform:translateY(10px)}
 
 /* while he drives */
 .g-going{display:grid; justify-items:center; gap:14px; width:100%}
 .g-going .cap{font-family:"Cormorant Garamond",Georgia,serif; font-style:italic;
-  font-size:clamp(1.02rem,3.4vw,1.18rem); color:var(--body)}
+  font-size:clamp(1.02rem,3.4vw,1.18rem); color:var(--body);
+  transition:opacity .32s ease, transform .4s var(--ease)}
+/* between two captions: the old line fades up and out before the new one
+   is written in, so the text never changes under the reader's eye */
+.g-going .cap.swap{opacity:0; transform:translateY(-5px)}
 .g-prog{width:min(320px,74%); height:3px; border-radius:3px; background:var(--line-soft); overflow:hidden}
 .g-prog i{display:block; height:100%; width:0%; border-radius:3px;
   background:linear-gradient(90deg,var(--accent),var(--navy))}
