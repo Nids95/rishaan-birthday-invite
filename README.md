@@ -119,6 +119,47 @@ phone. To bring the section back:
 4. set `INCLUDE_PARKED = True` in `build.py`
 5. `python3 build.py`
 
+## He crawls in
+
+As the note in the first section comes into view, Rishaan crawls in from the
+left, sits down beside the speech bubble, and only then does the bubble pop
+up and type what he says. The small round photo of his face that used to sit
+inside the bubble is gone: he is the speaker now, and the bubble's tail
+points at him.
+
+**The artwork** is `crawl/sheetA.png` (three-quarter view, looking at you)
+and `crawl/sheetB.png` (side profile). `crawl/build_sprite.py` turns them into
+one strip, `assets/crawl.webp`, of six cells on a shared canvas: four crawl
+frames, one looking at you, one sitting. The registration is what makes it
+work — the crawl frames are pinned by the centre of his hair so his head
+holds still while his hands step; the look-at-camera frame is pinned by its
+*body* (86% overlap with crawl frame 1 below the neck), so switching to it
+turns his head rather than moving the baby; the sitting frame stands on the
+same ground line, centred where his torso was. The sheets are cut out with a
+gentler key than the car: this shirt and these socks meet the paper with no
+pencil line round them, and the car's "pale and neutral" rule would delete
+them.
+
+**The motion** (`initKid` in `build/04-app.js`) keeps to three rules:
+
+1. His hands are tied to distance, not time. One crawl cycle is a fixed
+   fraction of his own length, so a hand stays planted while it is on the
+   floor and his knees never slide.
+2. Scrolling sets where he is headed; he gets there at a baby's pace, so a
+   fast flick does not fire him across the screen. Until the note is well
+   into view, scrolling back up makes him crawl backwards.
+3. Two jokes, then he stops. Pause your scrolling and he stops too and looks
+   at you. On a long desktop path he looks once of his own accord; on a
+   phone, where the path is short, he looks at you when he arrives. Then he
+   plops down and speaks.
+
+Poses change on a cut, not a cross-fade — a dissolve between two drawings
+shows both at half strength for a moment, and that ghost is what makes this
+kind of thing look cheap. The drop and squash as he sits carry the motion.
+The loop only runs while the note is near the screen and stops for good once
+he is sitting. With reduced motion turned on he is simply sitting there; with
+no JavaScript, the bubble shows on its own.
+
 ## Notes on how it behaves
 
 - **No JavaScript** → the gate never appears and the invitation is simply
@@ -205,6 +246,7 @@ build/                the authored sources
 build.py              assembler — SITE_URL and INCLUDE_PARKED live at the top
 vercel.json           cache and security headers
 cutout.py             background removal for the landing artwork
+crawl/                the two crawl sheets and the script that builds the strip
 icons.py              draws favicon.ico and the home-screen PNGs
 assets/favicon.svg    the tab icon — replace this one to use your own
 assets.json           artwork as base64

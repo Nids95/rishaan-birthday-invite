@@ -292,21 +292,68 @@ html.gated.open body{overflow:visible}
 .l-facts.stack{flex-direction:column; gap:3px}
 .l-facts.stack span{display:none}
 
+/* ── he crawls in, sits, and speaks ─────────────────────
+   The row is [his seat][the bubble]. His seat is a real box in the layout,
+   sized to him sitting, so the bubble never moves when he arrives — it is
+   already where it will be, just invisible.
+
+   --kh is his height. The sprite is one strip of six cells on a shared
+   canvas (crawl ×4, looking at you, sitting); every number below is a
+   fraction of one cell, measured by crawl/build_sprite.py. */
+.l-say{--kh:clamp(84px,21vw,7.25rem); --gap:clamp(6px,1.6vw,12px);
+  --cw:calc(var(--kh) * 1.1779);           /* one cell's width           */
+  --seat:calc(var(--kh) * .74);            /* sitting, he is this wide   */
+  display:flex; align-items:flex-end; justify-content:center; gap:var(--gap);
+  width:min(100%, calc(var(--seat) + var(--gap) + 27rem)); margin-top:6px}
+.kid-slot{position:relative; flex:none; width:var(--seat); height:var(--kh)}
+/* the cell is wider than the seat; it is placed so that the sitting body
+   (centred at 32.5% of the cell) lands in the middle of the seat, and so
+   the cell's ground line (97.1% down) sits on the bubble's bottom edge */
+.kid{position:absolute; left:calc(var(--seat) / 2 - var(--cw) * .3249);
+  bottom:calc(var(--kh) * -.0288); width:var(--cw); height:var(--kh);
+  opacity:0; will-change:transform, opacity; pointer-events:none}
+.k-body{position:absolute; inset:0; transform-origin:32.5% 97%}
+.k-base,.k-over{position:absolute; inset:0; background-image:var(--sprite);
+  background-size:600% 100%; background-repeat:no-repeat; background-position:0 0}
+/* The two layers hand over rather than stack: when the top one shows (him
+   looking at you, or sitting) the crawl frame underneath goes, or its
+   profile head peeks out from behind the turned one.
+
+   They CUT, they do not cross-fade. A dissolve between two drawings shows
+   both at half strength — two heads, two bodies — for a fifth of a second,
+   and that ghost is the tell of a cheap sprite. Drawn animation changes
+   pose on a cut; the drop and squash when he sits carry the motion. */
+.k-over{opacity:0}
+.kid.over .k-over{opacity:1}
+.kid.over .k-base{opacity:0}
+/* he plops down: a drop, a squash, a settle */
+.kid.sat .k-body{animation:k-plop .46s cubic-bezier(.3,1.5,.5,1)}
+@keyframes k-plop{0%{transform:translateY(-4%) scale(1,1.02)}
+  45%{transform:translateY(1.5%) scale(1.03,.95)} 100%{transform:none}}
+/* no script, no sprite: the seat would only leave a gap, and the tail
+   would point at nobody */
+html:not(.gated) .kid-slot, html:not(.gated) .l-note .tail{display:none}
+
 /* his note: it lands, he types it, then it catches the eye now and then */
-.l-note{position:relative; overflow:hidden;
-  display:flex; align-items:center; gap:11px; background:var(--card);
-  border:1px solid var(--line); border-radius:17px; padding:10px 16px 10px 10px;
-  box-shadow:var(--shadow); max-width:min(27rem,100%); margin-top:4px;
-  opacity:0; transform:translateY(12px) scale(.965);
-  transition:opacity .5s var(--ease), transform .62s cubic-bezier(.18,.9,.28,1.22)}
-.l-note.in{opacity:1; transform:none}
-.l-note img{width:40px; height:40px; border-radius:50%; flex:none; object-fit:cover;
-  background:var(--card-2); border:1px solid var(--line-soft);
-  opacity:0; transform:scale(.62);
-  transition:opacity .34s var(--ease) .1s, transform .52s cubic-bezier(.2,.9,.25,1.55) .1s}
-.l-note.in img{opacity:1; transform:none}
-.l-note.in:not(.typed) img{animation:l-live 1.6s ease-out .62s infinite}
-@keyframes l-live{0%{box-shadow:0 0 0 0 var(--ring)} 72%,100%{box-shadow:0 0 0 11px transparent}}
+.l-note{position:relative; flex:1 1 auto; min-width:0;
+  display:flex; align-items:center; background:var(--card);
+  border:1px solid var(--line); border-radius:17px; padding:12px 18px;
+  box-shadow:var(--shadow); max-width:27rem;
+  transition:opacity .5s var(--ease), transform .62s cubic-bezier(.18,.9,.28,1.22);
+  transform-origin:0 70%}
+/* hidden only when the script is there to reveal it */
+html.gated .l-note{opacity:0; transform:translateX(-8px) scale(.94)}
+html.gated .l-note.in{opacity:1; transform:none}
+/* the tail, pointing back at him. It sits ON the bubble in the bubble's own
+   colour, so its inner half paints over the bubble's border where they
+   meet and the join is seamless. It lives outside .shine, which is what
+   clips the sheen, so the bubble itself no longer needs overflow:hidden. */
+.l-note .tail{position:absolute; left:-7px; width:13px; height:13px;
+  bottom:min(calc(var(--kh) * .5), calc(100% - 30px));
+  background:var(--card); border-left:1px solid var(--line); border-bottom:1px solid var(--line);
+  transform:rotate(45deg); border-radius:0 0 0 3px}
+.l-note .shine{position:absolute; inset:0; border-radius:inherit; overflow:hidden; pointer-events:none}
+.l-note .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
 .l-note .msg{display:grid; gap:5px; min-width:0}
 .l-note p{font-family:"Cormorant Garamond",Georgia,serif; font-size:1.04rem; line-height:1.34;
   color:var(--ink); text-align:left; text-wrap:pretty}
@@ -316,7 +363,7 @@ html.gated.open body{overflow:visible}
 .l-note p .w{display:inline-block; opacity:0; transform:translateY(7px)}
 .l-note.typed p .w{animation:l-word .44s var(--ease) forwards; animation-delay:calc(var(--i,0) * 55ms)}
 @keyframes l-word{to{opacity:1; transform:none}}
-.l-note .dots{position:absolute; left:61px; top:50%; margin-top:-3px;
+.l-note .dots{position:absolute; left:20px; top:50%; margin-top:-3px;
   display:flex; gap:5px; opacity:0; pointer-events:none; transition:opacity .28s var(--ease)}
 .l-note.in .dots{opacity:1}
 .l-note.typed .dots{opacity:0}
@@ -325,14 +372,14 @@ html.gated.open body{overflow:visible}
 .l-note.in:not(.typed) .dots i:nth-child(2){animation-delay:.16s}
 .l-note.in:not(.typed) .dots i:nth-child(3){animation-delay:.32s}
 @keyframes l-dot{0%,58%,100%{transform:translateY(0); opacity:.34} 29%{transform:translateY(-4px); opacity:.95}}
-.l-note.live::after{content:""; position:absolute; inset:-1px; border-radius:inherit;
+.l-note.live .shine::after{content:""; position:absolute; inset:-1px; border-radius:inherit;
   pointer-events:none; transform:translateX(-130%);
   background:linear-gradient(104deg,transparent 28%,var(--sheen) 50%,transparent 72%);
   animation:l-sheen 8s ease-in-out 1.4s infinite}
 @keyframes l-sheen{0%{transform:translateX(-130%)} 26%,100%{transform:translateX(130%)}}
 @media (prefers-reduced-motion:reduce){
-  .l-note,.l-note img{transition:none}
-  .l-note.live::after,.l-note.in:not(.typed) img{animation:none}
+  .l-note{transition:none}
+  .l-note.live .shine::after,.kid.sat .k-body{animation:none}
 }
 
 /* ── 2 · curtain up in ────────────────────────────────── */

@@ -39,7 +39,7 @@ SITE_URL = "https://rishaan-birthday-invite.vercel.app"
 # you uncomment the section.
 INCLUDE_PARKED = False
 
-LIVE = ("car", "eleph", "head")
+LIVE = ("car", "eleph", "crawl")
 PARKED = ("racer1", "wave1", "wave2", "wave3")
 
 here = pathlib.Path(__file__).parent
@@ -57,7 +57,7 @@ ART_NOTE = (
     "/* ── artwork ──────────────────────────────────────────────\n"
     "   car    · the landing portrait, also parked under the arch below\n"
     "   eleph  · the ticket stub and the closing line\n"
-    "   head   · his face in the little note\n"
+    "   crawl  · six cells: four crawl frames, one looking at you, one sitting\n"
     "   The four images for the parked \"Meet the birthday boy\" section are\n"
     "   held in assets.json and left out on purpose; set INCLUDE_PARKED in\n"
     "   build.py when you bring the section back. */\n"
@@ -95,7 +95,7 @@ def page(art_js, extra_head="", standalone=True, og_absolute=False):
 site = here
 (site / "img").mkdir(parents=True, exist_ok=True)
 
-FILE = {"car": "img/car.webp", "eleph": "img/eleph.webp", "head": "img/head.webp",
+FILE = {"car": "img/car.webp", "eleph": "img/eleph.webp", "crawl": "img/crawl.webp",
         "racer1": "img/racer1.webp", "wave1": "img/wave1.webp",
         "wave2": "img/wave2.webp", "wave3": "img/wave3.webp"}
 
