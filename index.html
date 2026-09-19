@@ -142,8 +142,13 @@ img:not([src]){display:none}
 .l-lights{position:absolute; left:0; right:0; top:0; height:62px; z-index:6; pointer-events:none}
 .l-lights::before{content:""; position:absolute; inset:0; opacity:.55;
   background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%2762%27%3E%3Cpath%20d%3D%27M0%203%20Q100%2052%20200%203%27%20fill%3D%27none%27%20stroke%3D%27%236E9BC4%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E"); background-repeat:repeat-x; background-size:200px 62px}
+/* will-change gives each bulb layer its own compositor layer: the soft
+   shadow is drawn once, and the twinkle only changes the layer's opacity.
+   Without it the browser redrew a full-width drop-shadow on every frame of
+   the twinkle — measured, that was half the dropped frames on a 1920px
+   screen during the ride. */
 .l-lights i{position:absolute; inset:0; background-repeat:repeat-x; background-size:200px 62px;
-  filter:drop-shadow(0 2px 3px rgba(14,47,87,.10))}
+  filter:drop-shadow(0 2px 3px rgba(14,47,87,.10)); will-change:opacity}
 .l-lights i:nth-child(1){background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%2762%27%3E%3Cdefs%3E%3CradialGradient%20id%3D%27g%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23FFFFFF%27%20stop-opacity%3D%27.55%27%2F%3E%3Cstop%20offset%3D%27.55%27%20stop-color%3D%27%23FFFFFF%27%20stop-opacity%3D%27.16%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23FFFFFF%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2725.0%27%20cy%3D%2724.1%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Ccircle%20cx%3D%27125.0%27%20cy%3D%2736.4%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Crect%20x%3D%2723.1%27%20y%3D%2713.1%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%2725.0%27%20cy%3D%2724.1%27%20r%3D%276%27%20fill%3D%27%23FFFFFF%27%20stroke%3D%27%2393B7D8%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%2723.1%27%20cy%3D%2722.1%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%27123.1%27%20y%3D%2725.4%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%27125.0%27%20cy%3D%2736.4%27%20r%3D%276%27%20fill%3D%27%23FFFFFF%27%20stroke%3D%27%2393B7D8%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%27123.1%27%20cy%3D%2734.4%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3C%2Fsvg%3E"); animation:l-twink 4.6s ease-in-out infinite}
 .l-lights i:nth-child(2){background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%2762%27%3E%3Cdefs%3E%3CradialGradient%20id%3D%27g%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%238CC3EB%27%20stop-opacity%3D%27.55%27%2F%3E%3Cstop%20offset%3D%27.55%27%20stop-color%3D%27%238CC3EB%27%20stop-opacity%3D%27.16%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%238CC3EB%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2775.0%27%20cy%3D%2736.4%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Ccircle%20cx%3D%27175.0%27%20cy%3D%2724.1%27%20r%3D%2714%27%20fill%3D%27url%28%2523g%29%27%2F%3E%3Crect%20x%3D%2773.1%27%20y%3D%2725.4%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%2775.0%27%20cy%3D%2736.4%27%20r%3D%276%27%20fill%3D%27%23A2C9EA%27%20stroke%3D%27%237FAFD6%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%2773.1%27%20cy%3D%2734.4%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3Crect%20x%3D%27173.1%27%20y%3D%2713.1%27%20width%3D%273.8%27%20height%3D%275%27%20rx%3D%271.3%27%20fill%3D%27%23A8C2D9%27%2F%3E%3Ccircle%20cx%3D%27175.0%27%20cy%3D%2724.1%27%20r%3D%276%27%20fill%3D%27%23A2C9EA%27%20stroke%3D%27%237FAFD6%27%20stroke-width%3D%271%27%2F%3E%3Ccircle%20cx%3D%27173.1%27%20cy%3D%2722.1%27%20r%3D%271.9%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%27.85%27%2F%3E%3C%2Fsvg%3E"); animation:l-twink 4.6s ease-in-out 2.3s infinite}
 @keyframes l-twink{0%,100%{opacity:.78}50%{opacity:1}}
@@ -169,7 +174,18 @@ html.gated.open body{overflow:visible}
 
 /* ── the road, and everything beside it ───────────────── */
 .g-scene{position:relative; overflow:hidden; min-height:0;
-  background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 78%)}
+  background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 78%);
+  /* The road depth and the car's size are functions of this box, and they
+     are worked out HERE, in CSS, with container units — the same formulas
+     the script uses. On a slow phone connection the page paints before the
+     script at the bottom has arrived; when these lived only in the script,
+     that first paint had a collapsed road, and a second later the road, the
+     car, the arch and the shadow all jumped into place (a layout shift of
+     0.3 — "poor" by Google's measure, and visible). Browsers without
+     container units fall back to the script, which still sets them. */
+  container-type:size;
+  --road:clamp(54px, 28cqh, 196px);
+  --carw:max(140px, min(47.5rem, 86cqw, (100cqh - var(--road) * .4 - 76px) * 1.083))}
 .g-sun{position:absolute; left:14%; top:-10%; width:min(46vh,340px); aspect-ratio:1; border-radius:50%;
   background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,0) 70%)}
 /* Every scrolling band is three identical tiles in a row; the script
@@ -204,7 +220,7 @@ html.gated.open body{overflow:visible}
   opacity:.75; will-change:transform}
 
 /* the balloon arch he pulls up under */
-#gArch{position:absolute; left:50%; bottom:calc(var(--road,90px) * .42); z-index:5;
+#gArch{position:absolute; left:50%; bottom:calc(var(--road,90px) * .42); z-index:5; opacity:0;
   width:calc(var(--carw,300px) * 1.46); will-change:transform}
 
 /* ── the car ──────────────────────────────────────────── */
@@ -220,15 +236,20 @@ html.gated.open body{overflow:visible}
   border-radius:50%; background:rgba(14,47,87,.16); filter:blur(7px); will-change:transform}
 
 /* motion cues: they exist only while he is moving, and their strength
-   is written from the script as --v (0 → 1). */
-.g-speed{position:absolute; inset:0; z-index:7; pointer-events:none; opacity:calc(var(--v,0) * .85)}
+   is written from the script straight onto these two elements. It used
+   to be a custom property on the whole scene, which made the browser
+   recheck the style of every element in it on every frame of the ride. */
+.g-speed{position:absolute; inset:0; z-index:7; pointer-events:none; opacity:0; will-change:opacity}
 .g-speed i{position:absolute; height:2px; border-radius:2px;
   background:linear-gradient(90deg,transparent,rgba(110,155,196,.6));
   animation:g-whoosh .62s linear infinite}
 .g-dust{position:absolute; left:0; bottom:3%; width:46%; height:36%;
-  z-index:1; pointer-events:none; opacity:var(--v,0)}
+  z-index:1; pointer-events:none; opacity:0; will-change:opacity}
 .g-dust i{position:absolute; border-radius:50%; background:rgba(255,255,255,.92);
   animation:g-puff 1s ease-out infinite}
+/* invisible until he moves, so they do not animate until he moves: on
+   the cover page they were running behind an opacity of zero */
+.gate:not(.riding) .g-speed i, .gate:not(.riding) .g-dust i{animation-play-state:paused}
 @keyframes g-whoosh{0%{transform:translateX(0); opacity:0}
   18%{opacity:1} 100%{transform:translateX(-46vw); opacity:0}}
 @keyframes g-puff{0%{transform:translate(0,0) scale(.4); opacity:.85}
@@ -296,8 +317,11 @@ html.gated.open body{overflow:visible}
 .g-prog{width:min(320px,74%); height:3px; border-radius:3px; background:var(--line-soft); overflow:hidden}
 .g-prog i{display:block; height:100%; width:0%; border-radius:3px;
   background:linear-gradient(90deg,var(--accent),var(--navy))}
+/* It reads as a small caption, but it is a button a thumb has to find
+   mid-animation: the hit area is the full 44px, the type stays small. */
 .g-skip{font-size:.58rem; letter-spacing:.24em; text-transform:uppercase; color:var(--muted);
-  padding:8px 14px; border-radius:999px; transition:color .2s}
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:44px; min-width:44px; padding:8px 18px; border-radius:999px; transition:color .2s}
 .g-skip:hover{color:var(--ink)}
 
 @media (prefers-reduced-motion:reduce){
@@ -503,6 +527,33 @@ html.gated .l-note.in{opacity:1; transform:none}
 .foot{text-align:center; padding:30px var(--gut) calc(38px + env(safe-area-inset-bottom,0px));
   font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
   background:var(--card-2); border-top:1px solid var(--line-soft)}
+
+/* ══ the landing party ═══════════════════════════════════
+   Fired once, as the curtain lifts: two poppers go off from the bottom
+   corners, and a handful of balloons in the invitation's blues are let go
+   and rise behind the first section. A few more drift up afterwards while
+   that section is on screen — slowly, and paler — the way the balloons on
+   the original stage did. */
+.party{position:fixed; inset:0; z-index:80; pointer-events:none; overflow:hidden}
+.party[hidden]{display:none}
+.party .popper{position:absolute; bottom:calc(4.5vh + env(safe-area-inset-bottom,0px));
+  width:clamp(46px,5.2vw,68px); opacity:0; transform-origin:12% 50%;
+  filter:drop-shadow(0 6px 8px rgba(14,47,87,.22))}
+.party .popper.l{left:clamp(8px,3.4vw,56px)}
+.party .popper.r{right:clamp(8px,3.4vw,56px)}
+.party .flash{position:absolute; width:70px; height:70px; margin:-35px 0 0 -35px; border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.95),rgba(243,215,156,.55) 38%,rgba(255,255,255,0) 70%)}
+.party .bit{position:absolute; width:9px; height:13px; border-radius:2px; will-change:transform,opacity}
+.party .bit.dot{width:9px; height:9px; border-radius:50%}
+.party .bit.curl{width:4px; height:18px; border-radius:3px}
+/* white paper on an ivory page needs an edge, or it simply is not there */
+.party .bit.white{background:#FFFFFF; box-shadow:0 0 0 .6px rgba(74,136,190,.45)}
+
+.h-sky{position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+.head > .g{position:relative; z-index:1}
+.h-bal{position:absolute; left:0; top:0; will-change:transform,opacity}
+.h-bal > i{display:block; transform-origin:50% 0}
+.h-bal svg{display:block; width:100%; height:auto; overflow:visible}
 
 /* ══ reveal on scroll ════════════════════════════════════ */
 [data-rev]{transition:opacity .9s var(--ease), transform .9s var(--ease); transition-delay:var(--d,0ms)}
@@ -719,6 +770,8 @@ html.gated .l-note.in{opacity:1; transform:none}
 
   <!-- ── 1 · you are lovingly invited ───────────────────── -->
   <header class="sec head" id="top">
+    <!-- balloons let go when the curtain lifts, rising behind everything -->
+    <div class="h-sky" id="hSky" aria-hidden="true"></div>
     <div class="l-lights" aria-hidden="true"><i></i><i></i></div>
     <div class="g">
       <div class="inner">
@@ -918,6 +971,23 @@ html.gated .l-note.in{opacity:1; transform:none}
 
   <div class="foot" id="lFoot"></div>
 </main>
+
+<!-- two party poppers, fired once from the bottom corners as the curtain
+     lifts. Fixed to the screen, so they go off wherever the guest is. -->
+<div class="party" id="party" aria-hidden="true" hidden>
+  <svg class="popper l" viewBox="0 0 60 40" aria-hidden="true">
+      <path d="M4,20 L44,6 L44,34 Z" fill="var(--navy)"/>
+      <path d="M17,15.5 L23,13.4 L23,26.6 L17,24.5 Z M31,10.6 L37,8.5 L37,31.5 L31,29.4 Z" fill="#FFFFFF" opacity=".85"/>
+      <path d="M44,6 L58,10 L58,30 L44,34 Z" fill="var(--dusty)"/>
+      <circle cx="9" cy="20" r="3.4" fill="#D9A93F"/>
+    </svg>
+  <svg class="popper r" viewBox="0 0 60 40" aria-hidden="true">
+      <path d="M4,20 L44,6 L44,34 Z" fill="var(--navy)"/>
+      <path d="M17,15.5 L23,13.4 L23,26.6 L17,24.5 Z M31,10.6 L37,8.5 L37,31.5 L31,29.4 Z" fill="#FFFFFF" opacity=".85"/>
+      <path d="M44,6 L58,10 L58,30 L44,34 Z" fill="var(--dusty)"/>
+      <circle cx="9" cy="20" r="3.4" fill="#D9A93F"/>
+    </svg>
+</div>
 
 <script>
 /* ── artwork ──────────────────────────────────────────────
@@ -1262,6 +1332,145 @@ window.INVITE = (function(){
     addEventListener("resize", function(){ if (state !== "sat") measure(); });
   }
 
+  /* ══════════════════════════════════════════════════════
+     THE LANDING PARTY
+     Two poppers go off from the bottom corners and a release of balloons
+     rises behind the first section — once, as the curtain lifts.
+
+     The paper is real paper, not dots: each piece flips as it tumbles
+     (a rotateX on top of its spin), goes up fast and comes down slow, and
+     is blown inward, towards the middle of the page. White pieces carry a
+     hairline edge, or on an ivory page they would not be there at all.
+     ══════════════════════════════════════════════════════ */
+  var TINTS = ["var(--dusty)","var(--accent)","var(--dusty-2)","white","var(--navy-2)","#D9A93F","var(--powder)"];
+
+  function popper(el, side, vw, vh){
+    var host = $("party");
+    var r = el.getBoundingClientRect();
+    /* the mouth is the popper's far end, lifted by its tilt */
+    var mx = side > 0 ? r.right - r.width * .12 : r.left + r.width * .12;
+    var my = r.top + r.height * .16;
+    var base = side > 0 ? "rotate(-38deg)" : "scaleX(-1) rotate(-38deg)";
+
+    /* in with a pop, a kick back as it fires, then away */
+    el.animate([
+      { opacity:0, transform: base + " scale(.4)" },
+      { opacity:1, transform: base + " scale(1.08)", offset:.1 },
+      { opacity:1, transform: base + " scale(1)", offset:.16 },
+      { opacity:1, transform: base + " scale(1)", offset:.2 },
+      { opacity:1, transform: base + " rotate(7deg) translateX(-7%)", offset:.26 },
+      { opacity:1, transform: base + " scale(1)", offset:.4 },
+      { opacity:1, transform: base + " scale(1)", offset:.78 },
+      { opacity:0, transform: base + " scale(.85)" }
+    ], { duration: 2200, easing:"ease-out", fill:"forwards" });
+
+    var flash = document.createElement("i");
+    flash.className = "flash"; flash.style.left = mx + "px"; flash.style.top = my + "px";
+    host.appendChild(flash);
+    flash.animate([{ opacity:0, transform:"scale(.2)" },{ opacity:1, transform:"scale(.9)", offset:.3 },
+                   { opacity:0, transform:"scale(1.7)" }],
+                  { duration: 460, delay: 440, easing:"ease-out", fill:"both" });
+
+    var n = vw < 600 ? 26 : 38;
+    for (var i = 0; i < n; i++){
+      var b = document.createElement("i");
+      var t = TINTS[i % TINTS.length];
+      b.className = "bit" + (i % 6 === 2 ? " dot" : i % 7 === 4 ? " curl" : "") + (t === "white" ? " white" : "");
+      if (t !== "white") b.style.background = t;
+      b.style.left = (mx - 4) + "px"; b.style.top = (my - 6) + "px";
+      host.appendChild(b);
+
+      /* blown up and inwards; the spread widens with the screen */
+      var dx = side * (vw * (.1 + Math.random() * .34));
+      var up = -(vh * (.32 + Math.random() * .38));
+      var fall = vh * (.28 + Math.random() * .42);
+      var spin = (Math.random() * 720 - 360) | 0, flip = (360 + Math.random() * 720) | 0;
+      var dur = 1900 + Math.random() * 1300;
+      b.animate([
+        { opacity:0, transform:"translate(0,0) rotate(0deg) rotateX(0deg) scale(.4)" },
+        { opacity:1, transform:"translate(" + (dx * .12) + "px," + (up * .25) + "px) rotate(" + (spin * .1) + "deg) rotateX(" + (flip * .1) + "deg) scale(1)", offset:.06, easing:"cubic-bezier(.1,.7,.3,1)" },
+        { opacity:1, transform:"translate(" + (dx * .7) + "px," + up + "px) rotate(" + (spin * .5) + "deg) rotateX(" + (flip * .5) + "deg) scale(1)", offset:.4, easing:"cubic-bezier(.45,0,.8,.6)" },
+        { opacity:0, transform:"translate(" + dx + "px," + (up + fall) + "px) rotate(" + spin + "deg) rotateX(" + flip + "deg) scale(.9)" }
+      ], { duration: dur, delay: 440 + Math.random() * 120, fill:"both" });
+    }
+  }
+
+  function balloon(sky, x, y, size, rise, opts){
+    var tint = ["var(--dusty)","var(--powder)","white","var(--dusty-2)","var(--accent)"][opts.tint % 5];
+    var edge = tint === "white" ? ' stroke="rgba(74,136,190,.38)" stroke-width="1"' : "";
+    var g = document.createElement("div");
+    g.className = "h-bal";
+    g.style.width = size + "px";
+    g.style.left = x + "px"; g.style.top = y + "px";
+    g.innerHTML = '<i><svg viewBox="0 0 40 74" aria-hidden="true">' +
+      '<path d="M20 35 C22 46 17 58 20 73" stroke="rgba(74,136,190,.38)" stroke-width="1" fill="none"/>' +
+      '<path d="M16.5 37.5 L20 32 L23.5 37.5 Z" fill="' + tint + '"' + edge + '/>' +
+      '<ellipse cx="20" cy="19" rx="16" ry="18.5" fill="' + tint + '"' + edge + '/>' +
+      '<ellipse cx="13.5" cy="11.5" rx="4.6" ry="6.4" fill="rgba(255,255,255,.55)" transform="rotate(-18 13.5 11.5)"/>' +
+      '</svg></i>';
+    sky.appendChild(g);
+    /* up, drifting a little sideways; faint at birth and at the top */
+    var drift = (Math.random() * 2 - 1) * size * 2.2;
+    var a = g.animate([
+      { transform:"translate3d(0,0,0)", opacity:0 },
+      { opacity:opts.alpha, offset:.08 },
+      { opacity:opts.alpha, offset:.82 },
+      { transform:"translate3d(" + drift.toFixed(0) + "px," + (-rise).toFixed(0) + "px,0)", opacity:0 }
+    ], { duration: opts.dur, delay: opts.delay || 0, easing:"cubic-bezier(.35,0,.65,1)", fill:"both" });
+    /* and sways on its string as it goes */
+    g.firstChild.animate([{ transform:"rotate(-5deg)" },{ transform:"rotate(5deg)" }],
+      { duration: 2200 + Math.random() * 1400, direction:"alternate", iterations:Infinity, easing:"ease-in-out" });
+    a.onfinish = function(){ g.remove(); };
+  }
+
+  function celebrate(){
+    if (reduce || !Element.prototype.animate) return;
+    var vw = innerWidth, vh = innerHeight;
+
+    /* the poppers */
+    var party = $("party");
+    party.hidden = false;
+    popper(party.querySelector(".popper.l"),  1, vw, vh);
+    popper(party.querySelector(".popper.r"), -1, vw, vh);
+    setTimeout(function(){
+      party.hidden = true;
+      [].slice.call(party.querySelectorAll(".bit,.flash")).forEach(function(n){ n.remove(); });
+    }, 4200);
+
+    /* the release: they start just below the bottom of the SCREEN, not the
+       bottom of the section, which on a phone is a screen and a half down —
+       otherwise the guest waits two seconds for balloons that are on their
+       way up from somewhere they cannot see */
+    var head = $("top"), sky = $("hSky");
+    if (!head || !sky) return;
+    var hr = head.getBoundingClientRect();
+    var W = head.clientWidth, H = head.clientHeight;
+    var startY = Math.min(H, vh - hr.top) + 10;
+    var n = vw < 600 ? 7 : 11;
+    for (var i = 0; i < n; i++){
+      var size = (vw < 600 ? 24 : 32) + Math.random() * (vw < 600 ? 14 : 20);
+      var lane = (i + .5) / n, x = W * (lane + (Math.random() - .5) * .08) - size / 2;
+      balloon(sky, x, startY, size, startY + size * 2 + 40,
+        { tint:i, alpha:.92, dur: 6200 + Math.random() * 3600, delay: 380 + i * 110 + Math.random() * 260 });
+    }
+
+    /* afterwards, one now and then while the section is on screen — paler,
+       slower, from the very bottom of it, and never more than a few at once */
+    var visible = true;
+    new IntersectionObserver(function(en){ visible = en[0].isIntersecting; }).observe(head);
+    var k = 0;
+    (function trickle(){
+      setTimeout(function(){
+        if (visible && sky.childElementCount < n + 4){
+          var s = (vw < 600 ? 20 : 26) + Math.random() * 12;
+          balloon(sky, Math.random() * (W - s), H + 10, s, H + s * 2 + 60,
+            { tint:k++, alpha:.55, dur: 12000 + Math.random() * 6000 });
+        }
+        trickle();
+      }, 2800 + Math.random() * 2600);
+    })();
+  }
+
   /* ── reveal, from a visible resting state ────────────── */
   function startReveals(){
     if (reduce || !("IntersectionObserver" in window)) return;
@@ -1392,6 +1601,7 @@ window.INVITE = (function(){
 
   /* ── the road band's height drives the whole composition ── */
   var road = 100;
+  var CQ = !!(window.CSS && CSS.supports && CSS.supports("width", "1cqh"));
   function fit(){
     var h = scene.clientHeight || 1, w = scene.clientWidth || 1;
     road = Math.max(54, Math.min(196, h * 0.28));
@@ -1405,8 +1615,12 @@ window.INVITE = (function(){
        and not a wall, and let it grow on a wide screen so the same hill is
        not tiled six times across the horizon. */
     var sc = Math.max(0.46, Math.min(1.6, w / 1150));
-    scene.style.setProperty("--road", road.toFixed(0) + "px");
-    scene.style.setProperty("--carw", carW.toFixed(0) + "px");
+    /* CSS already has these where container units exist (see .g-scene);
+       writing the same numbers again, rounded, would only nudge things */
+    if (!CQ){
+      scene.style.setProperty("--road", road.toFixed(0) + "px");
+      scene.style.setProperty("--carw", carW.toFixed(0) + "px");
+    }
     if (Math.abs(sc - SC) > 0.02){ SC = sc; buildScene(); syncWidths(); }
   }
 
@@ -1430,6 +1644,7 @@ window.INVITE = (function(){
   });
 
   var dash = $("gDash"), arch = $("gArch"), car = $("gCar"), shade = $("gShade");
+  var speedEl = $("gSpeed"), dustEl = $("gDust");
   var bar = $("gBar"), cap = $("gCap");
   var running = false, done = false, t0 = 0, dist = 0, lastV = 0;
 
@@ -1442,7 +1657,8 @@ window.INVITE = (function(){
     arch.style.transform = "translate3d(calc(-50% + " + (TOTAL - d).toFixed(1) + "px),0,0)";
 
     var u = v / V;
-    scene.style.setProperty("--v", u.toFixed(3));
+    speedEl.style.opacity = (u * .85).toFixed(3);
+    dustEl.style.opacity = u.toFixed(3);
     /* the bob is tied to distance, not to time, so it stops when he stops */
     var bob = Math.sin(d * 0.055) * 3.4 * Math.min(1, u * 1.6);
     var pitch = ((v - lastV) * 0.006);
@@ -1536,6 +1752,9 @@ window.INVITE = (function(){
     /* the invitation animates in WHILE the cover rises, not after it —
        otherwise the guest watches a still page for a second first */
     startReveals();
+    /* the party goes off while the curtain is on its way up, so the guest
+       sees it being revealed rather than finding it already over */
+    celebrate();
     /* give the header a moment to settle before he sets off */
     setTimeout(initKid, 650);
     var finish = function(){ gate.hidden = true; };
@@ -1557,6 +1776,7 @@ window.INVITE = (function(){
     $("gReady").setAttribute("aria-hidden","true");
     $("gGoing").classList.remove("off");
     $("gGoing").removeAttribute("aria-hidden");
+    gate.classList.add("riding");
     running = true; t0 = performance.now(); dist = 0; lastV = 0;
     requestAnimationFrame(frame);
   }

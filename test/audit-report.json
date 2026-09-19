@@ -1,0 +1,692 @@
+[
+ {
+  "label": "iPhone SE",
+  "w": 375,
+  "h": 667,
+  "cpu": 4,
+  "loadMs": 1709,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 48,
+   "carClear": 125,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 327,
+   "avg": 16.7,
+   "janky": 0,
+   "pct": 0,
+   "worst": 17
+  },
+  "party": {
+   "balloons": 7
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 20
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 1,
+   "revealsLeft": 0,
+   "pageH": 2050
+  },
+  "m": {
+   "cls": 0.0005,
+   "shifts": [
+    [
+     4529,
+     0.0002,
+     "gCap"
+    ],
+    [
+     6124,
+     0.0002,
+     "gCap"
+    ],
+    [
+     7329,
+     0.0001,
+     "gCap"
+    ]
+   ],
+   "lcp": 1412,
+   "long": 2,
+   "longMax": 130,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "iPhone 14",
+  "w": 390,
+  "h": 844,
+  "cpu": 4,
+  "loadMs": 1707,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 267,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 326,
+   "avg": 16.8,
+   "janky": 2,
+   "pct": 0.6,
+   "worst": 33
+  },
+  "party": {
+   "balloons": 7
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 20
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 1,
+   "revealsLeft": 0,
+   "pageH": 2042
+  },
+  "m": {
+   "cls": 0.0003,
+   "shifts": [
+    [
+     4502,
+     0.0001,
+     "gCap"
+    ],
+    [
+     6110,
+     0.0001,
+     "gCap"
+    ],
+    [
+     7293,
+     0.0001,
+     "gCap"
+    ]
+   ],
+   "lcp": 1412,
+   "long": 2,
+   "longMax": 138,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "Galaxy S8+",
+  "w": 360,
+  "h": 740,
+  "cpu": 4,
+  "loadMs": 1699,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 198,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 326,
+   "avg": 16.7,
+   "janky": 1,
+   "pct": 0.3,
+   "worst": 33
+  },
+  "party": {
+   "balloons": 7
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 20
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 1,
+   "revealsLeft": 0,
+   "pageH": 2035
+  },
+  "m": {
+   "cls": 0.0005,
+   "shifts": [
+    [
+     4487,
+     0.0002,
+     "gCap"
+    ],
+    [
+     6092,
+     0.0002,
+     "gCap"
+    ],
+    [
+     7284,
+     0.0001,
+     "gCap"
+    ]
+   ],
+   "lcp": 1404,
+   "long": 2,
+   "longMax": 123,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "Pixel 7",
+  "w": 412,
+  "h": 915,
+  "cpu": 4,
+  "loadMs": 1702,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 312,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 327,
+   "avg": 16.7,
+   "janky": 1,
+   "pct": 0.3,
+   "worst": 33
+  },
+  "party": {
+   "balloons": 7
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 20
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 1,
+   "revealsLeft": 0,
+   "pageH": 2068
+  },
+  "m": {
+   "cls": 0.0003,
+   "shifts": [
+    [
+     4522,
+     0.0001,
+     "gCap"
+    ],
+    [
+     6130,
+     0.0001,
+     "gCap"
+    ],
+    [
+     7327,
+     0,
+     "gCap"
+    ]
+   ],
+   "lcp": 1392,
+   "long": 3,
+   "longMax": 122,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "Phone landscape",
+  "w": 844,
+  "h": 390,
+  "cpu": 4,
+  "loadMs": 1700,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 44,
+   "carClear": 76,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 2
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 327,
+   "avg": 16.7,
+   "janky": 0,
+   "pct": 0,
+   "worst": 17
+  },
+  "party": {
+   "balloons": 11
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 157
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 3,
+   "revealsLeft": 0,
+   "pageH": 2421
+  },
+  "m": {
+   "cls": 0.0005,
+   "shifts": [
+    [
+     4500,
+     0.0002,
+     "gCap"
+    ],
+    [
+     6101,
+     0.0002,
+     "gCap"
+    ],
+    [
+     7320,
+     0.0001,
+     "gCap"
+    ]
+   ],
+   "lcp": 1400,
+   "long": 4,
+   "longMax": 111,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "iPad mini portrait",
+  "w": 768,
+  "h": 1024,
+  "cpu": 2,
+  "loadMs": 407,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 92,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 319,
+   "avg": 16.9,
+   "janky": 2,
+   "pct": 0.6,
+   "worst": 67
+  },
+  "party": {
+   "balloons": 11
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 119
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 3,
+   "revealsLeft": 0,
+   "pageH": 2312
+  },
+  "m": {
+   "cls": 0.0002,
+   "shifts": [
+    [
+     3127,
+     0.0001,
+     "gCap"
+    ],
+    [
+     4726,
+     0.0001,
+     "gCap"
+    ],
+    [
+     5926,
+     0,
+     "gCap"
+    ]
+   ],
+   "lcp": 492,
+   "long": 1,
+   "longMax": 122,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "iPad Air landscape",
+  "w": 1180,
+  "h": 820,
+  "cpu": 2,
+  "loadMs": 363,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 76,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 322,
+   "avg": 16.7,
+   "janky": 1,
+   "pct": 0.3,
+   "worst": 33
+  },
+  "party": {
+   "balloons": 11
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 325
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 3,
+   "revealsLeft": 0,
+   "pageH": 2859
+  },
+  "m": {
+   "cls": 0.0001,
+   "shifts": [
+    [
+     3106,
+     0,
+     "gCap"
+    ],
+    [
+     4706,
+     0.0001,
+     "gCap"
+    ],
+    [
+     5907,
+     0,
+     "gCap"
+    ]
+   ],
+   "lcp": 488,
+   "long": 1,
+   "longMax": 125,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "iPad Pro portrait",
+  "w": 1024,
+  "h": 1366,
+  "cpu": 2,
+  "loadMs": 347,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 330,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 318,
+   "avg": 17,
+   "janky": 7,
+   "pct": 2.2,
+   "worst": 33
+  },
+  "party": {
+   "balloons": 11
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 247
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 3,
+   "revealsLeft": 0,
+   "pageH": 2680
+  },
+  "m": {
+   "cls": 0.0001,
+   "shifts": [
+    [
+     3098,
+     0,
+     "gCap"
+    ],
+    [
+     4698,
+     0,
+     "gCap"
+    ],
+    [
+     5908,
+     0,
+     "gCap"
+    ]
+   ],
+   "lcp": 448,
+   "long": 1,
+   "longMax": 114,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "Laptop",
+  "w": 1366,
+  "h": 768,
+  "cpu": 1,
+  "loadMs": 307,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 76,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 323,
+   "avg": 16.7,
+   "janky": 0,
+   "pct": 0,
+   "worst": 17
+  },
+  "party": {
+   "balloons": 11
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 418
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 3,
+   "revealsLeft": 0,
+   "pageH": 2983
+  },
+  "m": {
+   "cls": 0.0001,
+   "shifts": [
+    [
+     3019,
+     0,
+     "gCap"
+    ],
+    [
+     4619,
+     0,
+     "gCap"
+    ],
+    [
+     5819,
+     0,
+     "gCap"
+    ]
+   ],
+   "lcp": 428,
+   "long": 1,
+   "longMax": 61,
+   "heap": 3
+  },
+  "errs": []
+ },
+ {
+  "label": "Desktop",
+  "w": 1920,
+  "h": 1080,
+  "cpu": 1,
+  "loadMs": 261,
+  "KB": 312,
+  "req": 5,
+  "gate": {
+   "btnVisible": true,
+   "btnH": 52,
+   "carClear": 76,
+   "carInScene": true,
+   "overflowX": 0,
+   "heroLines": 1
+  },
+  "skip": 44,
+  "ride": {
+   "frames": 248,
+   "avg": 21.6,
+   "janky": 61,
+   "pct": 24.6,
+   "worst": 50
+  },
+  "party": {
+   "balloons": 11
+  },
+  "note": {
+   "sat": true,
+   "typed": true,
+   "kidLeftOfNote": true,
+   "noteRight": 663
+  },
+  "page": {
+   "overflowX": 0,
+   "outside": [],
+   "clipped": [],
+   "smallTaps": [],
+   "factsOneLine": true,
+   "tkt": 3,
+   "revealsLeft": 0,
+   "pageH": 3251
+  },
+  "m": {
+   "cls": 0,
+   "shifts": [
+    [
+     2995,
+     0,
+     "gCap"
+    ],
+    [
+     4595,
+     0,
+     "gCap"
+    ],
+    [
+     5778,
+     0,
+     "gCap"
+    ]
+   ],
+   "lcp": 424,
+   "long": 1,
+   "longMax": 66,
+   "heap": 3
+  },
+  "errs": []
+ }
+]

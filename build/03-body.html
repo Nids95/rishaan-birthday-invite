@@ -84,6 +84,8 @@
 
   <!-- ── 1 · you are lovingly invited ───────────────────── -->
   <header class="sec head" id="top">
+    <!-- balloons let go when the curtain lifts, rising behind everything -->
+    <div class="h-sky" id="hSky" aria-hidden="true"></div>
     <div class="l-lights" aria-hidden="true"><i></i><i></i></div>
     <div class="g">
       <div class="inner">
@@ -283,3 +285,20 @@
 
   <div class="foot" id="lFoot"></div>
 </main>
+
+<!-- two party poppers, fired once from the bottom corners as the curtain
+     lifts. Fixed to the screen, so they go off wherever the guest is. -->
+<div class="party" id="party" aria-hidden="true" hidden>
+  <svg class="popper l" viewBox="0 0 60 40" aria-hidden="true">
+      <path d="M4,20 L44,6 L44,34 Z" fill="var(--navy)"/>
+      <path d="M17,15.5 L23,13.4 L23,26.6 L17,24.5 Z M31,10.6 L37,8.5 L37,31.5 L31,29.4 Z" fill="#FFFFFF" opacity=".85"/>
+      <path d="M44,6 L58,10 L58,30 L44,34 Z" fill="var(--dusty)"/>
+      <circle cx="9" cy="20" r="3.4" fill="#D9A93F"/>
+    </svg>
+  <svg class="popper r" viewBox="0 0 60 40" aria-hidden="true">
+      <path d="M4,20 L44,6 L44,34 Z" fill="var(--navy)"/>
+      <path d="M17,15.5 L23,13.4 L23,26.6 L17,24.5 Z M31,10.6 L37,8.5 L37,31.5 L31,29.4 Z" fill="#FFFFFF" opacity=".85"/>
+      <path d="M44,6 L58,10 L58,30 L44,34 Z" fill="var(--dusty)"/>
+      <circle cx="9" cy="20" r="3.4" fill="#D9A93F"/>
+    </svg>
+</div>

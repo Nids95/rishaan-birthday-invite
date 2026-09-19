@@ -325,6 +325,145 @@ window.INVITE = (function(){
     addEventListener("resize", function(){ if (state !== "sat") measure(); });
   }
 
+  /* ══════════════════════════════════════════════════════
+     THE LANDING PARTY
+     Two poppers go off from the bottom corners and a release of balloons
+     rises behind the first section — once, as the curtain lifts.
+
+     The paper is real paper, not dots: each piece flips as it tumbles
+     (a rotateX on top of its spin), goes up fast and comes down slow, and
+     is blown inward, towards the middle of the page. White pieces carry a
+     hairline edge, or on an ivory page they would not be there at all.
+     ══════════════════════════════════════════════════════ */
+  var TINTS = ["var(--dusty)","var(--accent)","var(--dusty-2)","white","var(--navy-2)","#D9A93F","var(--powder)"];
+
+  function popper(el, side, vw, vh){
+    var host = $("party");
+    var r = el.getBoundingClientRect();
+    /* the mouth is the popper's far end, lifted by its tilt */
+    var mx = side > 0 ? r.right - r.width * .12 : r.left + r.width * .12;
+    var my = r.top + r.height * .16;
+    var base = side > 0 ? "rotate(-38deg)" : "scaleX(-1) rotate(-38deg)";
+
+    /* in with a pop, a kick back as it fires, then away */
+    el.animate([
+      { opacity:0, transform: base + " scale(.4)" },
+      { opacity:1, transform: base + " scale(1.08)", offset:.1 },
+      { opacity:1, transform: base + " scale(1)", offset:.16 },
+      { opacity:1, transform: base + " scale(1)", offset:.2 },
+      { opacity:1, transform: base + " rotate(7deg) translateX(-7%)", offset:.26 },
+      { opacity:1, transform: base + " scale(1)", offset:.4 },
+      { opacity:1, transform: base + " scale(1)", offset:.78 },
+      { opacity:0, transform: base + " scale(.85)" }
+    ], { duration: 2200, easing:"ease-out", fill:"forwards" });
+
+    var flash = document.createElement("i");
+    flash.className = "flash"; flash.style.left = mx + "px"; flash.style.top = my + "px";
+    host.appendChild(flash);
+    flash.animate([{ opacity:0, transform:"scale(.2)" },{ opacity:1, transform:"scale(.9)", offset:.3 },
+                   { opacity:0, transform:"scale(1.7)" }],
+                  { duration: 460, delay: 440, easing:"ease-out", fill:"both" });
+
+    var n = vw < 600 ? 26 : 38;
+    for (var i = 0; i < n; i++){
+      var b = document.createElement("i");
+      var t = TINTS[i % TINTS.length];
+      b.className = "bit" + (i % 6 === 2 ? " dot" : i % 7 === 4 ? " curl" : "") + (t === "white" ? " white" : "");
+      if (t !== "white") b.style.background = t;
+      b.style.left = (mx - 4) + "px"; b.style.top = (my - 6) + "px";
+      host.appendChild(b);
+
+      /* blown up and inwards; the spread widens with the screen */
+      var dx = side * (vw * (.1 + Math.random() * .34));
+      var up = -(vh * (.32 + Math.random() * .38));
+      var fall = vh * (.28 + Math.random() * .42);
+      var spin = (Math.random() * 720 - 360) | 0, flip = (360 + Math.random() * 720) | 0;
+      var dur = 1900 + Math.random() * 1300;
+      b.animate([
+        { opacity:0, transform:"translate(0,0) rotate(0deg) rotateX(0deg) scale(.4)" },
+        { opacity:1, transform:"translate(" + (dx * .12) + "px," + (up * .25) + "px) rotate(" + (spin * .1) + "deg) rotateX(" + (flip * .1) + "deg) scale(1)", offset:.06, easing:"cubic-bezier(.1,.7,.3,1)" },
+        { opacity:1, transform:"translate(" + (dx * .7) + "px," + up + "px) rotate(" + (spin * .5) + "deg) rotateX(" + (flip * .5) + "deg) scale(1)", offset:.4, easing:"cubic-bezier(.45,0,.8,.6)" },
+        { opacity:0, transform:"translate(" + dx + "px," + (up + fall) + "px) rotate(" + spin + "deg) rotateX(" + flip + "deg) scale(.9)" }
+      ], { duration: dur, delay: 440 + Math.random() * 120, fill:"both" });
+    }
+  }
+
+  function balloon(sky, x, y, size, rise, opts){
+    var tint = ["var(--dusty)","var(--powder)","white","var(--dusty-2)","var(--accent)"][opts.tint % 5];
+    var edge = tint === "white" ? ' stroke="rgba(74,136,190,.38)" stroke-width="1"' : "";
+    var g = document.createElement("div");
+    g.className = "h-bal";
+    g.style.width = size + "px";
+    g.style.left = x + "px"; g.style.top = y + "px";
+    g.innerHTML = '<i><svg viewBox="0 0 40 74" aria-hidden="true">' +
+      '<path d="M20 35 C22 46 17 58 20 73" stroke="rgba(74,136,190,.38)" stroke-width="1" fill="none"/>' +
+      '<path d="M16.5 37.5 L20 32 L23.5 37.5 Z" fill="' + tint + '"' + edge + '/>' +
+      '<ellipse cx="20" cy="19" rx="16" ry="18.5" fill="' + tint + '"' + edge + '/>' +
+      '<ellipse cx="13.5" cy="11.5" rx="4.6" ry="6.4" fill="rgba(255,255,255,.55)" transform="rotate(-18 13.5 11.5)"/>' +
+      '</svg></i>';
+    sky.appendChild(g);
+    /* up, drifting a little sideways; faint at birth and at the top */
+    var drift = (Math.random() * 2 - 1) * size * 2.2;
+    var a = g.animate([
+      { transform:"translate3d(0,0,0)", opacity:0 },
+      { opacity:opts.alpha, offset:.08 },
+      { opacity:opts.alpha, offset:.82 },
+      { transform:"translate3d(" + drift.toFixed(0) + "px," + (-rise).toFixed(0) + "px,0)", opacity:0 }
+    ], { duration: opts.dur, delay: opts.delay || 0, easing:"cubic-bezier(.35,0,.65,1)", fill:"both" });
+    /* and sways on its string as it goes */
+    g.firstChild.animate([{ transform:"rotate(-5deg)" },{ transform:"rotate(5deg)" }],
+      { duration: 2200 + Math.random() * 1400, direction:"alternate", iterations:Infinity, easing:"ease-in-out" });
+    a.onfinish = function(){ g.remove(); };
+  }
+
+  function celebrate(){
+    if (reduce || !Element.prototype.animate) return;
+    var vw = innerWidth, vh = innerHeight;
+
+    /* the poppers */
+    var party = $("party");
+    party.hidden = false;
+    popper(party.querySelector(".popper.l"),  1, vw, vh);
+    popper(party.querySelector(".popper.r"), -1, vw, vh);
+    setTimeout(function(){
+      party.hidden = true;
+      [].slice.call(party.querySelectorAll(".bit,.flash")).forEach(function(n){ n.remove(); });
+    }, 4200);
+
+    /* the release: they start just below the bottom of the SCREEN, not the
+       bottom of the section, which on a phone is a screen and a half down —
+       otherwise the guest waits two seconds for balloons that are on their
+       way up from somewhere they cannot see */
+    var head = $("top"), sky = $("hSky");
+    if (!head || !sky) return;
+    var hr = head.getBoundingClientRect();
+    var W = head.clientWidth, H = head.clientHeight;
+    var startY = Math.min(H, vh - hr.top) + 10;
+    var n = vw < 600 ? 7 : 11;
+    for (var i = 0; i < n; i++){
+      var size = (vw < 600 ? 24 : 32) + Math.random() * (vw < 600 ? 14 : 20);
+      var lane = (i + .5) / n, x = W * (lane + (Math.random() - .5) * .08) - size / 2;
+      balloon(sky, x, startY, size, startY + size * 2 + 40,
+        { tint:i, alpha:.92, dur: 6200 + Math.random() * 3600, delay: 380 + i * 110 + Math.random() * 260 });
+    }
+
+    /* afterwards, one now and then while the section is on screen — paler,
+       slower, from the very bottom of it, and never more than a few at once */
+    var visible = true;
+    new IntersectionObserver(function(en){ visible = en[0].isIntersecting; }).observe(head);
+    var k = 0;
+    (function trickle(){
+      setTimeout(function(){
+        if (visible && sky.childElementCount < n + 4){
+          var s = (vw < 600 ? 20 : 26) + Math.random() * 12;
+          balloon(sky, Math.random() * (W - s), H + 10, s, H + s * 2 + 60,
+            { tint:k++, alpha:.55, dur: 12000 + Math.random() * 6000 });
+        }
+        trickle();
+      }, 2800 + Math.random() * 2600);
+    })();
+  }
+
   /* ── reveal, from a visible resting state ────────────── */
   function startReveals(){
     if (reduce || !("IntersectionObserver" in window)) return;
@@ -455,6 +594,7 @@ window.INVITE = (function(){
 
   /* ── the road band's height drives the whole composition ── */
   var road = 100;
+  var CQ = !!(window.CSS && CSS.supports && CSS.supports("width", "1cqh"));
   function fit(){
     var h = scene.clientHeight || 1, w = scene.clientWidth || 1;
     road = Math.max(54, Math.min(196, h * 0.28));
@@ -468,8 +608,12 @@ window.INVITE = (function(){
        and not a wall, and let it grow on a wide screen so the same hill is
        not tiled six times across the horizon. */
     var sc = Math.max(0.46, Math.min(1.6, w / 1150));
-    scene.style.setProperty("--road", road.toFixed(0) + "px");
-    scene.style.setProperty("--carw", carW.toFixed(0) + "px");
+    /* CSS already has these where container units exist (see .g-scene);
+       writing the same numbers again, rounded, would only nudge things */
+    if (!CQ){
+      scene.style.setProperty("--road", road.toFixed(0) + "px");
+      scene.style.setProperty("--carw", carW.toFixed(0) + "px");
+    }
     if (Math.abs(sc - SC) > 0.02){ SC = sc; buildScene(); syncWidths(); }
   }
 
@@ -493,6 +637,7 @@ window.INVITE = (function(){
   });
 
   var dash = $("gDash"), arch = $("gArch"), car = $("gCar"), shade = $("gShade");
+  var speedEl = $("gSpeed"), dustEl = $("gDust");
   var bar = $("gBar"), cap = $("gCap");
   var running = false, done = false, t0 = 0, dist = 0, lastV = 0;
 
@@ -505,7 +650,8 @@ window.INVITE = (function(){
     arch.style.transform = "translate3d(calc(-50% + " + (TOTAL - d).toFixed(1) + "px),0,0)";
 
     var u = v / V;
-    scene.style.setProperty("--v", u.toFixed(3));
+    speedEl.style.opacity = (u * .85).toFixed(3);
+    dustEl.style.opacity = u.toFixed(3);
     /* the bob is tied to distance, not to time, so it stops when he stops */
     var bob = Math.sin(d * 0.055) * 3.4 * Math.min(1, u * 1.6);
     var pitch = ((v - lastV) * 0.006);
@@ -599,6 +745,9 @@ window.INVITE = (function(){
     /* the invitation animates in WHILE the cover rises, not after it —
        otherwise the guest watches a still page for a second first */
     startReveals();
+    /* the party goes off while the curtain is on its way up, so the guest
+       sees it being revealed rather than finding it already over */
+    celebrate();
     /* give the header a moment to settle before he sets off */
     setTimeout(initKid, 650);
     var finish = function(){ gate.hidden = true; };
@@ -620,6 +769,7 @@ window.INVITE = (function(){
     $("gReady").setAttribute("aria-hidden","true");
     $("gGoing").classList.remove("off");
     $("gGoing").removeAttribute("aria-hidden");
+    gate.classList.add("riding");
     running = true; t0 = performance.now(); dist = 0; lastV = 0;
     requestAnimationFrame(frame);
   }
